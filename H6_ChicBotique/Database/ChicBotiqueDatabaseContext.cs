@@ -28,7 +28,7 @@ namespace H6_ChicBotique.Database
       
             modelBuilder.Entity<AccountInfo>(entity =>
             {
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()");
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()"); //setting default value in the database table
                 //entity.HasIndex(e => e.CreatedDate);
                 //entity.HasKey(e=>e.Id);
                 entity.HasOne(e => e.User).WithOne(e => e.Account).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
