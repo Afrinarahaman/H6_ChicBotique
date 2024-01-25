@@ -26,7 +26,7 @@ namespace H5_Webshop.Database.Entities
 
       
 
-        // Role er en enum datatype, der består af integrerede konstanter. Her bruges vi enum for at sætter role(Admin eller Kunder)
+        // Role er en enum datatype, der består af integrerede konstanter. Her bruges vi enum for at sætte role(Admin eller Kunder)
         public Role Role { get; set; }
         public AccountInfo Account { get; set; }
       
