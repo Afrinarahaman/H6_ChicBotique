@@ -1,8 +1,22 @@
+using H6_ChicBotique.Database;
+using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
+                        o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
 

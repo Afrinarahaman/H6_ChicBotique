@@ -1,42 +1,42 @@
 ﻿using H6_ChicBotique.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using H6_ChicBotique.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace H6_ChicBotique.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IProductService productService)
+        public CategoryController(ICategoryService categoryService)
         {
-            _productService = productService;
+            _categoryService = categoryService;
         }
 
+        // GET: api/Category
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
-            // Get all products
             try
             {
-                List<ProductResponse> productResponses = await _productService.GetAllProducts();
+                List<CategoryResponse> categoryResponse = await _categoryService.GetAllCategories();
 
-                if (productResponses == null)
+                if (categoryResponse == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");
                 }
 
-                if (productResponses.Count == 0)
+                if (categoryResponse.Count == 0)
                 {
                     return NoContent();
                 }
 
-                return Ok(productResponses);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -44,24 +44,24 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
-        [HttpGet("{productId}")]
+        // GET: api/Category/{categoryId}
+        [HttpGet("{categoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetById([FromRoute] int productId)
+        public async Task<IActionResult> GetById([FromRoute] int categoryId)
         {
-            // Get a product by ID
             try
             {
-                ProductResponse productResponse = await _productService.GetProductById(productId);
+                CategoryResponse categoryResponse = await _categoryService.GetCategoryById(categoryId);
 
-                if (productResponse == null)
+                if (categoryResponse == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(productResponse);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -69,29 +69,29 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
-        [HttpGet("Category/{categoryId}")]
+        // GET: api/Category/WithoutProducts
+        [HttpGet("WithoutProducts")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetProductsByCategoryId([FromRoute] int categoryId)
+        public async Task<IActionResult> GetAllCategoriesWithoutProducts()
         {
-            // Get products by category ID
             try
             {
-                List<ProductResponse> productResponse = await _productService.GetProductsByCategoryId(categoryId);
+                List<CategoryResponse> categoryResponse = await _categoryService.GetAllCategoriesWithoutProducts();
 
-                if (productResponse == null)
+                if (categoryResponse == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");
                 }
 
-                if (productResponse.Count == 0)
+                if (categoryResponse.Count == 0)
                 {
                     return NoContent();
                 }
 
-                return Ok(productResponse);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -99,24 +99,24 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
+        // POST: api/Category
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] ProductRequest newProduct)
+        public async Task<IActionResult> Create([FromBody] CategoryRequest newCategory)
         {
-            // Create a new product
             try
             {
-                ProductResponse productResponse = await _productService.CreateProduct(newProduct);
+                CategoryResponse categoryResponse = await _categoryService.CreateCategory(newCategory);
 
-                if (productResponse == null)
+                if (categoryResponse == null)
                 {
-                    return NotFound();
+                    return Problem("Category was not created, something went wrong");
                 }
 
-                return Ok(productResponse);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -124,24 +124,24 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
-        [HttpPut("{productId}")]
+        // PUT: api/Category/{categoryId}
+        [HttpPut("{categoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update([FromRoute] int productId, [FromBody] ProductRequest updateProduct)
+        public async Task<IActionResult> Update([FromRoute] int categoryId, [FromBody] CategoryRequest updateCategory)
         {
-            // Update an existing product
             try
             {
-                ProductResponse productResponse = await _productService.UpdateProduct(productId, updateProduct);
+                CategoryResponse categoryResponse = await _categoryService.UpdateCategory(categoryId, updateCategory);
 
-                if (productResponse == null)
+                if (categoryResponse == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(productResponse);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -149,24 +149,24 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
-        [HttpDelete("{productId}")]
+        // DELETE: api/Category/{categoryId}
+        [HttpDelete("{categoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Delete([FromRoute] int productId)
+        public async Task<IActionResult> Delete([FromRoute] int categoryId)
         {
-            // Delete a product by ID
             try
             {
-                ProductResponse productResponse = await _productService.DeleteProduct(productId);
+                CategoryResponse categoryResponse = await _categoryService.DeleteCategory(categoryId);
 
-                if (productResponse == null)
+                if (categoryResponse == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(productResponse);
+                return Ok(categoryResponse);
             }
             catch (Exception ex)
             {
@@ -174,4 +174,5 @@ namespace H6_ChicBotique.Controllers
             }
         }
     }
+
 }
