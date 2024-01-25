@@ -42,12 +42,12 @@ namespace H6_ChicBotique.Database
             });
             
            
-            modelBuilder.Entity<Payment>(entity =>
+            /*modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.Order).WithOne(e => e.Payment).HasForeignKey<Order>(e => e.PaymentId).OnDelete(DeleteBehavior.Restrict);
             });
-
+            */
         }
     }
  
