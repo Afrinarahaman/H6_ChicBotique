@@ -35,13 +35,7 @@ namespace H6_ChicBotique.Database
 
             }); // specify the configuration for the AccountInfo and rules for this entity
            
-           /*modelBuilder.Entity<Order>(entity =>
-            {
-                entity.Property(e => e.OrderDate).HasDefaultValueSql("getdate()");
-                //entity.HasIndex(e => e.CreatedDate);
-                //entity.HasKey(e=>e.Id);
-                entity.HasMany(e => e.OrderDetails).WithOne(e => e.Order).HasForeignKey(e => e.OrderId).OnDelete(DeleteBehavior.Cascade);
-            });*/
+         
             modelBuilder.Entity<HomeAddress>(entity =>
             {
                 entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
