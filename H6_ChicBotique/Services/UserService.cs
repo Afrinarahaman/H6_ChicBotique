@@ -93,6 +93,8 @@ namespace H6_ChicBotique.Services
 
             return response; // Return the mapped UserResponse object
         }
+
+       
     }
 }
 
