@@ -19,29 +19,32 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
-            // Get all products
             try
             {
                 List<ProductResponse> productResponses = await _productService.GetAllProducts();
-
                 if (productResponses == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");
                 }
-
                 if (productResponses.Count == 0)
                 {
                     return NoContent();
                 }
-
                 return Ok(productResponses);
             }
             catch (Exception ex)
             {
                 return Problem(ex.Message);
+
             }
+
+
         }
 
         [HttpGet("{productId}")]

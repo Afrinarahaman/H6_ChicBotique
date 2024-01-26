@@ -32,69 +32,68 @@ namespace H6_ChicBotique.Repositories
             return await _context.Product
                 .Include(a => a.Category)
                 .OrderBy(a => a.CategoryId)
+
                 .ToListAsync();
         }
 
-        // Get a product by ID, including associated category information
-        public async Task<Product> SelectProductById(int productId)
+        public async Task<Product> SelectProductById(int product_Id)
         {
             return await _context.Product
                 .Include(a => a.Category)
                 .OrderBy(a => a.CategoryId)
-                .FirstOrDefaultAsync(product => product.Id == productId);
+                .FirstOrDefaultAsync(product => product.Id == product_Id);
         }
 
-        // Get products by category ID, including associated category information
-        public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
+
+
+        public async Task<List<Product>> GetProductsByCategoryId(int Category_Id)
         {
+
             return await _context.Product
                 .Include(a => a.Category)
                 .OrderBy(a => a.CategoryId)
-                .Where(a => a.CategoryId == categoryId)
+                .Where(a => a.CategoryId==Category_Id)
                 .ToListAsync();
         }
-
-        // Insert a new product
         public async Task<Product> InsertNewProduct(Product product)
         {
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
             return product;
         }
-
-        // Update an existing product
-        public async Task<Product> UpdateExistingProduct(int productId, Product product)
+        public async Task<Product> UpdateExistingProduct(int product_Id, Product product)
         {
-            Product updateProduct = await _context.Product.FirstOrDefaultAsync(p => p.Id == productId);
+            Product updateProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
 
             if (updateProduct != null)
             {
-                // Update product properties
                 updateProduct.Title = product.Title;
                 updateProduct.Price = product.Price;
                 updateProduct.Description = product.Description;
                 updateProduct.Image = product.Image;
                 updateProduct.Stock = product.Stock;
 
+                //_context.Entry(updateProduct).CurrentValues.SetValues(product);
+
                 await _context.SaveChangesAsync();
+
             }
 
             return updateProduct;
         }
 
-        // Delete a product by ID
-        public async Task<Product> DeleteProductById(int productId)
+        public async Task<Product> DeleteProductById(int product_Id)
         {
-            Product deleteProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == productId);
+            Product deleteProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
 
             if (deleteProduct != null)
             {
                 _context.Product.Remove(deleteProduct);
                 await _context.SaveChangesAsync();
             }
-
             return deleteProduct;
         }
+
     }
 
 }
