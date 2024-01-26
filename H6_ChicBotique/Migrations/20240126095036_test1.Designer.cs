@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240126080409_test1")]
+    [Migration("20240126095036_test1")]
     partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,20 @@ namespace H6_ChicBotique.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("AccountInfo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("H5_Webshop.Database.Entities.User", b =>
@@ -76,6 +90,32 @@ namespace H6_ChicBotique.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "peter@abc.com",
+                            FirstName = "Peter",
+                            LastName = "Aksten",
+                            Role = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "riz@abc.com",
+                            FirstName = "Rizwanah",
+                            LastName = "Mustafa",
+                            Role = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "afr@abc.com",
+                            FirstName = "Afrina",
+                            LastName = "Rahaman",
+                            Role = 2
+                        });
                 });
 
             modelBuilder.Entity("H6_ChicBotique.Database.Entities.Category", b =>
@@ -103,11 +143,6 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 2,
                             CategoryName = "Men"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryName = "Women"
                         });
                 });
 
@@ -148,6 +183,28 @@ namespace H6_ChicBotique.Migrations
                         .IsUnique();
 
                     b.ToTable("HomeAddress");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountInfoId = new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"),
+                            Address = "Husum",
+                            City = "Copenhagen",
+                            Country = "Danmark",
+                            PostalCode = "2200",
+                            TelePhone = "+228415799"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountInfoId = new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"),
+                            Address = "Husum",
+                            City = "Copenhagen",
+                            Country = "Danmark",
+                            PostalCode = "2200",
+                            TelePhone = "+228415799"
+                        });
                 });
 
             modelBuilder.Entity("H6_ChicBotique.Database.Entities.Order", b =>
@@ -241,6 +298,24 @@ namespace H6_ChicBotique.Migrations
                         .IsUnique();
 
                     b.ToTable("PasswordEntity");
+
+                    b.HasData(
+                        new
+                        {
+                            PasswordId = 1,
+                            LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Password = "7398456669E76571CE90280A5EC66A88C46EE612A17833ADC08F55B7E94FC657",
+                            Salt = "26/01/2024 10.50.36",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            PasswordId = 2,
+                            LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Password = "EC53F2F908A982E76D59FBAE6145F6A929695C76FB35FBD867F6FD58AEDE41ED",
+                            Salt = "26/01/2024 10.50.36",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("H6_ChicBotique.Database.Entities.Payment", b =>
@@ -291,6 +366,9 @@ namespace H6_ChicBotique.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<short>("Stock")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(32)");
@@ -306,10 +384,11 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "Kids dress",
+                            Description = "kids dress",
                             Image = "dress1.jpg",
                             Price = 299.99m,
-                            Title = "Fancy dress"
+                            Stock = (short)10,
+                            Title = " Fancy dress"
                         },
                         new
                         {
@@ -318,6 +397,7 @@ namespace H6_ChicBotique.Migrations
                             Description = "T-Shirt for men",
                             Image = "BlueTShirt.jpg",
                             Price = 199.99m,
+                            Stock = (short)10,
                             Title = "Blue T-Shirt"
                         },
                         new
@@ -327,15 +407,17 @@ namespace H6_ChicBotique.Migrations
                             Description = "Girls skirt",
                             Image = "skirt1.jpg",
                             Price = 159.99m,
+                            Stock = (short)10,
                             Title = "Skirt"
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 1,
-                            Description = "Kids jumpersuit",
+                            Description = "kids jumpersuit",
                             Image = "jumpersuit1.jpg",
                             Price = 279.99m,
+                            Stock = (short)10,
                             Title = "Jumpersuit"
                         },
                         new
@@ -345,6 +427,7 @@ namespace H6_ChicBotique.Migrations
                             Description = "T-Shirt for men",
                             Image = "RedT-Shirt.jpg",
                             Price = 199.99m,
+                            Stock = (short)10,
                             Title = "Red T-Shirt"
                         });
                 });

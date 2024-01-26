@@ -1,5 +1,6 @@
 ﻿using H5_Webshop.Database.Entities;
 using H6_ChicBotique.Database.Entities;
+using H6_ChicBotique.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Database
@@ -30,17 +31,13 @@ namespace H6_ChicBotique.Database
                 entity.HasOne(e => e.User).WithOne().HasForeignKey<PasswordEntity>(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
             });  // specify the configuration for the PasswordEntity and relationship with the User entity
 
-           modelBuilder.Entity<Category>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                // Konfigurer relationen mellem Category og Products.
                 entity.HasMany(e => e.Products).WithOne(e => e.Category).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
             });
-
             // modelBuilder.Entity<Category>().HasIndex(u => u.CategoryName).IsUnique();
-
             modelBuilder.Entity<Product>(entity =>
             {
-                // Konfigurer relationen mellem Product og Category.
                 entity.HasOne(e => e.Category).WithMany(e => e.Products).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -71,36 +68,33 @@ namespace H6_ChicBotique.Database
             */
             // Seeding data for the Category entity
             modelBuilder.Entity<Category>().HasData(
-                new Category
-                {
-                    Id = 1,
-                    CategoryName = "Kids"
-                },
-                new Category
-                {
-                    Id = 2,
-                    CategoryName = "Men"
-                },
-                new Category
-                {
-                    Id = 3,
-                    CategoryName = "Women"
-                }
-            );
+               new()
+               {
+                   Id = 1,
+                   CategoryName = "Kids"
 
-            // Seeding data for the Product entity
+
+               },
+               new()
+               {
+                   Id = 2,
+                   CategoryName = "Men"
+               }
+               );
             modelBuilder.Entity<Product>().HasData(
-                new Product
+                new()
                 {
                     Id = 1,
-                    Title = "Fancy dress",
+                    Title = " Fancy dress",
                     Price = 299.99M,
-                    Description = "Kids dress",
+                    Description = "kids dress",
                     Image = "dress1.jpg",
                     Stock = 10,
                     CategoryId = 1
+
                 },
-                new Product
+
+                new()
                 {
                     Id = 2,
                     Title = "Blue T-Shirt",
@@ -109,8 +103,10 @@ namespace H6_ChicBotique.Database
                     Image = "BlueTShirt.jpg",
                     Stock = 10,
                     CategoryId = 2
+
                 },
-                new Product
+
+                new()
                 {
                     Id = 3,
                     Title = "Skirt",
@@ -119,18 +115,20 @@ namespace H6_ChicBotique.Database
                     Image = "skirt1.jpg",
                     Stock = 10,
                     CategoryId = 1
+
                 },
-                new Product
+                new()
                 {
                     Id = 4,
                     Title = "Jumpersuit",
                     Price = 279.99M,
-                    Description = "Kids jumpersuit",
+                    Description = "kids jumpersuit",
                     Image = "jumpersuit1.jpg",
                     Stock = 10,
                     CategoryId = 1
+
                 },
-                new Product
+                new()
                 {
                     Id = 5,
                     Title = "Red T-Shirt",
@@ -139,12 +137,118 @@ namespace H6_ChicBotique.Database
                     Image = "RedT-Shirt.jpg",
                     Stock = 10,
                     CategoryId = 2
+
                 }
+              );
+            var salt = DateTime.Now.ToString();
+            //var hashedadminpass = PasswordHelpers.HashPassword("password"+adminsalt);
+
+            modelBuilder.Entity<User>().HasData(
+               new()
+               {
+                   Id = 1,
+                   FirstName = "Peter",
+
+                   LastName = "Aksten",
+                   Email = "peter@abc.com",
+
+                   Role = Role.Administrator
+               },
+               new()
+               {
+                   Id = 2,
+                   FirstName = "Rizwanah",
+
+                   LastName = "Mustafa",
+
+                   Email = "riz@abc.com",
+
+                   Role = Role.Member
+               },
+            new()
+            {
+                Id = 3,
+                FirstName = "Afrina",
+
+                LastName = "Rahaman",
+
+                Email = "afr@abc.com",
+
+                Role = Role.Guest
+            }
             );
+            Guid acc1id = Guid.NewGuid();
+            Guid acc2id = Guid.NewGuid();
+
+            modelBuilder.Entity<AccountInfo>().HasData(
+               new()
+               {
+                   // Id = Guid.Parse("3e79cea4 - d1a1 - 4954 - bad2 - d2ca09aff5d3"),
+                   Id= acc1id,
+                   UserId = 1
+
+
+               },
+
+               new()
+               {
+                   //Id =Guid.Parse("c8c1fe00-599d-480f-9fe5-cc0a5a6d9f45"),
+                   Id= acc2id,
+                   UserId = 2
+
+               }
+               );
+            modelBuilder.Entity<HomeAddress>().HasData(
+                new()
+                {
+                    AccountInfoId= acc1id,
+                    Id=1,
+
+                    Address ="Husum",
+                    City    = "Copenhagen",
+                    PostalCode = "2200",
+                    Country ="Danmark",
+                    TelePhone="+228415799"
+
+                },
+                new()
+                {
+
+                    AccountInfoId = acc2id,
+                    Id = 2,
+                    Address = "Husum",
+                    City = "Copenhagen",
+                    PostalCode = "2200",
+                    Country = "Danmark",
+                    TelePhone = "+228415799"
+                }
+                );
+            modelBuilder.Entity<PasswordEntity>().HasData(
+                 new()
+                 {
+                     PasswordId = 1,
+                     UserId = 1,
+                     Password = PasswordHelpers.HashPassword("password" + salt),
+                     Salt = salt,
+                 },
+                  new()
+                  {
+                      PasswordId = 2,
+                      UserId = 2,
+                      Password = PasswordHelpers.HashPassword("password1" + salt),
+                      Salt = salt,
+                  }
+
+
+                 );
+
+
 
 
         }
+
     }
+    
  
 
 }

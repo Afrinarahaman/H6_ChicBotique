@@ -64,6 +64,7 @@ namespace H6_ChicBotique.Migrations
                     Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(32)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(32)", nullable: false),
+                    Stock = table.Column<short>(type: "smallint", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -226,29 +227,61 @@ namespace H6_ChicBotique.Migrations
             migrationBuilder.InsertData(
                 table: "Category",
                 columns: new[] { "Id", "CategoryName" },
-                values: new object[] { 1, "Kids" });
+                values: new object[,]
+                {
+                    { 1, "Kids" },
+                    { 2, "Men" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Category",
-                columns: new[] { "Id", "CategoryName" },
-                values: new object[] { 2, "Men" });
+                table: "User",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Role" },
+                values: new object[,]
+                {
+                    { 1, "peter@abc.com", "Peter", "Aksten", 0 },
+                    { 2, "riz@abc.com", "Rizwanah", "Mustafa", 1 },
+                    { 3, "afr@abc.com", "Afrina", "Rahaman", 2 }
+                });
 
             migrationBuilder.InsertData(
-                table: "Category",
-                columns: new[] { "Id", "CategoryName" },
-                values: new object[] { 3, "Women" });
+                table: "AccountInfo",
+                columns: new[] { "Id", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"), 2 },
+                    { new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"), 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PasswordEntity",
+                columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "7398456669E76571CE90280A5EC66A88C46EE612A17833ADC08F55B7E94FC657", "26/01/2024 10.50.36", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "EC53F2F908A982E76D59FBAE6145F6A929695C76FB35FBD867F6FD58AEDE41ED", "26/01/2024 10.50.36", 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "CategoryId", "Description", "Image", "Price", "Title" },
+                columns: new[] { "Id", "CategoryId", "Description", "Image", "Price", "Stock", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, "Kids dress", "dress1.jpg", 299.99m, "Fancy dress" },
-                    { 2, 2, "T-Shirt for men", "BlueTShirt.jpg", 199.99m, "Blue T-Shirt" },
-                    { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, "Skirt" },
-                    { 4, 1, "Kids jumpersuit", "jumpersuit1.jpg", 279.99m, "Jumpersuit" },
-                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, "Red T-Shirt" }
+                    { 1, 1, "kids dress", "dress1.jpg", 299.99m, (short)10, " Fancy dress" },
+                    { 2, 2, "T-Shirt for men", "BlueTShirt.jpg", 199.99m, (short)10, "Blue T-Shirt" },
+                    { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, (short)10, "Skirt" },
+                    { 4, 1, "kids jumpersuit", "jumpersuit1.jpg", 279.99m, (short)10, "Jumpersuit" },
+                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "HomeAddress",
+                columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
+                values: new object[] { 1, new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+
+            migrationBuilder.InsertData(
+                table: "HomeAddress",
+                columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
+                values: new object[] { 2, new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountInfo_UserId",

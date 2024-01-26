@@ -7,7 +7,7 @@ namespace H6_ChicBotique.Database.Entities
     public class Product
     {
         [Key]
-        public int Id { get; set; } // Unik identifikator for produktet
+        public int Id { get; set; }
 
         [Column(TypeName = "nvarchar(32)")]
         public string Title { get; set; }
@@ -19,17 +19,16 @@ namespace H6_ChicBotique.Database.Entities
         public string Description { get; set; }
 
         [Column(TypeName = "nvarchar(32)")]
-        public string Image { get; set; } // Stien til produktbilledet
+        public string Image { get; set; }
 
         [Column(TypeName = "smallint")]
-        public int Stock; // Lagerbeholdning af produktet
+        public int Stock { get; set; }
 
-        //public List<ProductStock> ProductQuantities { get; set; } //  ProductStock.
 
-        public int? CategoryId { get; set; } //Foreign key, der henviser til kategoriens Id
+        public int? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category Category { get; set; } // Navigationsegenskab, der forbinder til kategorien
+        public Category Category { get; set; }
     }
 
     public class ProductStock
