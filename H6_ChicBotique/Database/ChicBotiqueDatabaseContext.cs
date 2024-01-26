@@ -139,6 +139,26 @@ namespace H6_ChicBotique.Database
                     Image = "RedT-Shirt.jpg",
                     Stock = 10,
                     CategoryId = 2
+                },
+                 new Product
+                 {
+                     Id = 6,
+                     Title = "Long dress",
+                     Price = 299.99M,
+                     Description = "Summer clothing",
+                     Image = "floral-dress.jpg",
+                     Stock = 10,
+                     CategoryId = 3
+                 },
+                new Product
+                {
+                    Id = 7,
+                    Title = "Red dress",
+                    Price = 299.99M,
+                    Description = "Party dress for women",
+                    Image = "Red-dress.jpg",
+                    Stock = 10,
+                    CategoryId = 3
                 }
             );
 
