@@ -344,6 +344,24 @@ namespace H6_ChicBotique.Migrations
                             Image = "RedT-Shirt.jpg",
                             Price = 199.99m,
                             Title = "Red T-Shirt"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Description = "Summer clothing",
+                            Image = "floral-dress.jpg",
+                            Price = 299.99m,
+                            Title = "Long dress"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            Description = "Party dress for women",
+                            Image = "Red-dress.jpg",
+                            Price = 299.99m,
+                            Title = "Red dress"
                         });
                 });
 

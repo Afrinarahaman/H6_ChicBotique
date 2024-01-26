@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240126080409_test1")]
-    partial class test1
+    [Migration("20240126084304_ChicBotiqueDatabase")]
+    partial class ChicBotiqueDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -346,6 +346,24 @@ namespace H6_ChicBotique.Migrations
                             Image = "RedT-Shirt.jpg",
                             Price = 199.99m,
                             Title = "Red T-Shirt"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Description = "Summer clothing",
+                            Image = "floral-dress.jpg",
+                            Price = 299.99m,
+                            Title = "Long dress"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            Description = "Party dress for women",
+                            Image = "Red-dress.jpg",
+                            Price = 299.99m,
+                            Title = "Red dress"
                         });
                 });
 

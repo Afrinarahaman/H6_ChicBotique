@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace H6_ChicBotique.Migrations
 {
-    public partial class test1 : Migration
+    public partial class ChicBotiqueDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -247,7 +247,9 @@ namespace H6_ChicBotique.Migrations
                     { 2, 2, "T-Shirt for men", "BlueTShirt.jpg", 199.99m, "Blue T-Shirt" },
                     { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, "Skirt" },
                     { 4, 1, "Kids jumpersuit", "jumpersuit1.jpg", 279.99m, "Jumpersuit" },
-                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, "Red T-Shirt" }
+                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, "Red T-Shirt" },
+                    { 6, 3, "Summer clothing", "floral-dress.jpg", 299.99m, "Long dress" },
+                    { 7, 3, "Party dress for women", "Red-dress.jpg", 299.99m, "Red dress" }
                 });
 
             migrationBuilder.CreateIndex(
