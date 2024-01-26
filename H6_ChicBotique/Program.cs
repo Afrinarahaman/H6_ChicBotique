@@ -1,10 +1,14 @@
+using H6_ChicBotique.Database;
 using H6_ChicBotique.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
+// Add services to the container.
+builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
+                o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
 builder.Services.AddControllers();
