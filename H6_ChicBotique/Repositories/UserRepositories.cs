@@ -1,6 +1,48 @@
-﻿namespace H6_ChicBotique.Repositories
+﻿using H5_Webshop.Database.Entities;
+using H6_ChicBotique.Database;
+using Microsoft.EntityFrameworkCore;
+
+namespace H6_ChicBotique.Repositories
 {
-    public class UserRepositories
+    //Creating Interface of IUserRepository
+    public interface IUserRepository
     {
+        Task<List<User>> GetAll();      
+        Task<User> GetByEmail(string email);
+        Task<User> GetById(int userId);
+      
+
+    }
+    // Implementation of IUserRepository interface in UserRepository class
+    public class UserRepository : IUserRepository
+    {
+        private readonly ChicBotiqueDatabaseContext _context; // Instance of ChicBotiqueDatabaseContext class
+
+        // Constructor with dependency injection
+        public UserRepository(ChicBotiqueDatabaseContext context)
+        {
+            _context = context;
+        }
+
+        // Implementation of GetAll method
+        public async Task<List<User>> GetAll()
+        {
+            // Retrieve all users from the database
+            return await _context.User.ToListAsync();
+        }
+
+        // Implementation of GetById method
+        public async Task<User> GetById(int userId)
+        {
+            // Retrieve a specific user based on user ID
+            return await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
+        // Implementation of GetByEmail method
+        public async Task<User> GetByEmail(string email)
+        {
+            // Retrieve a specific user based on email address and also include user account information
+            return await _context.User.Include(a => a.Account).FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }
