@@ -1,4 +1,5 @@
 ﻿using H5_Webshop.Database.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace H6_ChicBotique.Database.Entities
@@ -22,5 +23,5 @@ namespace H6_ChicBotique.Database.Entities
         public int PaymentId { get; set; }
         public Payment Payment { get; set; }
     }
-}
+
 }

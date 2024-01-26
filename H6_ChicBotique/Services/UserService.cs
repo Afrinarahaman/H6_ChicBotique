@@ -94,15 +94,7 @@ namespace H6_ChicBotique.Services
             return response; // Return the mapped UserResponse object
         }
 
-        public Task<UserResponse> GetById(int UserId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UserResponse> GetIdByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
 
