@@ -16,5 +16,15 @@ namespace H6_ChicBotique.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<UserResponse> GetById(int UserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserResponse> GetIdByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
