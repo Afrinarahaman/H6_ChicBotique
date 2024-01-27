@@ -108,7 +108,7 @@ namespace H6_ChicBotique.Controllers
             }
 
             // Update User Information
-            [Authorize(Role.Member, Role.Administrator)]
+         //  [Authorize(Role.Member, Role.Administrator)]
             [HttpPut("{userId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -167,32 +167,7 @@ namespace H6_ChicBotique.Controllers
                 }
             }
 
-            // Delete User
-            [AllowAnonymous]
-            [HttpDelete("{userId}")]
-            [ProducesResponseType(StatusCodes.Status204NoContent)]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            [ProducesResponseType(StatusCodes.Status404NotFound)]
-            [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public async Task<IActionResult> Delete([FromRoute] int userId)
-            {
-                try
-                {
-                    // Delete user
-                    User result = await _userService.Delete(userId);
-
-                    if (result == null)
-                    {
-                        return NotFound(); // Return 404 if user not found
-                    }
-
-                    return Ok(result); // Return deleted user information
-                }
-                catch (Exception ex)
-                {
-                    return Problem(ex.Message); // Return 500 if an unexpected error occurs
-                }
-            }
+           
         }
 
 

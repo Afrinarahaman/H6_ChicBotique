@@ -10,7 +10,8 @@ namespace H6_ChicBotique.Repositories
         Task<List<User>> GetAll();      
         Task<User> GetByEmail(string email);
         Task<User> GetById(int userId);
-      
+        Task<User> Update(int userId, User user);
+
 
     }
     // Implementation of IUserRepository interface in UserRepository class
@@ -43,6 +44,27 @@ namespace H6_ChicBotique.Repositories
         {
             // Retrieve a specific user based on email address and also include user account information
             return await _context.User.Include(a => a.Account).FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        //Using this method existing user info can be updated by giving specific userId
+        public async Task<User> Update(int user_Id, User user)
+        {
+            User updateUser = await _context.User
+                .FirstOrDefaultAsync(a => a.Id == user_Id);
+
+            if (updateUser != null)
+            {
+                updateUser.Email = user.Email;
+                updateUser.FirstName = user.FirstName;
+
+                updateUser.LastName = user.LastName;
+
+                updateUser.Role = user.Role;
+
+                // _context.Entry(updateUser).CurrentValues.SetValues(user);
+                await _context.SaveChangesAsync();
+            }
+            return updateUser;
         }
     }
 }
