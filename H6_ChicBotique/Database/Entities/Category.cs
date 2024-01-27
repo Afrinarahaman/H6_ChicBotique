@@ -6,15 +6,16 @@ namespace H6_ChicBotique.Database.Entities
 {
     public class Category
     {
-            // Unik identifikator(Primary key) for kategorien
-            [Key]
-            public int Id { get; set; }
 
-            // Navn på kategorien med en maksimal længde på 20 tegn
-            [Column(TypeName = "nvarchar(20)")]
-            public string? CategoryName { get; set; }
+        // Category Model Class
+        // Primary key
+        [Key]
+        public int Id { get; set; }
+        // CategoryName
+        [Column(TypeName = "nvarchar(20)")]
+        public string? CategoryName { get; set; }
+        // Products
+        public List<Product> Products { get; set; } = new();
 
-            // Liste af produkter, der hører til denne kategori. Initialiseres som en tom liste.
-            public List<Product> Products { get; set; } = new();
-        }
+       }
     }

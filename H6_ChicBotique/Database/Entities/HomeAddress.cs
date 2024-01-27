@@ -18,6 +18,6 @@ namespace H6_ChicBotique.Database.Entities
 
         [ForeignKey("AccountInfoId")]
         public Guid AccountInfoId { get; set; }
-        public AccountInfo AccountInfo { get; set; }
+        public AccountInfo Account { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace H6_ChicBotique.Database
         public DbSet<PasswordEntity> PasswordEntity { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
 
-        public DbSet<AccountInfo> AccountInfo { get; set; }
+        public DbSet<AccountInfo> Account { get; set; }
         public DbSet<Payment> Payment { get; set; }
 
 
@@ -42,21 +42,20 @@ namespace H6_ChicBotique.Database
             });
 
 
-
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
             modelBuilder.Entity<AccountInfo>(entity =>
             {
-                entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()"); //setting default value in the database table
+                entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()");
                 //entity.HasIndex(e => e.CreatedDate);
                 //entity.HasKey(e=>e.Id);
-                entity.HasOne(e => e.User).WithOne(e => e.Account).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
-
+                entity.HasOne(e => e.User).WithOne(e => e.Account).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict);
             }); // specify the configuration for the AccountInfo and rules for this entity
 
 
             modelBuilder.Entity<HomeAddress>(entity =>
             {
-                entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.Account).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -68,19 +67,25 @@ namespace H6_ChicBotique.Database
             */
             // Seeding data for the Category entity
             modelBuilder.Entity<Category>().HasData(
-               new()
-               {
-                   Id = 1,
-                   CategoryName = "Kids"
+                new()
+                {
+                    Id = 1,
+                    CategoryName = "Kids"
 
 
-               },
-               new()
-               {
-                   Id = 2,
-                   CategoryName = "Men"
-               }
-               );
+                },
+                new()
+                {
+                    Id = 2,
+                    CategoryName = "Men"
+                },
+                new()
+                {
+                    Id = 3,
+                    CategoryName = "Women"
+                }
+                );
+            // Seeding data for the Product entity
             modelBuilder.Entity<Product>().HasData(
                 new()
                 {
@@ -159,17 +164,47 @@ namespace H6_ChicBotique.Database
                     CategoryId = 3
                 }
             );
+            // Seed Data for User Entity
+            modelBuilder.Entity<User>().HasData(
+                // User 1: Administrator
+                new User
+                {
+                    Id = 1,
+                    FirstName = "Peter",
+                    LastName = "Aksten",
+                    Email = "peter@abc.com",
+                    Role = Role.Administrator
+                },
+                // User 2: Member
+                new User
+                {
+                    Id = 2,
+                    FirstName = "Rizwanah",
+                    LastName = "Mustafa",
+                    Email = "riz@abc.com",
+                    Role = Role.Member
+                },
+                // User 3: Guest
+                new User
+                {
+                    Id = 3,
+                    FirstName = "Afrina",
+                    LastName = "Rahaman",
+                    Email = "afr@abc.com",
+                    Role = Role.Guest
+                }
+            );
+
             Guid acc1id = Guid.NewGuid();
             Guid acc2id = Guid.NewGuid();
 
-            modelBuilder.Entity<AccountInfo>().HasData(
+            // Seed Data for AccountInfo Entity
+          modelBuilder.Entity<AccountInfo>().HasData(
                new()
                {
                    // Id = Guid.Parse("3e79cea4 - d1a1 - 4954 - bad2 - d2ca09aff5d3"),
                    Id = acc1id,
                    UserId = 1
-
-
                },
 
                new()
@@ -205,34 +240,37 @@ namespace H6_ChicBotique.Database
                     TelePhone = "+228415799"
                 }
                 );
+            // Seed Data for PasswordEntity
+            // Generate a unique salt using the current date and time
             var salt = DateTime.Now.ToString();
+
             modelBuilder.Entity<PasswordEntity>().HasData(
-              new()
-              {
-                  PasswordId = 1,
-                  UserId = 1,
-                  Password = PasswordHelpers.HashPassword("password" + salt),
-                  Salt = salt,
-              },
-               new()
-               {
-                   PasswordId = 2,
-                   UserId = 2,
-                   Password = PasswordHelpers.HashPassword("password1" + salt),
-                   Salt = salt,
-               }
+                // PasswordEntity 1 for User 1
+                new PasswordEntity
+                {
+                    PasswordId = 1,
+                    UserId = 1,
+                    Password = PasswordHelpers.HashPassword("password" + salt),
+                    Salt = salt,
+                },
+                // PasswordEntity 2 for User 2
+                new PasswordEntity
+                {
+                    PasswordId = 2,
+                    UserId = 2,
+                    Password = PasswordHelpers.HashPassword("password1" + salt),
+                    Salt = salt,
+                }
+            );
 
-
-              );
-
-
-
-
-             }
 
 
 
         }
+
+
+
+    }
     }
 
 
