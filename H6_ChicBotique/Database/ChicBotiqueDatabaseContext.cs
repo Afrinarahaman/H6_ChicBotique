@@ -1,6 +1,5 @@
 ﻿using H5_Webshop.Database.Entities;
 using H6_ChicBotique.Database.Entities;
-using H6_ChicBotique.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Database
@@ -10,7 +9,7 @@ namespace H6_ChicBotique.Database
         public ChicBotiqueDatabaseContext() { }
         public ChicBotiqueDatabaseContext(DbContextOptions<ChicBotiqueDatabaseContext> options) : base(options) { }
 
-        public DbSet<Product> Product { get; set; }      
+        public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
 
         public DbSet<User> User { get; set; }
@@ -52,8 +51,8 @@ namespace H6_ChicBotique.Database
                 entity.HasOne(e => e.User).WithOne(e => e.Account).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
 
             }); // specify the configuration for the AccountInfo and rules for this entity
-           
-         
+
+
             modelBuilder.Entity<HomeAddress>(entity =>
             {
                 entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
@@ -166,7 +165,7 @@ namespace H6_ChicBotique.Database
                new()
                {
                    // Id = Guid.Parse("3e79cea4 - d1a1 - 4954 - bad2 - d2ca09aff5d3"),
-                   Id= acc1id,
+                   Id = acc1id,
                    UserId = 1
 
 
@@ -175,7 +174,7 @@ namespace H6_ChicBotique.Database
                new()
                {
                    //Id =Guid.Parse("c8c1fe00-599d-480f-9fe5-cc0a5a6d9f45"),
-                   Id= acc2id,
+                   Id = acc2id,
                    UserId = 2
 
                }
@@ -183,14 +182,14 @@ namespace H6_ChicBotique.Database
             modelBuilder.Entity<HomeAddress>().HasData(
                 new()
                 {
-                    AccountInfoId= acc1id,
-                    Id=1,
+                    AccountInfoId = acc1id,
+                    Id = 1,
 
-                    Address ="Husum",
-                    City    = "Copenhagen",
+                    Address = "Husum",
+                    City = "Copenhagen",
                     PostalCode = "2200",
-                    Country ="Danmark",
-                    TelePhone="+228415799"
+                    Country = "Danmark",
+                    TelePhone = "+228415799"
 
                 },
                 new()
@@ -205,32 +204,37 @@ namespace H6_ChicBotique.Database
                     TelePhone = "+228415799"
                 }
                 );
-            modelBuilder.Entity<PasswordEntity>().HasData(
-                 new()
-                 {
-                     PasswordId = 1,
-                     UserId = 1,
-                     Password = PasswordHelpers.HashPassword("password" + salt),
-                     Salt = salt,
-                 },
-                  new()
-                  {
-                      PasswordId = 2,
-                      UserId = 2,
-                      Password = PasswordHelpers.HashPassword("password1" + salt),
-                      Salt = salt,
-                  }
+            /*     modelBuilder.Entity<PasswordEntity>().HasData(
+              new()
+              {
+                  PasswordId = 1,
+                  UserId = 1,
+                  Password = PasswordHelpers.HashPassword("password" + salt),
+                  Salt = salt,
+              },
+               new()
+               {
+                   PasswordId = 2,
+                   UserId = 2,
+                   Password = PasswordHelpers.HashPassword("password1" + salt),
+                   Salt = salt,
+               }
 
 
-                 );
+              );
 
+
+
+
+             }*/
 
 
 
         }
-
     }
-    
+}
+
+        
  
 
-}
+
