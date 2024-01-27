@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace H5_Webshop.Database.Entities
 {
+    //This class is for holding the orders and Homeaddress of the client if they delete their profile from the website. 
     public class AccountInfo
     {
         [Key]

@@ -192,7 +192,7 @@ namespace H6_ChicBotique.Database
 
                new()
                {
-                   //Id =Guid.Parse("c8c1fe00-599d-480f-9fe5-cc0a5a6d9f45"),
+                   
                    Id= acc2id,
                    UserId = 2
 

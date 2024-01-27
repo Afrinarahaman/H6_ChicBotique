@@ -11,10 +11,10 @@ namespace H5_Webshop.Database.Entities
     {
 
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; }  //Unique Key for identifying each entity.
 
         [Column(TypeName = "nvarchar(32)")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } 
 
         [Column(TypeName = "nvarchar(32)")]
         public string LastName { get; set; }
@@ -26,10 +26,10 @@ namespace H5_Webshop.Database.Entities
 
       
 
-        // Role er en enum datatype, der består af integrerede konstanter. Her bruges vi enum for at sætte role(Admin eller Kunder)
+        // Role is an Enum datatype which consists set of constant values(Admin, Member, Guest )
         public Role Role { get; set; }
-        public AccountInfo Account { get; set; }
-      
+        public AccountInfo Account { get; set; } /////Navigational object for getting Account table's data from this class
+
     }
 
    

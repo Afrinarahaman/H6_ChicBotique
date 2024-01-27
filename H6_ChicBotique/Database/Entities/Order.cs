@@ -7,9 +7,9 @@ namespace H6_ChicBotique.Database.Entities
     public class Order
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } //Unique Key for identifying each entity.
 
-        [Column(TypeName = "Date")]  //this is a columnAttribute from System.CoponentModel.DataAnnotations (defined in enityframework.dll)
+        [Column(TypeName = "Date")]  //this is a columnAttribute from System.ComponentModel.DataAnnotations (defined in enityframework.dll)
         public DateTime OrderDate { get; set; }
 
         [ForeignKey("AccountId")]
@@ -19,9 +19,10 @@ namespace H6_ChicBotique.Database.Entities
 
         public List<OrderDetails> OrderDetails { get; set; } = new();
 
-        [ForeignKey("PaymentId")]
+        [ForeignKey("PaymentId")]  //ForeignKey for establishing the relationship between Order and Payment tables.
+        
         public int PaymentId { get; set; }
-        public Payment Payment { get; set; }
+        public Payment Payment { get; set; }  ////Navigation property for getting Payment  tables data from this class
     }
 
 }
