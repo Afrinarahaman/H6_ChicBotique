@@ -10,11 +10,10 @@ namespace H5_Webshop.Database.Entities
         public Guid Id { get; set; }
 
         public DateTime CreatedDate { get; set; }
-
         public int? UserId { get; set; }
+
         public IEnumerable<Order> Orders { get; set; }
-        public HomeAddress? HomeAddress { get; set; }
-        [ForeignKey("UserId")]
+        public HomeAddress HomeAddress { get; set; }
         public User User { get; set; }
     }
 }

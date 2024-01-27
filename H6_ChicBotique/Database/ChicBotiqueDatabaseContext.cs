@@ -1,5 +1,6 @@
 ﻿using H5_Webshop.Database.Entities;
 using H6_ChicBotique.Database.Entities;
+using H6_ChicBotique.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Database
@@ -204,7 +205,8 @@ namespace H6_ChicBotique.Database
                     TelePhone = "+228415799"
                 }
                 );
-            /*     modelBuilder.Entity<PasswordEntity>().HasData(
+            var salt = DateTime.Now.ToString();
+            modelBuilder.Entity<PasswordEntity>().HasData(
               new()
               {
                   PasswordId = 1,
@@ -226,13 +228,13 @@ namespace H6_ChicBotique.Database
 
 
 
-             }*/
+             }
 
 
 
         }
     }
-}
+
 
         
  
