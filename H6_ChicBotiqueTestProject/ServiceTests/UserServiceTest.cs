@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace H6_ChicBotiqueTest.Services
+namespace H6_ChicBotiqueTestProject.ServiceTests
 {
     internal class UserServiceTest
     {
