@@ -17,7 +17,7 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll() //For getting all the entities of AccountInfo
         {
             try
             {
@@ -40,40 +40,14 @@ namespace H6_ChicBotique.Controllers
 
 
         }
-        /*
-          // https://localhost:5001/api/AccountInfo/derp
-          [HttpGet("{AccountId}")]
-          [ProducesResponseType(StatusCodes.Status200OK)]
-          [ProducesResponseType(StatusCodes.Status400BadRequest)]
-          [ProducesResponseType(StatusCodes.Status404NotFound)]
-          [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-          public async Task<IActionResult> GetById([FromRoute] Guid AccountId)
-          {
-              try
-              {
-                  AccountInfoResponse AccountInfoResponse = await _AccountService.GetById(AccountId);
-
-                  if (AccountInfoResponse == null)
-                  {
-                      return NotFound();
-                  }
-
-                  return Ok(AccountInfoResponse);
-              }
-              catch (Exception ex)
-              {
-                  return Problem(ex.Message);
-              }
-
-          }*/
-
+      
         // https://localhost:5001/api/AccountInfo/derp
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetUserGuid([FromRoute] int userId)
+        public async Task<IActionResult> GetUserGuid([FromRoute] int userId) //Getting UserGuidId by the userId
         {
             try
             {

@@ -10,7 +10,8 @@ namespace H6_ChicBotique.Database
         public ChicBotiqueDatabaseContext() { }
         public ChicBotiqueDatabaseContext(DbContextOptions<ChicBotiqueDatabaseContext> options) : base(options) { }
 
-        public DbSet<Product> Product { get; set; }      
+        //Defining DbSet properties according to our project model 
+        public DbSet<Product> Product { get; set; }      //Defining a DbSet property 
         public DbSet<Category> Category { get; set; }
 
         public DbSet<User> User { get; set; }
@@ -29,7 +30,7 @@ namespace H6_ChicBotique.Database
             modelBuilder.Entity<PasswordEntity>(entity =>
             {
                 entity.HasOne(e => e.User).WithOne().HasForeignKey<PasswordEntity>(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
-            });  // specify the configuration for the PasswordEntity and relationship with the User entity
+            });  // specify the configuration for the PasswordEntity table and relationship with the User table
 
             modelBuilder.Entity<Category>(entity =>
             {
