@@ -15,6 +15,17 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+
+builder.Services.AddTransient<IAccountInfoService, AccountInfoService>();
+builder.Services.AddTransient<IAccountInfoRepository, AccountInfoRepository>();
+
+builder.Services.AddTransient<IHomeAddressRepository, HomeAddressRepository>();
+builder.Services.AddTransient<IHomeAddressService, HomeAddressService>();
+
+
+
+builder.Services.AddTransient<IPasswordEntityRepository, PasswordEntityRepository>();
+
 builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
                         o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
