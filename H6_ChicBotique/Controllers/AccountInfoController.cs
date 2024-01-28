@@ -8,8 +8,8 @@ namespace H6_ChicBotique.Controllers
     [ApiController]
     public class AccountInfoController : ControllerBase
     {
-        private readonly IAccountInfoService _AccountInfoService;
-        public AccountInfoController(IAccountInfoService AccountInfoService)
+        private readonly IAccountInfoService _AccountInfoService; //Creating an instance of IAccountInfoService
+        public AccountInfoController(IAccountInfoService AccountInfoService) //Dependency injection of AccountInforService
         {
             _AccountInfoService = AccountInfoService;
         }

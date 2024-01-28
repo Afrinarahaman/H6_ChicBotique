@@ -2,6 +2,7 @@
 
 namespace H6_ChicBotique.DTOs
 {
+    //Input from the Customer 
     public class GuestRequest
     {
 

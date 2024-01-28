@@ -2,6 +2,7 @@
 
 namespace H6_ChicBotique.DTOs
 {
+    //Input from the clientside for making account, changing profile
     public class UserRequest
     {
         [Required]

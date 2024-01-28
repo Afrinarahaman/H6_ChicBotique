@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace H6_ChicBotique.DTOs
-{
+{ 
+    //Input from the clientside or admin page
     public class CategoryRequest
     {
         [Required] // Specifies that the property is required
