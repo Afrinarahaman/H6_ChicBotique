@@ -4,6 +4,7 @@ namespace H6_ChicBotique.DTOs
 {
     public class GuestResponse
     {
+        //It is a output for the corresponding request
         public int Id { get; set; }
 
 

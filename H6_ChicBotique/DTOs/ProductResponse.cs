@@ -1,7 +1,7 @@
 ﻿namespace H6_ChicBotique.DTOs
 {
     public class ProductResponse
-    {
+    { //It is a output for the corresponding request
         public int Id { get; set; } // Unique identifier for the product
         public string Title { get; set; }
         public decimal Price { get; set; } 

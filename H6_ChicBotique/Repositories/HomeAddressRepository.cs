@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Repositories
 {
-    public interface IHomeAddressRepository
+    public interface IHomeAddressRepository //Interface which declares the methods
     {
         Task<List<HomeAddress>> SelectAll(); //For getting all HomeAddresses Details
         Task<HomeAddress> Create(HomeAddress HomeAddress); //For creating a HomeAddress

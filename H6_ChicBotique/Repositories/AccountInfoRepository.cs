@@ -9,7 +9,7 @@ namespace H6_ChicBotique.Repositories
         Task<List<AccountInfo>> SelectAll(); //For getting all AccountInfo Details
         Task<AccountInfo> Create(AccountInfo AccountInfo); //For creating an AccountInfo
         
-        Task<AccountInfo> SeletById(Guid Id); //For getting AccountInfo by specific Id
+        Task<AccountInfo> SelectById(Guid Id); //For getting AccountInfo by specific Id
         
         Task<AccountInfo> Update(AccountInfo Account); // For updating the AccountInfo entity
         Task<AccountInfo> Delete(Guid Account_Id); //Deleting the AccountInfo entity from the database
@@ -25,11 +25,12 @@ namespace H6_ChicBotique.Repositories
             _context = context;
         }
 
-     
+     //Getting All AccountInfo details including HomeAddress
         public async Task<List<AccountInfo>> SelectAll()
         {
 
-            return await _context.AccountInfo.Include(u => u.User).Include(h => h.HomeAddress).ToListAsync();
+            return await _context.AccountInfo.Include(u => u.User)
+                .Include(h => h.HomeAddress).ToListAsync();
 
         }
 
@@ -42,7 +43,7 @@ namespace H6_ChicBotique.Repositories
         }
 
         //This method will get one specific AccountInfo info whoose AccountId has been given 
-        public async Task<AccountInfo> SeletById(Guid accId)
+        public async Task<AccountInfo> SelectById(Guid accId)
         {
             return await _context.AccountInfo.Include(s => s.HomeAddress).Include(u => u.User).FirstOrDefaultAsync(u => u.Id == accId);
         }

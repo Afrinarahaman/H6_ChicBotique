@@ -4,10 +4,10 @@ using H6_ChicBotique.Repositories;
 
 namespace H6_ChicBotique.Services
 {
-    public interface ICategoryService
+    public interface ICategoryService // Interface definition for Category service
     {
-        Task<List<CategoryResponse>> GetAllCategories();
-        Task<CategoryResponse> GetCategoryById(int categoryId);
+        Task<List<CategoryResponse>> GetAllCategories(); // Method to retrieve all Categories as CategoryResponse objects
+        Task<CategoryResponse> GetCategoryById(int categoryId); // Method to retrieve a Category by ID as a CategoryResponse object
         Task<List<CategoryResponse>> GetAllCategoriesWithoutProducts();
         Task<CategoryResponse> CreateCategory(CategoryRequest newCategory);
         Task<CategoryResponse> UpdateCategory(int category_Id, CategoryRequest updateCategory);

@@ -4,6 +4,7 @@ namespace H6_ChicBotique.DTOs
 {
     public class PasswordEnttiyResponse
     {
+        //It is a output for the corresponding request
         public string Password { get; set; }
 
         [Required]

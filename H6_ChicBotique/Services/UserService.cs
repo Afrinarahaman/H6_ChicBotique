@@ -27,7 +27,7 @@ namespace H6_ChicBotique.Services
         public async Task<List<UserResponse>> GetAll()
         {
             // Retrieve all users from the repository
-            List<User> users = await _userRepository.GetAll();
+            List<User> users = await _userRepository.SelectAll();
 
             // If users are not null, map each user to a UserResponse object
             return users == null ? null : users.Select(u => new UserResponse
@@ -44,7 +44,7 @@ namespace H6_ChicBotique.Services
         public async Task<UserResponse> GetById(int UserId)
         {
             // Retrieve a specific user by ID from the repository
-            User User = await _userRepository.GetById(UserId);
+            User User = await _userRepository.SelectById(UserId);
 
             // If the user is not null, map the user to a UserResponse object
             if (User != null)
@@ -59,7 +59,7 @@ namespace H6_ChicBotique.Services
         public async Task<UserResponse> GetIdByEmail(string email)
         {
             // Retrieve a specific user by email from the repository
-            User User = await _userRepository.GetByEmail(email);
+            User User = await _userRepository.SelectByEmail(email);
 
             // If the user is not null, map the user to a UserResponse object
             if (User != null)

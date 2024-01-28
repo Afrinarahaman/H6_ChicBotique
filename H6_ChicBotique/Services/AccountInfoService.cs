@@ -4,80 +4,70 @@ using H6_ChicBotique.Repositories;
 
 namespace H6_ChicBotique.Services
 {
-    public interface IAccountInfoService
+    public interface IAccountInfoService  ////Interface which declares only the methods
     {
-        Task<List<AccountInfoResponse>> GetAll();
-        
-        Task<AccountInfoResponse> GetById(Guid AccountId);
-        Task<Guid> GetGuidIdByUserId(int userId);
+        Task<List<AccountInfoResponse>> GetAll(); //For getting all AccountInfo Details
+
+        Task<AccountInfoResponse> GetById(Guid AccountId); ///For getting AccountInfo by specific Id
+        Task<Guid> GetGuidIdByUserId(int userId); //For getting GuidUderId by specific UserId
 
 
     }
-    public class AccountInfoService : IAccountInfoService
+    public class AccountInfoService : IAccountInfoService // This class is inheriting interfacae AccountInfoRepository and implement the interfaces
     {
-        private readonly AccountInfoRepository _AccountRepository;
-        private readonly IPasswordEntityRepository _PasswordEntityRepository;
-        private readonly IHomeAddressRepository _ShippingDetailsRepository;
-        private readonly AccountInfoRepository _accountRepository;
-        private readonly IJwtUtils _jwtUtils;
+        //making an instance of the class C
+
+       
+
+        private readonly IAccountInfoRepository _accountInfoRepository;
 
 
 
-        public AccountInfoService(AccountInfoRepository AccountRepository, IPasswordEntityRepository PasswordEntityRepository, IShippingDetailsRepository shippingDetailsRepository, AccountInfoRepository accountRepository, IJwtUtils jwtUtils)
+        // Implementation of IAccountInfoService interface in AccountService class
+
+        public AccountInfoService(IAccountInfoRepository AccountInfoRepository)
         {
-            _PasswordEntityRepository = PasswordEntityRepository;
-            // _ShippingDetailsRepository = shippingDetailsRepository;
-            _AccountRepository = AccountRepository;
-            _accountRepository = accountRepository;
-            _jwtUtils = jwtUtils;
+            
+
+            _accountInfoRepository = AccountInfoRepository; // Constructor with dependency injection for IAccountInfoRepository
+
 
         }
 
 
 
-
+        // Implementation of GetAll method
         public async Task<List<AccountInfoResponse>> GetAll()
         {
+            // Retrieve all AccountInfo from the repository
 
-            List<AccountInfo> Accounts = await _AccountRepository.GetAll();
+            List<AccountInfo> Accounts = await _accountInfoRepository.SelectAll();
 
 
             return Accounts.Select(acc => MapAccountToAccountResponse(acc)).ToList();
 
-            //    public Guid Id { get; set; }
 
-            //public DateTime CreatedDate { get; set; }
-            //public int? AccountId { get; set; }
-            //public IEnumerable<Order> Orders { get; set; }
-            //public ShippingAddress ShippingAddress { get; set; }
-            //public AccountInfo AccountInfo { get; set; }
         }
 
 
-
-
-
-
-
-
-
-
-        public async Task<AccountInfoResponse> GetById(Guid AccountId)
+        // Implementation of GetById method
+        public async Task<AccountInfoResponse> GetById(Guid AccountInfoId)
         {
-            AccountInfo Account = await _AccountRepository.GetById(AccountId);
-
+            // Retrieve a specific AccountInfo by ID from the repository
+            AccountInfo Account = await _accountInfoRepository.SelectById(AccountInfoId);
+            // If the Account is not null, map the Account to a AccountInfoResponse object
             if (Account != null)
             {
 
                 return MapAccountToAccountResponse(Account);
             }
-            return null;
+            return null; // Return null if the Account is not found
         }
 
-
+        //Getting GuidId by a specific userId
         public async Task<Guid> GetGuidIdByUserId(int userId)
         {
-            var userGuid = await _AccountRepository.GetGuidByUserId(userId);
+            var userGuid = await _accountInfoRepository.GetGuidByUserId(userId);
 
             if (userGuid != null)
             {
@@ -88,7 +78,7 @@ namespace H6_ChicBotique.Services
         }
 
 
-
+        // Private method to map a AccountInfo object to a AccountInfoResponse object
         private static AccountInfoResponse MapAccountToAccountResponse(AccountInfo Account)
         {
             if (Account == null)
@@ -108,7 +98,7 @@ namespace H6_ChicBotique.Services
                     Role=Account.User.Role
                 },
                 CreatedDate = Account.CreatedDate,
-                Orders = Account.Orders?.Select(Order => new OrderAndPaymentResponse
+                /*Orders = Account.Orders?.Select(Order => new OrderAndPaymentResponse
                 {
                     Id = Order.Id,
                     OrderDate = Order.OrderDate,
@@ -127,10 +117,11 @@ namespace H6_ChicBotique.Services
 
 
                     }).ToList()
-                }).ToList(),
+                }).ToList(),*/
 
             };
-            if (Account.HomeAddress != null)
+            if (Account.HomeAddress != null)  //If HomeAddress is there in the database for the guest Account then map it
+                                              //with the response otherwise it will give null
             {
                 acc.HomeAddress = new HomeAddressResponse
                 {
@@ -147,3 +138,4 @@ namespace H6_ChicBotique.Services
             return acc;
         }
     }
+}

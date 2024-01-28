@@ -10,7 +10,7 @@ namespace H6_ChicBotique.Controllers
     {
         private readonly ICategoryService _categoryService; //Creating an instance of ICategoryService
 
-        public CategoryController(ICategoryService categoryService) ////Dependency injection of AccountInforService
+        public CategoryController(ICategoryService categoryService) ////Dependency injection of IAccountInfoService
         {
             _categoryService = categoryService;
         }
@@ -57,7 +57,8 @@ namespace H6_ChicBotique.Controllers
         {
             try
             {
-                CategoryResponse categoryResponse = await _categoryService.GetCategoryById(categoryId);
+                CategoryResponse categoryResponse = await _categoryService.GetCategoryById(categoryId); //getting a specific category's details
+                                                                                                     //from the Categoryservice
 
                 if (categoryResponse == null)
                 {
@@ -83,7 +84,8 @@ namespace H6_ChicBotique.Controllers
         {
             try
             {
-                List<CategoryResponse> categoryResponse = await _categoryService.GetAllCategoriesWithoutProducts();
+                List<CategoryResponse> categoryResponse = await _categoryService.GetAllCategoriesWithoutProducts();//getting all categories details without products details
+                                                                                                                    //from the Categoryservice
 
                 if (categoryResponse == null)
                 {
@@ -109,13 +111,14 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //Creating Category by Admin with the CategoryRequest
+        
         public async Task<IActionResult> Create([FromBody] CategoryRequest newCategory)
         {
+            //Creating Category by Admin with the CategoryRequest
             try
             {
                 CategoryResponse categoryResponse = await _categoryService.CreateCategory(newCategory); //calling CreateCategory method
-                                                                                                        //by the instance of categoryservice
+                                                                                                        //by the instance of ICategoryservice
 
                 if (categoryResponse == null)
                 {
@@ -142,7 +145,8 @@ namespace H6_ChicBotique.Controllers
             try
             {
                 //calling updating method of categoryservice
-                CategoryResponse categoryResponse = await _categoryService.UpdateCategory(categoryId, updateCategory);
+                CategoryResponse categoryResponse = await _categoryService.UpdateCategory(categoryId, updateCategory); //calling updateCategory method
+                                                                                                        //by the instance of ICategoryservice for updating the category entity
 
                 if (categoryResponse == null)
                 {
@@ -165,9 +169,11 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete([FromRoute] int categoryId)
         {
+            //Delete the Category by categoryId
             try
             {
-                CategoryResponse categoryResponse = await _categoryService.DeleteCategory(categoryId);
+                CategoryResponse categoryResponse = await _categoryService.DeleteCategory(categoryId); //calling deleteCategory method
+                                                                                                       //by the instance of ICategoryservice for deleting the category entity
 
                 if (categoryResponse == null)
                 {

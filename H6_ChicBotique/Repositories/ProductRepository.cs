@@ -36,6 +36,7 @@ namespace H6_ChicBotique.Repositories
                 .ToListAsync();
         }
 
+        // Get a specific product info by specific product_Id
         public async Task<Product> SelectProductById(int product_Id)
         {
             return await _context.Product
@@ -45,7 +46,7 @@ namespace H6_ChicBotique.Repositories
         }
 
 
-
+        //// Get a specific product info by Category_Id including Category details
         public async Task<List<Product>> GetProductsByCategoryId(int Category_Id)
         {
 
@@ -55,12 +56,14 @@ namespace H6_ChicBotique.Repositories
                 .Where(a => a.CategoryId==Category_Id)
                 .ToListAsync();
         }
+        //With this method one Product can be added
         public async Task<Product> InsertNewProduct(Product product)
         {
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
             return product;
         }
+        // For updating the  existing Product entity
         public async Task<Product> UpdateExistingProduct(int product_Id, Product product)
         {
             Product updateProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
@@ -73,7 +76,7 @@ namespace H6_ChicBotique.Repositories
                 updateProduct.Image = product.Image;
                 updateProduct.Stock = product.Stock;
 
-                //_context.Entry(updateProduct).CurrentValues.SetValues(product);
+                
 
                 await _context.SaveChangesAsync();
 
@@ -81,7 +84,7 @@ namespace H6_ChicBotique.Repositories
 
             return updateProduct;
         }
-
+        // For deleting the  existing Product entity
         public async Task<Product> DeleteProductById(int product_Id)
         {
             Product deleteProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
