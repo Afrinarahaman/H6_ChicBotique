@@ -272,8 +272,37 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
+        // Test case: Create should return StatusCode 500 when exception is raised
+        [Fact]
+        public async void Create_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        {
+            // Arrange
+            // Creating a new product request for testing
+            ProductRequest newProduct = new()
+            {
+                Title = " Fancy dress",
+                Price = 299.99M,
+                Description = "kids dress",
+                Image = "dress1.jpg",
+                Stock = 10,
+                CategoryId = 1
+            };
 
-        // Similar test cases for Update and Delete follow the same structure...
+            // Setting up the mock product service to throw an exception when CreateProduct is called
+            _mockProductService
+                .Setup(x => x.CreateProduct(It.IsAny<ProductRequest>()))
+                .ReturnsAsync(() => throw new System.Exception("This is an exception"));
+
+            // Act
+            var result = await _productController.Create(newProduct);
+
+            // Assert
+            // Verifying that the result is of type IStatusCodeActionResult
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            // Checking that the status code is 500 (Internal Server Error)
+            Assert.Equal(500, statusCodeResult.StatusCode);
+        }
+        // Test case: Update should return StatusCode 200 when product is successfully updated
         [Fact]
         public async void Update_ShouldReturnStatusCode200_WhenProductIsSuccessfullyUpdated()
         {
