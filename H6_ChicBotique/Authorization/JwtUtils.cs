@@ -16,10 +16,10 @@ namespace H6_ChicBotique.Authorization
 
     public class JwtUtils : IJwtUtils
     {
-        private readonly Appsettings _appSettings;
+        private readonly AppSettings _appSettings;
 
         // Constructor that takes an instance of IOptions<AppSettings> to retrieve application settings.
-        public JwtUtils(IOptions<Appsettings> appSettings)
+        public JwtUtils(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }

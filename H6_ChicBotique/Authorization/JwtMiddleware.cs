@@ -7,9 +7,9 @@ namespace H6_ChicBotique.Authorization
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly Appsettings _appSettings;
+        private readonly AppSettings _appSettings;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<Appsettings> appSettings)
+        public JwtMiddleware(RequestDelegate next, IOptions<AppSettings> appSettings)
         {
             _next = next;
             _appSettings = appSettings.Value;

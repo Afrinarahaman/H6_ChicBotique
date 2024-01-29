@@ -7,7 +7,7 @@ namespace H6_ChicBotique.Database.Entities
     public class Product
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } //Unique Key for identifying each entity.
 
         [Column(TypeName = "nvarchar(32)")]
         public string Title { get; set; }
@@ -25,22 +25,11 @@ namespace H6_ChicBotique.Database.Entities
         public int Stock { get; set; }
 
 
-        public int? CategoryId { get; set; }
+        public int? CategoryId { get; set; } //ForeignKey for establishing the relationship between Category and Product tables.
 
         [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public Category Category { get; set; } ////Navigational object for getting Category table's data from this class
     }
 
-    public class ProductStock
-    {
-        [Key]
-        public int ProductStockId { get; set; } // Unik identifikator for produktstock
-
-        public int ProductId { get; set; }  //Foreign key, der henviser til produktets Id
-
-        public int Quantity { get; set; } // Antal af produktet i stock
-
-        // Navigationsegenskab til at repræsentere relationen mellem ProductStock og Product
-        public Product Product { get; set; }
-    }
+    
 }

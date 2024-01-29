@@ -25,18 +25,19 @@ namespace H6_ChicBotique.Repositories
             _context = context;
         }
 
-     
+     //Getting All AccountInfo details including HomeAddress
         public async Task<List<AccountInfo>> SelectAll()
         {
 
-            return await _context.Account.Include(u => u.User).Include(h => h.HomeAddress).ToListAsync();
+            return await _context.AccountInfo.Include(u => u.User)
+                .Include(h => h.HomeAddress).ToListAsync();
 
         }
 
         //With this method one AccountInfo's info can be added
         public async Task<AccountInfo> Create(AccountInfo Account)
         {
-            _context.Account.Add(Account);
+            _context.AccountInfo.Add(Account);
             await _context.SaveChangesAsync();
             return Account;
         }
@@ -44,13 +45,13 @@ namespace H6_ChicBotique.Repositories
         //This method will get one specific AccountInfo info whoose AccountId has been given 
         public async Task<AccountInfo> SelectById(Guid accId)
         {
-            return await _context.Account.Include(s => s.HomeAddress).Include(u => u.User).FirstOrDefaultAsync(u => u.Id == accId);
+            return await _context.AccountInfo.Include(s => s.HomeAddress).Include(u => u.User).FirstOrDefaultAsync(u => u.Id == accId);
         }
 
         // For updating the  AccountInfo entity
         public async Task<AccountInfo> Update(AccountInfo Account)
         {
-            AccountInfo updateAccount = await _context.Account
+            AccountInfo updateAccount = await _context.AccountInfo
                 .FirstOrDefaultAsync(a => a.Id == Account.Id);
 
             if (Account != null)
@@ -69,12 +70,12 @@ namespace H6_ChicBotique.Repositories
         //This method will remove all the details of one AccountInfo Entity by AccountID
         public async Task<AccountInfo> Delete(Guid Account_Id)
         {
-            AccountInfo deleteAccount = await _context.Account
+            AccountInfo deleteAccount = await _context.AccountInfo
                 .FirstOrDefaultAsync(u => u.Id == Account_Id);
 
             if (deleteAccount != null)
             {
-                _context.Account.Remove(deleteAccount);
+                _context.AccountInfo.Remove(deleteAccount);
                 await _context.SaveChangesAsync();
             }
             return deleteAccount;
@@ -83,7 +84,7 @@ namespace H6_ChicBotique.Repositories
         //This method is developed for getting the GuidId by the UserId
         public async Task<Guid> SelectGuidByUserId(int userId)
         {
-            var acc = await _context.Account.SingleOrDefaultAsync(a => a.UserId == userId);
+            var acc = await _context.AccountInfo.SingleOrDefaultAsync(a => a.UserId == userId);
 
             if (acc == null)
             {

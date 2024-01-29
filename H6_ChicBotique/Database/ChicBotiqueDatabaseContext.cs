@@ -10,7 +10,7 @@ namespace H6_ChicBotique.Database
         public ChicBotiqueDatabaseContext() { }
         public ChicBotiqueDatabaseContext(DbContextOptions<ChicBotiqueDatabaseContext> options) : base(options) { }
 
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Product> Product { get; set; }      
         public DbSet<Category> Category { get; set; }
 
         public DbSet<User> User { get; set; }
@@ -19,7 +19,7 @@ namespace H6_ChicBotique.Database
         public DbSet<PasswordEntity> PasswordEntity { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
 
-        public DbSet<AccountInfo> Account { get; set; }
+        public DbSet<AccountInfo> AccountInfo { get; set; }
         public DbSet<Payment> Payment { get; set; }
 
 
@@ -29,7 +29,7 @@ namespace H6_ChicBotique.Database
             modelBuilder.Entity<PasswordEntity>(entity =>
             {
                 entity.HasOne(e => e.User).WithOne().HasForeignKey<PasswordEntity>(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
-            });  // specify the configuration for the PasswordEntity and relationship with the User entity
+            });  // specify the configuration for the PasswordEntity table and relationship with the User table
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -55,7 +55,7 @@ namespace H6_ChicBotique.Database
 
             modelBuilder.Entity<HomeAddress>(entity =>
             {
-                entity.HasOne(e => e.Account).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -210,7 +210,7 @@ namespace H6_ChicBotique.Database
                new()
                {
                    //Id =Guid.Parse("c8c1fe00-599d-480f-9fe5-cc0a5a6d9f45"),
-                   Id = acc2id,
+                   Id= acc2id,
                    UserId = 2
 
                }

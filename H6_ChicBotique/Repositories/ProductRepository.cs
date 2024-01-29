@@ -77,7 +77,7 @@ namespace H6_ChicBotique.Repositories
                 updateProduct.Image = product.Image;
                 updateProduct.Stock = product.Stock;
 
-                //_context.Entry(updateProduct).CurrentValues.SetValues(product);
+                
 
                 await _context.SaveChangesAsync();
 

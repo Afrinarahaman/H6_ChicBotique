@@ -12,7 +12,7 @@ namespace H6_ChicBotique.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _userService;  ////Creating an instance of IUserService
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -28,10 +28,11 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
+            //Getting all users
             try
             {
 
-                List<UserResponse> users = await _userService.GetAll();
+                List<UserResponse> users = await _userService.GetAll();  //Getting all users info from the UserService by using IUserService instance
 
                 if (users == null)
                 {

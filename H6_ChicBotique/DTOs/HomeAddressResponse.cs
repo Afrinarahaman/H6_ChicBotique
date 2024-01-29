@@ -2,6 +2,7 @@
 {
     public class HomeAddressResponse
     {
+        //It is a output for the corresponding request
         public Guid AccountId { get; set; }
         public int Id { get; set; }
 

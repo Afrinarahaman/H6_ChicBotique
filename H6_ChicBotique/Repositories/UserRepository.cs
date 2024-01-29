@@ -6,7 +6,7 @@ namespace H6_ChicBotique.Repositories
 {
     //Functioname in respository should be Select,Create and update , delete
     //Creating Interface of IUserRepository
-    public interface IUserRepository
+    public interface IUserRepository //Interface which declares only the methods
     {
         Task<List<User>> SelectAll();      
         Task<User> SelectByEmail(string email);

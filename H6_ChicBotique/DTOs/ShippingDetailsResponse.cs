@@ -3,7 +3,7 @@
 namespace H6_ChicBotique.DTOs
 {
     public class ShippingDetailsResponse
-    {
+    { //It is a output for the corresponding request
         public int OrderId { get; set; }
         public int Id { get; set; }
 

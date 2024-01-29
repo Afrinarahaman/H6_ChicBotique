@@ -6,7 +6,7 @@ namespace H6_ChicBotique.Database.Entities
     public class Payment
     {
         [Key]
-        public int Id { get; set; }
+        public int Id { get; set; } //Unique Key for identifying each entity.
 
         [Column(TypeName = "nvarchar(50)")]
         public string? Status { get; set; }
@@ -19,6 +19,6 @@ namespace H6_ChicBotique.Database.Entities
         public string? PaymentMethod { get; set; }
         [Column(TypeName = "DateTime")]
         public DateTime? TimePaid { get; set; }
-        public Order Order { get; set; }
+        public Order Order { get; set; } //Navigational object for getting Order table's data from this class
     }
 }

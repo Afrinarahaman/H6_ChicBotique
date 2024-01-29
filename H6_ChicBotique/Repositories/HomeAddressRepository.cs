@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Repositories
 {
-    public interface IHomeAddressRepository
+    public interface IHomeAddressRepository //Interface which declares the methods
     {
         Task<List<HomeAddress>> SelectAll(); //For getting all HomeAddresses Details
         Task<HomeAddress> Create(HomeAddress HomeAddress); //For creating a HomeAddress
@@ -25,7 +25,7 @@ namespace H6_ChicBotique.Repositories
         public async Task<List<HomeAddress>> SelectAll()
         {
 
-            return await _context.HomeAddress.Include(e => e.Account)
+            return await _context.HomeAddress.Include(e => e.AccountInfo)
                 .ToListAsync();
 
         }
@@ -41,13 +41,13 @@ namespace H6_ChicBotique.Repositories
         //This method will get one specific HomeAddress info whoose HomeAddressId has been given 
         public async Task<HomeAddress> SelectById(int Id)
         {
-            return await _context.HomeAddress.Include(a => a.Account).FirstOrDefaultAsync(u => u.Id == Id);
+            return await _context.HomeAddress.Include(a => a.AccountInfo).FirstOrDefaultAsync(u => u.Id == Id);
         }
 
         // For updating the HomeAddressEnitity entity
         public async Task<HomeAddress> Update(HomeAddress HomeAddress)
         {
-            HomeAddress updateHomeAddress = await _context.HomeAddress.Include(a => a.Account)
+            HomeAddress updateHomeAddress = await _context.HomeAddress.Include(a => a.AccountInfo)
                 .FirstOrDefaultAsync(a => a.Id == HomeAddress.Id);
 
             if (HomeAddress != null)

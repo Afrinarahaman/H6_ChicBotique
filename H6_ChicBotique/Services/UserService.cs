@@ -23,6 +23,7 @@ namespace H6_ChicBotique.Services
     // Implementation of IUserService interface in UserService class
     public class UserService : IUserService
     {
+        // creating instances of Interfaces
         private readonly IUserRepository _userRepository;
         private readonly IPasswordEntityRepository _PasswordEntityRepository;
         private readonly IHomeAddressRepository _HomeAddressRepository;

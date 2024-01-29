@@ -1,5 +1,6 @@
 ﻿namespace H6_ChicBotique.DTOs
 {
+    //Input from the clientside 
     public class HomeAddressRequest
     {
         public string Address { get; set; }

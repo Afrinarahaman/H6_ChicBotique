@@ -2,6 +2,7 @@
 
 namespace H6_ChicBotique.DTOs
 {
+    //Input from the clientside or admin page 
     public class ProductRequest
     {
         //The [Required] attribute indicates that property is mandatory, and a value must be provided.

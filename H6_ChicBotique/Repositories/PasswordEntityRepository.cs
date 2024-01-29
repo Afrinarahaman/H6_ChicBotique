@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Repositories
 {
-    public interface IPasswordEntityRepository
+    public interface IPasswordEntityRepository  //Interface which declares the methods
     {
-        Task<List<PasswordEntity>> SelectAll();
-        Task<PasswordEntity> CreatePassword(PasswordEntity PasswordEntity);
-       
-        Task<PasswordEntity> SelectByUserId(int PasswordEntityId);
-      
-        Task<PasswordEntity> UpdatePassword(PasswordEntity PasswordEntity);
-        
+        Task<List<PasswordEntity>> SelectAll(); //For getting all PasswordEntity Details
+        Task<PasswordEntity> CreatePassword(PasswordEntity PasswordEntity); //For creating an PasswordEntity
+
+        Task<PasswordEntity> SelectByUserId(int PasswordEntityId); //For getting PasswordEntity by specific Id
+
+        Task<PasswordEntity> UpdatePassword(PasswordEntity PasswordEntity); // For updating the PasswordEntity entity
+
     }
-    public class PasswordEntityRepository:IPasswordEntityRepository
+    public class PasswordEntityRepository: IPasswordEntityRepository // This class is inheriting interfacae AccountInfoRepository and implement the interfaces
     {
         private readonly ChicBotiqueDatabaseContext _context;  //making an instance of the class ChicBotiqueDatabaseContext
 

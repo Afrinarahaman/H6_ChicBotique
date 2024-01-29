@@ -8,26 +8,25 @@ namespace H6_ChicBotique.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductService _productService; //Creating an instance of IProductService
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService) ///Dependency injection of IProductService
         {
             _productService = productService;
         }
 
+        
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //For getting all Product details
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                List<ProductResponse> productResponses = await _productService.GetAllProducts();
+                List<ProductResponse> productResponses = await _productService.GetAllProducts(); ///calling GetAllProducts method
+                                                                                                  //by the instance of IProductService
                 if (productResponses == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");
@@ -52,12 +51,14 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //Get one specific entity's details by productId
         public async Task<IActionResult> GetById([FromRoute] int productId)
         {
             // Get a product by ID
             try
             {
-                ProductResponse productResponse = await _productService.GetProductById(productId);
+                ProductResponse productResponse = await _productService.GetProductById(productId); //calling GetProductById method
+                                                                                                   //by the instance of IProductService
 
                 if (productResponse == null)
                 {
@@ -77,12 +78,14 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
         public async Task<IActionResult> GetProductsByCategoryId([FromRoute] int categoryId)
         {
             // Get products by category ID
             try
             {
-                List<ProductResponse> productResponse = await _productService.GetProductsByCategoryId(categoryId);
+                List<ProductResponse> productResponse = await _productService.GetProductsByCategoryId(categoryId); //calling GetProductsByCategoryId method
+                                                                                                                   //by the instance of IProductService
 
                 if (productResponse == null)
                 {
@@ -109,10 +112,11 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] ProductRequest newProduct)
         {
-            // Create a new product
+            //Creating Product by Admin with the ProductRequest
             try
             {
-                ProductResponse productResponse = await _productService.CreateProduct(newProduct);
+                ProductResponse productResponse = await _productService.CreateProduct(newProduct); //calling ProductCategory method
+                                                                                                   //by the instance of IProductService
 
                 if (productResponse == null)
                 {
@@ -134,10 +138,11 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Update([FromRoute] int productId, [FromBody] ProductRequest updateProduct)
         {
-            // Update an existing product
+            // Update an existing product by categoryrequest and categoryId
             try
             {
-                ProductResponse productResponse = await _productService.UpdateProduct(productId, updateProduct);
+                ProductResponse productResponse = await _productService.UpdateProduct(productId, updateProduct); //calling updateProduct method
+                                                                                                                 //by the instance of IProductService for updating the Product entity
 
                 if (productResponse == null)
                 {
@@ -162,7 +167,8 @@ namespace H6_ChicBotique.Controllers
             // Delete a product by ID
             try
             {
-                ProductResponse productResponse = await _productService.DeleteProduct(productId);
+                ProductResponse productResponse = await _productService.DeleteProduct(productId); //calling deleteProduct method
+                                                                                                  //by the instance of IProductservice for deleting the product entity
 
                 if (productResponse == null)
                 {
