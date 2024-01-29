@@ -1,6 +1,6 @@
 namespace H6_ChicBotiqueTestProject.RepositoryTests
 {
-    public class AccountInfoRepositoryTest
+    public class AccountInfoRepositoryTests
     {
         [Fact]
         public void Test1()

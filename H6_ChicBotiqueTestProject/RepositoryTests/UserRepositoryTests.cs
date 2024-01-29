@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace H6_ChicBotiqueTestProject.ServiceTests
+namespace H6_ChicBotiqueTestProject.RepositoryTests
 {
-    internal class UserServiceTest
+    internal class UserRepositoryTests
     {
     }
 }

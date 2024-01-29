@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H6_ChicBotiqueTestProject.ControllerTests
 {
-    internal class UserControllerTest
+    internal class UserControllerTests
     {
     }
 }
