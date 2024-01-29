@@ -16,8 +16,8 @@ namespace H6_ChicBotique.Services
         Task<UserResponse> GetById(int UserId); // Method to retrieve a user by ID as a UserResponse object
         Task<UserResponse> GetIdByEmail(string email); // Method to retrieve a user by email as a UserResponse object
         Task<LoginResponse> Authenticate(LoginRequest login); // Method to authenticate a user based on the provided login credentials.
-        Task<UserResponse> Update(int UserId, UserRequest updateUser);
-        Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);
+        Task<UserResponse> Update(int UserId, UserRequest updateUser); 
+        Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);  
     }
 
     // Implementation of IUserService interface in UserService class

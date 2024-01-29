@@ -67,7 +67,7 @@ namespace H6_ChicBotique.Services
         //Getting GuidId by a specific userId
         public async Task<Guid> GetGuidIdByUserId(int userId)
         {
-            var userGuid = await _accountInfoRepository.GetGuidByUserId(userId);
+            var userGuid = await _accountInfoRepository.SelectGuidByUserId(userId);
 
             if (userGuid != null)
             {
