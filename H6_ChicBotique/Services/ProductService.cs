@@ -46,7 +46,7 @@ namespace H6_ChicBotique.Services
 
         public async Task<List<ProductResponse>> GetProductsByCategoryId(int categoryId)
         {
-            List<Product> products = await _productRepository.GetProductsByCategoryId(categoryId);
+            List<Product> products = await _productRepository.SelectProductsByCategoryId(categoryId);
 
 
             return products.Select(product => MapProductToProductResponse(product)).ToList();

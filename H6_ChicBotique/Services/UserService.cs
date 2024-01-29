@@ -5,6 +5,8 @@ using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Repositories;
 using H5_Webshop.Database.Entities;
 
+//Get, insert,delete,update
+
 namespace H6_ChicBotique.Services
 {
     // Interface definition for user service
@@ -24,12 +26,12 @@ namespace H6_ChicBotique.Services
         private readonly IUserRepository _userRepository;
         private readonly IPasswordEntityRepository _PasswordEntityRepository;
         private readonly IHomeAddressRepository _HomeAddressRepository;
-        private readonly AccountInfoRepository _accountRepository;
+        private readonly IAccountInfoRepository _accountRepository;
         private readonly IJwtUtils _jwtUtils;
 
 
         // Constructor with dependency injection for IUserRepository
-        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, AccountInfoRepository accountRepository, IJwtUtils jwtUtils)
+        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, IAccountInfoRepository accountRepository, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
         }
@@ -38,7 +40,7 @@ namespace H6_ChicBotique.Services
         public async Task<List<UserResponse>> GetAll()
         {
             // Retrieve all users from the repository
-            List<User> users = await _userRepository.GetAll();
+            List<User> users = await _userRepository.SelectAll();
 
             // If users are not null, map each user to a UserResponse object
             return users == null ? null : users.Select(u => new UserResponse
@@ -55,7 +57,7 @@ namespace H6_ChicBotique.Services
         public async Task<UserResponse> GetById(int UserId)
         {
             // Retrieve a specific user by ID from the repository
-            User User = await _userRepository.GetById(UserId);
+            User User = await _userRepository.SelectById(UserId);
 
             // If the user is not null, map the user to a UserResponse object
             if (User != null)
@@ -70,7 +72,7 @@ namespace H6_ChicBotique.Services
         public async Task<UserResponse> GetIdByEmail(string email)
         {
             // Retrieve a specific user by email from the repository
-            User User = await _userRepository.GetByEmail(email);
+            User User = await _userRepository.SelectByEmail(email);
 
             // If the user is not null, map the user to a UserResponse object
             if (User != null)
@@ -85,7 +87,7 @@ namespace H6_ChicBotique.Services
         public async Task<LoginResponse> Authenticate(LoginRequest login)
         {
             // Retrieve user information from the UserRepository based on the provided email.
-            User user = await _userRepository.GetByEmail(login.Email);
+            User user = await _userRepository.SelectByEmail(login.Email);
 
             // Check if the user with the provided email exists.
             if (user == null)
@@ -172,7 +174,7 @@ namespace H6_ChicBotique.Services
                 // Create an AccountInfoResponse object within UserResponse
                 response.Account = new AccountInfoResponse
                 {
-                    Id = user.Account.Id,
+                    Id = user.AccountInfo.Id,
                 };
             }
 
