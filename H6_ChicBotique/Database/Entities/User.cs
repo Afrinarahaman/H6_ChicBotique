@@ -19,12 +19,12 @@ namespace H5_Webshop.Database.Entities
         [Column(TypeName = "nvarchar(32)")]
         public string LastName { get; set; }
 
-       
+
 
         [Column(TypeName = "nvarchar(128)")]
         public string Email { get; set; }
 
-      
+
 
         // Role is an Enum datatype which consists set of constant values(Admin, Member, Guest )
         public Role Role { get; set; }
@@ -32,5 +32,4 @@ namespace H5_Webshop.Database.Entities
 
     }
 
-   
 }
