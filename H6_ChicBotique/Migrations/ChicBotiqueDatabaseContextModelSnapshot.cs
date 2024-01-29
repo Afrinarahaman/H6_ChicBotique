@@ -34,26 +34,26 @@ namespace H6_ChicBotique.Migrations
                         .HasDefaultValueSql("getdate()");
 
                     b.Property<int?>("UserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
-                    b.ToTable("AccountInfo");
+                    b.ToTable("Account");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"),
+                            Id = new Guid("e245c610-682c-4d04-bcf8-152217fc0b5e"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"),
+                            Id = new Guid("78b460cd-d5a4-4c6b-b3da-ef94cb8c45f5"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -141,6 +141,11 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 2,
                             CategoryName = "Men"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Women"
                         });
                 });
 
@@ -186,7 +191,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"),
+                            AccountInfoId = new Guid("e245c610-682c-4d04-bcf8-152217fc0b5e"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -196,7 +201,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"),
+                            AccountInfoId = new Guid("78b460cd-d5a4-4c6b-b3da-ef94cb8c45f5"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -302,16 +307,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "7398456669E76571CE90280A5EC66A88C46EE612A17833ADC08F55B7E94FC657",
-                            Salt = "26/01/2024 10.50.36",
+                            Password = "05BA6313366AF08DCFAFC57DBF3F8EF4D2BC61B8B28535848EC9A2BFBE6423D6",
+                            Salt = "27/01/2024 02.37.24",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "EC53F2F908A982E76D59FBAE6145F6A929695C76FB35FBD867F6FD58AEDE41ED",
-                            Salt = "26/01/2024 10.50.36",
+                            Password = "241596C4F8F3E0156AADC5FBE555D53EB2FBFEE45B6180850273B25FCA00D1D3",
+                            Salt = "27/01/2024 02.37.24",
                             UserId = 2
                         });
                 });
@@ -427,6 +432,26 @@ namespace H6_ChicBotique.Migrations
                             Price = 199.99m,
                             Stock = (short)10,
                             Title = "Red T-Shirt"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Description = "Summer clothing",
+                            Image = "floral-dress.jpg",
+                            Price = 299.99m,
+                            Stock = (short)10,
+                            Title = "Long dress"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 3,
+                            Description = "Party dress for women",
+                            Image = "Red-dress.jpg",
+                            Price = 299.99m,
+                            Stock = (short)10,
+                            Title = "Red dress"
                         });
                 });
 
@@ -474,20 +499,21 @@ namespace H6_ChicBotique.Migrations
                     b.HasOne("H5_Webshop.Database.Entities.User", "User")
                         .WithOne("Account")
                         .HasForeignKey("H5_Webshop.Database.Entities.AccountInfo", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("H6_ChicBotique.Database.Entities.HomeAddress", b =>
                 {
-                    b.HasOne("H5_Webshop.Database.Entities.AccountInfo", "AccountInfo")
+                    b.HasOne("H5_Webshop.Database.Entities.AccountInfo", "Account")
                         .WithOne("HomeAddress")
                         .HasForeignKey("H6_ChicBotique.Database.Entities.HomeAddress", "AccountInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccountInfo");
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("H6_ChicBotique.Database.Entities.Order", b =>
@@ -563,7 +589,8 @@ namespace H6_ChicBotique.Migrations
 
             modelBuilder.Entity("H5_Webshop.Database.Entities.AccountInfo", b =>
                 {
-                    b.Navigation("HomeAddress");
+                    b.Navigation("HomeAddress")
+                        .IsRequired();
 
                     b.Navigation("Orders");
                 });

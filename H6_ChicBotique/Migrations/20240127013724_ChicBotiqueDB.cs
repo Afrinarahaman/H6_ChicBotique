@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace H6_ChicBotique.Migrations
 {
-    public partial class test1 : Migration
+    public partial class ChicBotiqueDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,18 +79,18 @@ namespace H6_ChicBotique.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountInfo",
+                name: "Account",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountInfo", x => x.Id);
+                    table.PrimaryKey("PK_Account", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AccountInfo_User_UserId",
+                        name: "FK_Account_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -136,9 +136,9 @@ namespace H6_ChicBotique.Migrations
                 {
                     table.PrimaryKey("PK_HomeAddress", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HomeAddress_AccountInfo_AccountInfoId",
+                        name: "FK_HomeAddress_Account_AccountInfoId",
                         column: x => x.AccountInfoId,
-                        principalTable: "AccountInfo",
+                        principalTable: "Account",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -158,9 +158,9 @@ namespace H6_ChicBotique.Migrations
                 {
                     table.PrimaryKey("PK_Order", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_AccountInfo_AccountInfoId",
+                        name: "FK_Order_Account_AccountInfoId",
                         column: x => x.AccountInfoId,
-                        principalTable: "AccountInfo",
+                        principalTable: "Account",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -230,7 +230,8 @@ namespace H6_ChicBotique.Migrations
                 values: new object[,]
                 {
                     { 1, "Kids" },
-                    { 2, "Men" }
+                    { 2, "Men" },
+                    { 3, "Women" }
                 });
 
             migrationBuilder.InsertData(
@@ -244,12 +245,12 @@ namespace H6_ChicBotique.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AccountInfo",
+                table: "Account",
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"), 2 },
-                    { new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"), 1 }
+                    { new Guid("78b460cd-d5a4-4c6b-b3da-ef94cb8c45f5"), 2 },
+                    { new Guid("e245c610-682c-4d04-bcf8-152217fc0b5e"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -257,8 +258,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "7398456669E76571CE90280A5EC66A88C46EE612A17833ADC08F55B7E94FC657", "26/01/2024 10.50.36", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "EC53F2F908A982E76D59FBAE6145F6A929695C76FB35FBD867F6FD58AEDE41ED", "26/01/2024 10.50.36", 2 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "05BA6313366AF08DCFAFC57DBF3F8EF4D2BC61B8B28535848EC9A2BFBE6423D6", "27/01/2024 02.37.24", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "241596C4F8F3E0156AADC5FBE555D53EB2FBFEE45B6180850273B25FCA00D1D3", "27/01/2024 02.37.24", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -270,25 +271,26 @@ namespace H6_ChicBotique.Migrations
                     { 2, 2, "T-Shirt for men", "BlueTShirt.jpg", 199.99m, (short)10, "Blue T-Shirt" },
                     { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, (short)10, "Skirt" },
                     { 4, 1, "kids jumpersuit", "jumpersuit1.jpg", 279.99m, (short)10, "Jumpersuit" },
-                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" }
+                    { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" },
+                    { 6, 3, "Summer clothing", "floral-dress.jpg", 299.99m, (short)10, "Long dress" },
+                    { 7, 3, "Party dress for women", "Red-dress.jpg", 299.99m, (short)10, "Red dress" }
                 });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 1, new Guid("91c490e1-a5e2-4359-9dea-af7b4881de72"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+                values: new object[] { 1, new Guid("e245c610-682c-4d04-bcf8-152217fc0b5e"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 2, new Guid("4d8843df-5a2b-466c-81b5-ba9a7354f8b8"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+                values: new object[] { 2, new Guid("78b460cd-d5a4-4c6b-b3da-ef94cb8c45f5"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountInfo_UserId",
-                table: "AccountInfo",
+                name: "IX_Account_UserId",
+                table: "Account",
                 column: "UserId",
-                unique: true,
-                filter: "[UserId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_HomeAddress_AccountInfoId",
@@ -365,7 +367,7 @@ namespace H6_ChicBotique.Migrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "AccountInfo");
+                name: "Account");
 
             migrationBuilder.DropTable(
                 name: "Payment");
