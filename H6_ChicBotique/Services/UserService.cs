@@ -173,7 +173,7 @@ namespace H6_ChicBotique.Services
                 // Create an AccountInfoResponse object within UserResponse
                 response.Account = new AccountInfoResponse
                 {
-                    Id = user.Account.Id,
+                    Id = user.AccountInfo.Id,
                 };
             }
 

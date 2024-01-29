@@ -98,7 +98,7 @@ namespace H6_ChicBotique.Services
                     Role=Account.User.Role
                 },
                 CreatedDate = Account.CreatedDate,
-                /*Orders = Account.Orders?.Select(Order => new OrderAndPaymentResponse
+                Orders = Account.Orders?.Select(Order => new OrderAndPaymentResponse
                 {
                     Id = Order.Id,
                     OrderDate = Order.OrderDate,
@@ -107,7 +107,7 @@ namespace H6_ChicBotique.Services
                     TransactionId=Order.Payment.TransactionId,
 
                     //Amount=Order.Payment.Amount,
-                    OrderDetails = Order.OrderDetails.Select(order => new OrderDetailResponse
+                    OrderDetails = Order.OrderDetails.Select(order => new OrderDetailsResponse
                     {
                         Id = order.Id,
                         ProductId = order.ProductId,
@@ -117,7 +117,7 @@ namespace H6_ChicBotique.Services
 
 
                     }).ToList()
-                }).ToList(),*/
+                }).ToList(),
 
             };
             if (Account.HomeAddress != null)  //If HomeAddress is there in the database for the guest Account then map it

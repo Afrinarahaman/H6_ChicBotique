@@ -49,7 +49,7 @@ namespace H6_ChicBotique.Database
                 entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()");
                 //entity.HasIndex(e => e.CreatedDate);
                 //entity.HasKey(e=>e.Id);
-                entity.HasOne(e => e.User).WithOne(e => e.Account).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.User).WithOne(e => e.AccountInfo).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict);
             }); // specify the configuration for the AccountInfo and rules for this entity
 
 
