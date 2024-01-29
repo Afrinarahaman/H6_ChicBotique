@@ -19,7 +19,7 @@ namespace H6_ChicBotique.Database
         public DbSet<PasswordEntity> PasswordEntity { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
 
-        public DbSet<AccountInfo> Account { get; set; }
+        public DbSet<AccountInfo> AccountInfo { get; set; }
         public DbSet<Payment> Payment { get; set; }
 
 
@@ -55,7 +55,7 @@ namespace H6_ChicBotique.Database
 
             modelBuilder.Entity<HomeAddress>(entity =>
             {
-                entity.HasOne(e => e.Account).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
             });
 
 

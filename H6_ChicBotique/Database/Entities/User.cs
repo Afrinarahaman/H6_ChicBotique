@@ -28,7 +28,7 @@ namespace H5_Webshop.Database.Entities
 
         // Role is an Enum datatype which consists set of constant values(Admin, Member, Guest )
         public Role Role { get; set; }
-        public AccountInfo Account { get; set; } /////Navigational object for getting Account table's data from this class
+        public AccountInfo AccountInfo { get; set; } /////Navigational object for getting Account table's data from this class
 
     }
 

@@ -1,5 +1,6 @@
 using H6_ChicBotique.Authorization;
 using H6_ChicBotique.Database;
+using H6_ChicBotique.Helpers;
 using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Services;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,23 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+
+
+builder.Services.AddTransient<IHomeAddressRepository, HomeAddressRepository>();
+builder.Services.AddTransient<IHomeAddressService, HomeAddressService>();
+
+builder.Services.AddTransient<IAccountInfoService, AccountInfoService>();
+builder.Services.AddTransient<IAccountInfoRepository, AccountInfoRepository>();
+
+builder.Services.AddTransient<IPasswordEntityRepository, PasswordEntityRepository>();
+builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+
 builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
                         o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
 
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings")); // henter appsettings fra json 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -61,18 +74,19 @@ builder.Services.AddSwaggerGen(
 var app = builder.Build();
 app.UseHttpsRedirection();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
 
 app.UseHttpsRedirection();
 app.UseCors(policy => policy
            .AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader());
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseAuthorization();
 //JWT middleware setup, use as replacement for  default Authorization

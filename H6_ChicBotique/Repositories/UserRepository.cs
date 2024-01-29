@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 namespace H6_ChicBotique.Repositories
 {
     //Creating Interface of IUserRepository
-    public interface IUserRepository
+    public interface IUserRepository //Interface which declares only the methods
     {
-        Task<List<User>> GetAll();      
-        Task<User> GetByEmail(string email);
-        Task<User> GetById(int userId);
-        Task<User> Update(int userId, User user);
+        Task<List<User>> SelectAll();     //For getting all User Details 
+        Task<User> SelectByEmail(string email); //For getting User by specific unique Email
+        Task<User> SelectById(int userId); //For getting User by specific Id
+        Task<User> Update(int userId, User user); //For Updating the User entity
 
 
     }
@@ -26,21 +26,21 @@ namespace H6_ChicBotique.Repositories
         }
 
         // Implementation of GetAll method
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>> SelectAll()
         {
             // Retrieve all users from the database
             return await _context.User.ToListAsync();
         }
 
         // Implementation of GetById method
-        public async Task<User> GetById(int userId)
+        public async Task<User> SelectById(int userId)
         {
             // Retrieve a specific user based on user ID
             return await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        // Implementation of GetByEmail method
-        public async Task<User> GetByEmail(string email)
+        // Implementation of SelectByEmail method
+        public async Task<User> SelectByEmail(string email)
         {
             // Retrieve a specific user based on email address and also include user account information
             return await _context.User.Include(a => a.Account).FirstOrDefaultAsync(u => u.Email == email);

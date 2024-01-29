@@ -24,12 +24,12 @@ namespace H6_ChicBotique.Services
         private readonly IUserRepository _userRepository;
         private readonly IPasswordEntityRepository _PasswordEntityRepository;
         private readonly IHomeAddressRepository _HomeAddressRepository;
-        private readonly AccountInfoRepository _accountRepository;
+        private readonly IAccountInfoRepository _accountInfoRepository;
         private readonly IJwtUtils _jwtUtils;
 
 
         // Constructor with dependency injection for IUserRepository
-        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, AccountInfoRepository accountRepository, IJwtUtils jwtUtils)
+        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, IAccountInfoRepository accountInfoRepository, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
         }
@@ -85,7 +85,7 @@ namespace H6_ChicBotique.Services
         public async Task<LoginResponse> Authenticate(LoginRequest login)
         {
             // Retrieve user information from the UserRepository based on the provided email.
-            User user = await _userRepository.GetByEmail(login.Email);
+            User user = await _userRepository.SelectByEmail(login.Email);
 
             // Check if the user with the provided email exists.
             if (user == null)
