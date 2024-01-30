@@ -3,18 +3,18 @@ using H6_ChicBotique.Database;
 using H6_ChicBotique.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace H6_ChicBotique.Repositories
+//Should be Select,Create and update , delete
 {
     public interface IAccountInfoRepository  //Interface which declares the methods
     {
         Task<List<AccountInfo>> SelectAll(); //For getting all AccountInfo Details
-        Task<AccountInfo> Create(AccountInfo AccountInfo); //For creating an AccountInfo
-        
-        Task<AccountInfo> SelectById(Guid Id); //For getting AccountInfo by specific Id
-        
+        Task<AccountInfo> Create(AccountInfo AccountInfo); //For creating an AccountInfo        
+        Task<AccountInfo> SelectById(Guid Id); //For getting AccountInfo by specific Id        
         Task<AccountInfo> Update(AccountInfo Account); // For updating the AccountInfo entity
         Task<AccountInfo> Delete(Guid Account_Id); //Deleting the AccountInfo entity from the database
-        Task<Guid> GetGuidByUserId(int userId);  //Getting the GuidId by the userId
+        Task<Guid> SelectGuidByUserId(int userId);  //Getting the GuidId by the userId
     }
 
     public class AccountInfoRepository : IAccountInfoRepository  // This class is inheriting interfacae AccountInfoRepository and implement the interfaces
@@ -83,7 +83,7 @@ namespace H6_ChicBotique.Repositories
         }
 
         //This method is developed for getting the GuidId by the UserId
-        public async Task<Guid> GetGuidByUserId(int userId)
+        public async Task<Guid> SelectGuidByUserId(int userId)
         {
             var acc = await _context.AccountInfo.SingleOrDefaultAsync(a => a.UserId == userId);
 

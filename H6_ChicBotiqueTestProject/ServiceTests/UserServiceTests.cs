@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H6_ChicBotiqueTestProject.ServiceTests
 {
-    internal class UserServiceTest
+    internal class UserServiceTests
     {
     }
 }

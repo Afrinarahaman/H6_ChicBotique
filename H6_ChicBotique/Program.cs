@@ -18,6 +18,7 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 
+builder.Services.AddTransient<IAccountInfoRepository, AccountInfoRepository>();
 
 
 builder.Services.AddTransient<IHomeAddressRepository, HomeAddressRepository>();

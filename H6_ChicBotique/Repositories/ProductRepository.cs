@@ -9,7 +9,7 @@ namespace H6_ChicBotique.Repositories
     {
         Task<List<Product>> SelectAllProducts(); // Get all products
         Task<Product> SelectProductById(int productId); // Get a product by ID
-        Task<List<Product>> GetProductsByCategoryId(int categoryId); // Get products by category ID
+        Task<List<Product>> SelectProductsByCategoryId(int categoryId); // Get products by category ID
         Task<Product> InsertNewProduct(Product product); // Insert a new product
         Task<Product> UpdateExistingProduct(int productId, Product product); // Update an existing product
         Task<Product> DeleteProductById(int productId); // Delete a product by ID
@@ -35,8 +35,7 @@ namespace H6_ChicBotique.Repositories
 
                 .ToListAsync();
         }
-
-        // Get a specific product info by specific product_Id
+        // Get all products by Id
         public async Task<Product> SelectProductById(int product_Id)
         {
             return await _context.Product
@@ -46,8 +45,8 @@ namespace H6_ChicBotique.Repositories
         }
 
 
-        //// Get a specific product info by Category_Id including Category details
-        public async Task<List<Product>> GetProductsByCategoryId(int Category_Id)
+        // Retrieve a list of products based on the given category ID
+        public async Task<List<Product>> SelectProductsByCategoryId(int Category_Id)
         {
 
             return await _context.Product
@@ -56,14 +55,16 @@ namespace H6_ChicBotique.Repositories
                 .Where(a => a.CategoryId==Category_Id)
                 .ToListAsync();
         }
-        //With this method one Product can be added
+
+        // Insert a new product into the database
         public async Task<Product> InsertNewProduct(Product product)
         {
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
             return product;
         }
-        // For updating the  existing Product entity
+
+        // Update an existing product in the database based on its ID
         public async Task<Product> UpdateExistingProduct(int product_Id, Product product)
         {
             Product updateProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
@@ -84,15 +85,17 @@ namespace H6_ChicBotique.Repositories
 
             return updateProduct;
         }
-        // For deleting the  existing Product entity
+
+        // Delete a product from the database based on its ID
         public async Task<Product> DeleteProductById(int product_Id)
         {
+            // Find the product to delete by its ID
             Product deleteProduct = await _context.Product.FirstOrDefaultAsync(product => product.Id == product_Id);
 
             if (deleteProduct != null)
             {
-                _context.Product.Remove(deleteProduct);
-                await _context.SaveChangesAsync();
+                _context.Product.Remove(deleteProduct);        // Remove the product from the database             
+                await _context.SaveChangesAsync();   // Save changes to the database
             }
             return deleteProduct;
         }
