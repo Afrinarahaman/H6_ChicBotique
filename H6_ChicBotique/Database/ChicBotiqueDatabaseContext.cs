@@ -18,7 +18,7 @@ namespace H6_ChicBotique.Database
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<PasswordEntity> PasswordEntity { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
-
+        public DbSet<ShippingDetails> ShippingDetails { get; set; }
         public DbSet<AccountInfo> AccountInfo { get; set; }
         public DbSet<Payment> Payment { get; set; }
 

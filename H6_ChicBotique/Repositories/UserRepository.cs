@@ -28,14 +28,14 @@ namespace H6_ChicBotique.Repositories
             _context = context;
         }
 
-        // Implementation of GetAll method
+        // Implementation of SelectAll method
         public async Task<List<User>> SelectAll()
         {
             // Retrieve all users from the database
             return await _context.User.ToListAsync();
         }
 
-        // Implementation of GetById method
+        // Implementation of SelectById method
         public async Task<User> SelectById(int userId)
         {
             // Retrieve a specific user based on user ID

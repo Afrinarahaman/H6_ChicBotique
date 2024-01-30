@@ -14,16 +14,20 @@ namespace H6_ChicBotique.Repositories
     // Implementation of IOrderRepository interface in OrderRepository class
     public class OrderRepository:IOrderRepository
     {
-        private readonly ChicBotiqueDatabaseContext _context;
+        private readonly ChicBotiqueDatabaseContext _context; // Instance of ChicBotiqueDatabaseContext class
 
-        public OrderRepository(ChicBotiqueDatabaseContext context)
+        public OrderRepository(ChicBotiqueDatabaseContext context) // Constructor with dependency injection
         {
             _context = context;
         }
+
+        // Implementation of SelectAll method
         public async Task<List<Order>> SelectAllOrders()
         {
             try
             {
+                // Retrieve all Orders from the database including AccountInfo, OrderDetails,
+                // Payment and ShippingDetails
                 return await _context.Order
                          .Include(o => o.AccountInfo)
                          .Include(o => o.OrderDetails)
@@ -37,6 +41,7 @@ namespace H6_ChicBotique.Repositories
                 return null;
             }
         }
+        // Retrieve a specific user based on AccountId
         public async Task<List<Order>> SelectOrdersByAccountInfoId(Guid AccountId)
         {
             try
@@ -52,7 +57,7 @@ namespace H6_ChicBotique.Repositories
                 return null;
             }
         }
-
+        // Implementation of SelectOrderById method
         public async Task<Order> SelectOrderById(int orderId)
         {
             try
@@ -69,7 +74,7 @@ namespace H6_ChicBotique.Repositories
                 return null;
             }
         }
-
+        //Implementation of Create method for creating a new entity in the Order table
         public async Task<Order> CreateNewOrder(Order order)
         {
             try
@@ -90,49 +95,7 @@ namespace H6_ChicBotique.Repositories
 
         }
     
-        public async Task<Order> DeleteOrderById(int orderId)
-        {
-            var deleteOrder = await _context.Set<Order>().FirstOrDefaultAsync(o => o.Id == orderId);
-            try
-            {
-                if (deleteOrder != null)
-                {
-                    _context.Remove(deleteOrder);
-                    await _context.SaveChangesAsync();
-
-                }
-
-                return deleteOrder;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-
-
-        public async Task<Order> UpdateExistingOrder(int orderId, Order order)
-        {
-
-
-            try
-            {
-                Order updateOrder = await _context.Order.FirstOrDefaultAsync(order => order.Id== orderId);
-
-                //_context.Update(order); //update all properties with navigation object
-                _context.Entry(updateOrder).CurrentValues.SetValues(order); //update only the properties inside the order without orderdetails(navigation object)
-
-                await _context.SaveChangesAsync();
-
-                return await _context.Order.FirstOrDefaultAsync(order => order.Id == orderId);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
+      
 
     }
 }
