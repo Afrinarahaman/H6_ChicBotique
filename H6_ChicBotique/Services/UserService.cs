@@ -32,7 +32,7 @@ namespace H6_ChicBotique.Services
 
 
         // Constructor with dependency injection for IUserRepository
-        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, IAccountInfoRepository accountRepository, IJwtUtils jwtUtils)
+        public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, IAccountInfoRepository accountInfoRepository, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
             _accountInfoRepository = accountInfoRepository;

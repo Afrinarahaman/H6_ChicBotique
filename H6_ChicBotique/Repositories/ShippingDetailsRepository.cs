@@ -12,6 +12,7 @@ namespace H6_ChicBotique.Repositories
         Task<ShippingDetails> SelectById(int Id); //For getting Shipping
                                                   //by specific Id
 
+        Task<ShippingDetails> Update(ShippingDetails ShippingDetails);
 
     }
     public class ShippingDetailsRepository:IShippingDetailsRepository
@@ -49,7 +50,25 @@ namespace H6_ChicBotique.Repositories
         }
 
 
-      
+        public async Task<ShippingDetails> Update(ShippingDetails ShippingDetails)
+        {
+            ShippingDetails updateShippingDetails = await _context.ShippingDetails.Include(a => a.Order)
+                .FirstOrDefaultAsync(a => a.Id == ShippingDetails.Id);
+
+            if (ShippingDetails != null)
+            {
+                /*ShippingDetails.Salt = ShippingDetails.Salt;
+                ShippingDetails.Password = ShippingDetails.Password;
+                ShippingDetails.LastUpdated = ShippingDetails.LastUpdated;
+                //_context.Update(updateShippingDetails);//update all properties plus navigation object*/
+
+                _context.Entry(updateShippingDetails).CurrentValues.SetValues(ShippingDetails);  //update properties without the navigation properties(AccountInfo)
+                await _context.SaveChangesAsync();
+            }
+            /*_context.Update(ShippingDetails);
+            await _context.SaveChangesAsync();*/
+            return updateShippingDetails;
+        }
 
     }
 }
