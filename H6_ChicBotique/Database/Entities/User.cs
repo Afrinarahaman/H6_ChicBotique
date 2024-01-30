@@ -3,9 +3,9 @@ using H6_ChicBotique.Helpers;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 
-namespace H5_Webshop.Database.Entities
+
+namespace H6_ChicBotique.Database.Entities
 {
     public class User //Basically profile
     {

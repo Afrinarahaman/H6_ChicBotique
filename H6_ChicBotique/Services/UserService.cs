@@ -3,7 +3,7 @@ using H6_ChicBotique.Authorization;
 using H6_ChicBotique.Database.Entities;
 using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Repositories;
-using H5_Webshop.Database.Entities;
+
 
 namespace H6_ChicBotique.Services
 {
@@ -14,8 +14,10 @@ namespace H6_ChicBotique.Services
         Task<UserResponse> GetById(int UserId); // Method to retrieve a user by ID as a UserResponse object
         Task<UserResponse> GetIdByEmail(string email); // Method to retrieve a user by email as a UserResponse object
         Task<LoginResponse> Authenticate(LoginRequest login); // Method to authenticate a user based on the provided login credentials.
-        Task<UserResponse> Update(int UserId, UserRequest updateUser);
-        Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);
+        Task<UserResponse> Register(UserRegisterRequest newUser);//To register a user
+        Task<GuestResponse> Register_Guest(GuestRequest newGuest);//To create a user as Guest withour having password
+        Task<UserResponse> Update(int UserId, UserRequest updateUser);//To update userprofile
+        Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);//To change the password
     }
 
     // Implementation of IUserService interface in UserService class
@@ -23,8 +25,8 @@ namespace H6_ChicBotique.Services
     {
         // creating instances of Interfaces
         private readonly IUserRepository _userRepository;
-        private readonly IPasswordEntityRepository _PasswordEntityRepository;
-        private readonly IHomeAddressRepository _HomeAddressRepository;
+        private readonly IPasswordEntityRepository _passwordEntityRepository;
+        private readonly IHomeAddressRepository _homeAddressRepository;
         private readonly IAccountInfoRepository _accountInfoRepository;
         private readonly IJwtUtils _jwtUtils;
 
@@ -33,6 +35,10 @@ namespace H6_ChicBotique.Services
         public UserService(IUserRepository userRepository, IPasswordEntityRepository PasswordEntityRepository, IHomeAddressRepository homeAddressRepository, IAccountInfoRepository accountInfoRepository, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
+            _accountInfoRepository = accountInfoRepository;
+            _jwtUtils = jwtUtils;
+            _passwordEntityRepository=PasswordEntityRepository;
+            _homeAddressRepository= homeAddressRepository;
         }
 
         // Implementation of GetAll method
@@ -81,8 +87,97 @@ namespace H6_ChicBotique.Services
 
             return null; // Return null if the user is not found
         }
+        public async Task<UserResponse> Register(UserRegisterRequest newuser)
+        {
+            User user = await _userRepository.SelectByEmail(newuser.Email);
+            AccountInfo acc = user?.AccountInfo;
 
-     
+            if (user == null)
+            {
+                user = new User
+                {
+
+                    FirstName = newuser.FirstName,
+                    LastName = newuser.LastName,
+                    //Address = newuser.Address,
+                    //Telephone = newuser.Telephone,
+                    Email = newuser.Email,
+                    //Password = HashedPW,
+                    //Salt = salt,
+                    Role = Helpers.Role.Member// force all users created through Register, to Role.AccountInfo
+                };
+
+                user = await _userRepository.Create(user);
+                acc = new()
+                {
+                    UserId = user.Id
+                };
+                acc = await _accountInfoRepository.Create(acc);
+
+            }
+            else
+            {
+                user.FirstName = newuser.FirstName;
+
+                user.LastName = newuser.LastName;
+
+                user.Email = newuser.Email;
+                //Password = "No Need",
+                user.Role = Helpers.Role.Member;// force all users created through Register, to Role.AccountInfo
+
+
+                user = await _userRepository.Update(user.Id, user);
+
+            }
+            HomeAddress homeaddress = new HomeAddress()
+            {
+                AccountInfoId = acc.Id,
+                Address = newuser.Address,
+                City=newuser.City,
+                PostalCode=newuser.PostalCode,
+                Country =newuser.Country,
+                TelePhone = newuser.Telephone
+
+
+                //etc
+            };
+            homeaddress = await _homeAddressRepository.Create(homeaddress);
+            var salt = DateTime.Now.ToString();
+            var HashedPW = Helpers.PasswordHelpers.HashPassword($"{newuser.Password}{salt}");
+            PasswordEntity pwd = new()
+            {
+                UserId = user.Id,
+                Password = HashedPW,
+                Salt = salt,
+                LastUpdated = DateTime.Now
+            };
+            pwd = await _passwordEntityRepository.CreatePassword(pwd);
+
+            return MapUserToUserResponse(user);
+        }
+        public async Task<GuestResponse> Register_Guest(GuestRequest newguest)
+        {
+
+            User user = new User();
+            user.FirstName = newguest.FirstName;
+
+            user.LastName = newguest.LastName;
+
+            user.Email = newguest.Email;
+            //Password = "No Need",
+            user.Role = Helpers.Role.Guest;
+
+            user = await _userRepository.Create(user);
+            AccountInfo acc = new()
+            {
+                UserId = user.Id
+            };
+            acc = await _accountInfoRepository.Create(acc);
+            
+            return MapGuestToGuestResponse(user);
+        }
+
+
         public async Task<LoginResponse> Authenticate(LoginRequest login)
         {
             // Retrieve user information from the UserRepository based on the provided email.
@@ -95,7 +190,7 @@ namespace H6_ChicBotique.Services
             }
 
             // Retrieve the stored password information (including salt) from the PasswordEntityRepository.
-            PasswordEntity pwd = await _PasswordEntityRepository.SelectByUserId(user.Id);
+            PasswordEntity pwd = await _passwordEntityRepository.SelectByUserId(user.Id);
 
             // Validate the provided password against the stored hashed password.
             if (Helpers.PasswordHelpers.HashPassword($"{login.Password}{pwd.Salt}") == pwd.Password)
@@ -120,13 +215,13 @@ namespace H6_ChicBotique.Services
         {
             var salt = DateTime.Now.ToString();  //making salt
             var HashedPW = Helpers.PasswordHelpers.HashPassword($"{passwordEntityRequest.Password}{salt}");///hashing the requested password with salt
-            PasswordEntity pwd = await _PasswordEntityRepository.SelectByUserId(passwordEntityRequest.UserId); ///getting the user by userId
+            PasswordEntity pwd = await _passwordEntityRepository.SelectByUserId(passwordEntityRequest.UserId); ///getting the user by userId
             //putting the new hashed password, salt, date in the object
             pwd.Salt = salt;
             pwd.Password = HashedPW;
             pwd.LastUpdated = DateTime.UtcNow;
             // updating the password in the database
-            await _PasswordEntityRepository.UpdatePassword(pwd);
+            await _passwordEntityRepository.UpdatePassword(pwd);
 
             return true;
         }
@@ -179,8 +274,26 @@ namespace H6_ChicBotique.Services
 
             return response; // Return the mapped UserResponse object
         }
+        private static GuestResponse MapGuestToGuestResponse(User user)
+        {
 
-       
+            return user == null ? null : new GuestResponse
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+
+                LastName = user.LastName,
+
+
+                Role = user.Role,
+
+
+            };
+
+        }
+
+
     }
 }
 

@@ -1,8 +1,8 @@
-﻿using H6_ChicBotique.Database.Entities;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace H5_Webshop.Database.Entities
+namespace H6_ChicBotique.Database.Entities
 {
     //This class is for holding the orders and Homeaddress of the client if they delete their profile from the website. 
     public class AccountInfo
