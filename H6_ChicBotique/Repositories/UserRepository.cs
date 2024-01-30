@@ -1,5 +1,6 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
 using H6_ChicBotique.Database;
+using H6_ChicBotique.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Repositories
@@ -8,10 +9,13 @@ namespace H6_ChicBotique.Repositories
     //Creating Interface of IUserRepository
     public interface IUserRepository //Interface which declares only the methods
     {
-        Task<List<User>> SelectAll();      
-        Task<User> SelectByEmail(string email);
-        Task<User> SelectById(int userId);
-        Task<User> Update(int userId, User user);
+        Task<List<User>> SelectAll();     //For getting all User Details 
+        Task<User> SelectByEmail(string email); //For getting User by specific unique Email
+        Task<User> SelectById(int userId); //For getting User by specific Id
+        Task<User> Create(User user);//Creating a new user entity
+        Task<User> Update(int userId, User user); //For Updating the User entity
+        Task<User> Delete(int userId); //For Deleting the User Entity from the table
+
 
 
     }
@@ -46,6 +50,17 @@ namespace H6_ChicBotique.Repositories
             // Retrieve a specific user based on email address and also include user account information
             return await _context.User.Include(a => a.AccountInfo).FirstOrDefaultAsync(u => u.Email == email);
         }
+        //Implementation of Create method for creating a new entity in the user table
+        public async Task<User> Create(User user)
+        {
+
+
+            _context.User.Add(user);
+
+
+            await _context.SaveChangesAsync();
+            return user;
+        }
 
         //Using this method existing user info can be updated by giving specific userId
         public async Task<User> Update(int user_Id, User user)
@@ -66,6 +81,43 @@ namespace H6_ChicBotique.Repositories
                 await _context.SaveChangesAsync();
             }
             return updateUser;
+        }
+        public async Task<User> Delete(int user_id)
+        {
+            /* User obj = new User()
+             {
+                 Id = user_id
+             };
+             _context.Entry(obj).State = EntityState.Deleted;
+             _context.SaveChanges();
+             return obj;*/
+            var user = _context.User.Include(u => u.AccountInfo).SingleOrDefault(u => u.Id == user_id);
+
+            if (user != null)
+            {
+
+                if (user.AccountInfo != null)
+                {
+
+                    user.AccountInfo.UserId = null;
+
+                }
+                try
+                {
+                    _context.User.Remove(user);
+                    await _context.SaveChangesAsync(); // Corrected method name
+                    return user;
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log or handle the inner exception
+                    var innerException = ex.InnerException;
+                    // Handle the exception or log the details
+                    throw; // Re-throw the exception if needed
+                }
+            }
+
+            return null;
         }
     }
 }

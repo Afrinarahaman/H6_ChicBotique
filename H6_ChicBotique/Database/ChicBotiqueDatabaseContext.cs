@@ -1,4 +1,4 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
 using H6_ChicBotique.Database.Entities;
 using H6_ChicBotique.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -18,19 +18,17 @@ namespace H6_ChicBotique.Database
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<PasswordEntity> PasswordEntity { get; set; }
         public DbSet<HomeAddress> HomeAddress { get; set; }
-
+        public DbSet<ShippingDetails> ShippingDetails { get; set; }
         public DbSet<AccountInfo> AccountInfo { get; set; }
         public DbSet<Payment> Payment { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();  //making email as unique entity
             modelBuilder.Entity<PasswordEntity>(entity =>
             {
                 entity.HasOne(e => e.User).WithOne().HasForeignKey<PasswordEntity>(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
-            });  // specify the configuration for the PasswordEntity table and relationship with the User table
-
+            });
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasMany(e => e.Products).WithOne(e => e.Category).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
@@ -40,31 +38,40 @@ namespace H6_ChicBotique.Database
             {
                 entity.HasOne(e => e.Category).WithMany(e => e.Products).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
             });
-
-
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-
             modelBuilder.Entity<AccountInfo>(entity =>
             {
                 entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()");
                 //entity.HasIndex(e => e.CreatedDate);
                 //entity.HasKey(e=>e.Id);
-                entity.HasOne(e => e.User).WithOne(e => e.AccountInfo).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict);
-            }); // specify the configuration for the AccountInfo and rules for this entity
+                entity.HasOne(e => e.User).WithOne(e => e.AccountInfo).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
 
-
+            });
+            /* modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasOne(e => e.Account).WithOne().HasForeignKey<User>(e => e.Account.Id).OnDelete(DeleteBehavior.Cascade);
+            });*/
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.OrderDate).HasDefaultValueSql("getdate()");
+                //entity.HasIndex(e => e.CreatedDate);
+                //entity.HasKey(e=>e.Id);
+                entity.HasMany(e => e.OrderDetails).WithOne(e => e.Order).HasForeignKey(e => e.OrderId).OnDelete(DeleteBehavior.Cascade);
+            });
             modelBuilder.Entity<HomeAddress>(entity =>
             {
                 entity.HasOne(e => e.AccountInfo).WithOne(e => e.HomeAddress).HasForeignKey<HomeAddress>(e => e.AccountInfoId).OnDelete(DeleteBehavior.Cascade);
             });
-
-
-            /*modelBuilder.Entity<Payment>(entity =>
+            modelBuilder.Entity<ShippingDetails>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.Order).WithOne(e => e.ShippingDetails).HasForeignKey<ShippingDetails>(e => e.OrderId).OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.Order).WithOne(e => e.Payment).HasForeignKey<Order>(e => e.PaymentId).OnDelete(DeleteBehavior.Restrict);
             });
-            */
             // Seeding data for the Category entity
             modelBuilder.Entity<Category>().HasData(
                 new()
@@ -194,7 +201,7 @@ namespace H6_ChicBotique.Database
                     Role = Role.Guest
                 }
             );
-
+          
             Guid acc1id = Guid.NewGuid();
             Guid acc2id = Guid.NewGuid();
 
@@ -202,14 +209,14 @@ namespace H6_ChicBotique.Database
           modelBuilder.Entity<AccountInfo>().HasData(
                new()
                {
-                   // Id = Guid.Parse("3e79cea4 - d1a1 - 4954 - bad2 - d2ca09aff5d3"),
+                  
                    Id = acc1id,
                    UserId = 1
                },
 
                new()
                {
-                   //Id =Guid.Parse("c8c1fe00-599d-480f-9fe5-cc0a5a6d9f45"),
+                   
                    Id= acc2id,
                    UserId = 2
 

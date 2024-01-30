@@ -1,4 +1,4 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

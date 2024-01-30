@@ -1,4 +1,5 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
+using H6_ChicBotique.Database.Entities;
 using H6_ChicBotique.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

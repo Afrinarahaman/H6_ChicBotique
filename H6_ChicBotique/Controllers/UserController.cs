@@ -1,4 +1,4 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
 using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Helpers;
 using H6_ChicBotique.Services;
@@ -53,10 +53,49 @@ namespace H6_ChicBotique.Controllers
         }
 
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest newUser)
+        {
+            try
+            {
 
+                // The email is already in use; return an error response
 
-            // Authenticate User
-            [HttpPost("authenticate")]
+                UserResponse user = await _userService.Register(newUser);
+                return Ok(user);
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("guestRegister")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> guestRegister([FromBody] GuestRequest newGuest)
+        {
+            try
+            {
+
+                GuestResponse user = await _userService.Register_Guest(newGuest);
+                return Ok(user);
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+        // Authenticate User
+        [HttpPost("authenticate")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -4,6 +4,7 @@ using H6_ChicBotique.Helpers;
 using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +29,18 @@ builder.Services.AddTransient<IAccountInfoService, AccountInfoService>();
 builder.Services.AddTransient<IAccountInfoRepository, AccountInfoRepository>();
 
 builder.Services.AddTransient<IPasswordEntityRepository, PasswordEntityRepository>();
+
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+builder.Services.AddTransient<IHomeAddressRepository, HomeAddressRepository>();
+builder.Services.AddTransient<IHomeAddressService, HomeAddressService>();
+
+builder.Services.AddTransient<IShippingDetailsRepository, ShippingDetailsRepository>();
+builder.Services.AddTransient<IShippingDetailsService, ShippingDetailsService>();
+
+builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+
 
 builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
                         o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -41,21 +53,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(
-    c =>
-    {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChicBotique.API", Version = "v1" });
-        // To Enable authorization using Swagger (JWT)  
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+c =>
+{
+c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChicBotique.API", Version = "v1" });
+    // To Enable authorization using Swagger (JWT)  
+c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+{
+    Name = "Authorization",
+    Type = SecuritySchemeType.ApiKey,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    In = ParameterLocation.Header,
+    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+});
+c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-        });
-        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -67,21 +79,18 @@ builder.Services.AddSwaggerGen(
                         },
                         new string[] {}
                     }
-                });
-    });
-
+        });
+});
 
 
 var app = builder.Build();
 app.UseHttpsRedirection();
 
-
-
-app.UseHttpsRedirection();
 app.UseCors(policy => policy
-           .AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -89,10 +98,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 app.UseAuthorization();
 //JWT middleware setup, use as replacement for  default Authorization
 app.UseMiddleware<JwtMiddleware>();
-
 app.MapControllers();
 
 app.Run();

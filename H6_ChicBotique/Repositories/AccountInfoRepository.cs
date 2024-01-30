@@ -1,5 +1,6 @@
-﻿using H5_Webshop.Database.Entities;
+﻿
 using H6_ChicBotique.Database;
+using H6_ChicBotique.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
