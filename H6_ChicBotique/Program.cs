@@ -4,8 +4,11 @@ using H6_ChicBotique.Helpers;
 using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+
+public class Program
+{
+private static void Main(string[] args){
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,16 +35,16 @@ builder.Services.AddTransient<IPasswordEntityRepository, PasswordEntityRepositor
 
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-builder.Services.AddTransient<IHomeAddressRepository, HomeAddressRepository>();
-builder.Services.AddTransient<IHomeAddressService, HomeAddressService>();
+
 
 builder.Services.AddTransient<IShippingDetailsRepository, ShippingDetailsRepository>();
 builder.Services.AddTransient<IShippingDetailsService, ShippingDetailsService>();
 
+builder.Services.AddTransient<IPasswordEntityRepository, PasswordEntityRepository>();
+
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
+
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
-
-
 builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
                         o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
@@ -66,8 +69,8 @@ c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     In = ParameterLocation.Header,
     Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
 });
-c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -79,7 +82,7 @@ c.AddSecurityRequirement(new OpenApiSecurityRequirement
                         },
                         new string[] {}
                     }
-        });
+                });
 });
 
 
@@ -106,3 +109,5 @@ app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 
 app.Run();
+    }
+}

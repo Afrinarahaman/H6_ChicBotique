@@ -1,6 +1,7 @@
 ﻿
 using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Helpers;
+using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace H6_ChicBotique.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;  ////Creating an instance of IUserService
+        private readonly IUserRepository _userRepository;
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -95,6 +97,7 @@ namespace H6_ChicBotique.Controllers
             }
         }
         // Authenticate User
+        [AllowAnonymous]
         [HttpPost("authenticate")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]

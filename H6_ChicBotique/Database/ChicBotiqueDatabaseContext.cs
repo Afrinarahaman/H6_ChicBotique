@@ -240,11 +240,11 @@ namespace H6_ChicBotique.Database
 
                     AccountInfoId = acc2id,
                     Id = 2,
-                    Address = "Husum",
+                    Address = "Gladsaxe",
                     City = "Copenhagen",
-                    PostalCode = "2200",
+                    PostalCode = "2400",
                     Country = "Danmark",
-                    TelePhone = "+228415799"
+                    TelePhone = "+228515798"
                 }
                 );
             // Seed Data for PasswordEntity

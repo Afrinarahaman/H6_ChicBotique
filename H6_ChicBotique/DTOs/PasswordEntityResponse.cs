@@ -2,7 +2,7 @@
 
 namespace H6_ChicBotique.DTOs
 {
-    public class PasswordEnttiyResponse
+    public class PasswordEntityResponse
     {
         //It is a output for the corresponding request
         public string Password { get; set; }
