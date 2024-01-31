@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators'; // Import the map operator
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = environment.apiUrl +  '/product';
+  private apiUrl_product = environment.apiUrl +  '/product';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,13 +19,13 @@ export class ProductService {
 
   //Method for getting all products
   getAllProducts():Observable <Product[]>{
-    return this.http.get<Product[]> (this.apiUrl);
+    return this.http.get<Product[]> (this.apiUrl_product);
   }
   getProductById(productId:number): Observable<Product>{
-    return this.http.get<Product> (`${this.apiUrl}/${productId}`);
+    return this.http.get<Product> (`${this.apiUrl_product}/${productId}`);
   }
   getProductsByCategoryId(categoryId:number): Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId} `)
+    return this.http.get<Product[]>(`${this.apiUrl_product}/category/${categoryId} `)
   }
 
   getProductCount(): Observable<number> {
@@ -36,15 +36,15 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product, this.httpOptions);
+    return this.http.post<Product>(this.apiUrl_product, product, this.httpOptions);
   }
 
   updateProduct(productId: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${productId}`, product, this.httpOptions);
+    return this.http.put<Product>(`${this.apiUrl_product}/${productId}`, product, this.httpOptions);
   }
 
   deleteProduct(productId: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${productId}`, this.httpOptions);
+    return this.http.delete<boolean>(`${this.apiUrl_product}/${productId}`, this.httpOptions);
   }
 
 

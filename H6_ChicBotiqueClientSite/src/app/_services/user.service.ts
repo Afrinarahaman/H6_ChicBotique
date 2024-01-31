@@ -1,12 +1,9 @@
-import { Order } from './../_models/order';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { BehaviorSubject, Observable, forkJoin, switchMap } from 'rxjs';
-import { Guid } from 'guid-typescript';
 import { map,of } from 'rxjs';
-import { OrderService } from './order.service';
 import { ShippingDetails } from '../_models/shippingdetails';
 import { Token } from '@angular/compiler';
 
@@ -15,11 +12,11 @@ import { Token } from '@angular/compiler';
 })
 export class UserService {
 
-  apiUrl = environment.apiUrl + '/User';
-  apiUrl1 = environment.apiUrl + '/User/register';
-  apiUrl2 = environment.apiUrl + '/User/guestRegister';
-  apiUrl3 = environment.apiUrl + '/AccountInfo';
-  apiUrl4= environment.apiUrl+ '/User/changepassword';
+  apiUrl_user = environment.apiUrl + '/User';
+  apiUrl_register = environment.apiUrl + '/User/register';
+  apiUrl_guestregister = environment.apiUrl + '/User/guestRegister';
+  apiUrl_accountinfo = environment.apiUrl + '/AccountInfo';
+  apiUrl_changepassword= environment.apiUrl+ '/User/changepassword';
 
 
   httpOptions = {
@@ -28,7 +25,7 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private orderService:OrderService
+
   ) { }
 //BehaviorSubject  to manage the user role, allowing components to subscribe and receive role updates.
   public getRole: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -36,7 +33,7 @@ export class UserService {
 
 //Retrieves the list of all users.
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl)
+    return this.http.get<User[]>(this.apiUrl_user)
   }
   getRole_(roleNr: number) {
     // This function can be used to notify subscribers about the role number
@@ -74,38 +71,33 @@ export class UserService {
       map(users => users.filter(user => user.role === 2))
     );
   }
-
-
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl1, user, this.httpOptions);
-  }
   guest_register(guestUser: User): Observable<User>{
-    return this.http.post<User>(this.apiUrl2, guestUser, this.httpOptions);
+    return this.http.post<User>(this.apiUrl_guestregister, guestUser, this.httpOptions);
   }
   getUserGuid(userId: number): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl3}/${userId}`);
+    return this.http.get<string>(`${this.apiUrl_accountinfo}/${userId}`);
   }
   getUserbyEmail(email:string):Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${email}`);;
+    return this.http.get<User>(`${this.apiUrl_user}/${email}`);;
   }
 
   registerUser(user: User): Observable<User>{
-    return this.http.post<User>(this.apiUrl1, user, this.httpOptions);
+    return this.http.post<User>(this.apiUrl_register, user, this.httpOptions);
   }
 
 
   updateUser(userId: number, user:User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${userId}`, user, this.httpOptions);
+    return this.http.put<User>(`${this.apiUrl_register}/${userId}`, user, this.httpOptions);
   }
 
   deleteUser(userId: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/${userId}`, this.httpOptions);
+    return this.http.delete<boolean>(`${this.apiUrl_user}/${userId}`, this.httpOptions);
   }
 
 
   resetPassword(newPassword: string, userId: number): Observable<string> {
     const passwordEntityRequest = { Password: newPassword, UserId: userId };
-    return this.http.post(`${this.apiUrl4}`, passwordEntityRequest, {
+    return this.http.post(`${this.apiUrl_changepassword}`, passwordEntityRequest, {
       ...this.httpOptions,
       responseType: 'text',  // Set the response type to 'text'
     });

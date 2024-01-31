@@ -12,7 +12,7 @@ import {Category} from '../_models/category';
 })
 export class CategoryService {
 
-  private apiUrl = environment.apiUrl + '/category';
+  private apiUrl_category = environment.apiUrl + '/category';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
@@ -20,7 +20,7 @@ export class CategoryService {
 constructor(private http: HttpClient) { }
 
 getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+    return this.http.get<Category[]>(this.apiUrl_category);
 }
 
 getCategoryCount(): Observable<number> {
@@ -31,23 +31,23 @@ getCategoryCount(): Observable<number> {
 }
 
 getCategory(categoryId: number): Observable<Category> {
-    return this.http.get<Category>(`${this.apiUrl}/${categoryId}`);
+    return this.http.get<Category>(`${this.apiUrl_category}/${categoryId}`);
 }
 getCategoriesWithoutProducts(): Observable<Category[]>{
-  return this.http.get<Category[]>(`${this.apiUrl}/WithoutProducts`)
+  return this.http.get<Category[]>(`${this.apiUrl_category}/WithoutProducts`)
 }
 
 addCategory(category: Category): Observable<Category> {
-  return this.http.post<Category>(this.apiUrl, category, this.httpOptions);
+  return this.http.post<Category>(this.apiUrl_category, category, this.httpOptions);
 }
 
 
 editCategory(categoryId: number, category: Category): Observable<Category> {
-  return this.http.put<Category>(`${this.apiUrl}/${categoryId}`, category, this.httpOptions);
+  return this.http.put<Category>(`${this.apiUrl_category}/${categoryId}`, category, this.httpOptions);
 }
 
 deleteCategory(authorId: number): Observable<Category> {
-  return this.http.delete<Category>(`${this.apiUrl}/${authorId}`, this.httpOptions);
+  return this.http.delete<Category>(`${this.apiUrl_category}/${authorId}`, this.httpOptions);
 
 }
 }
