@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
   public grandTotal: number = 0;
   public cartProducts: CartItem[] = [];  //property
 
-  constructor() { }
+
 
   constructor(private cartService: CartService, private router: Router,private authService: AuthService) { }
 
