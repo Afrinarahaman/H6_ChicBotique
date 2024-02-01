@@ -7,6 +7,7 @@ Technologies Used
   •	Entity Framework
   •	Angular 14
   •	Bootstrap 5
+  •	Node 16
   
 NuGet Packages
   •	Microsoft.AspNetCore.WebApi.Core.de {5.3.0}
@@ -17,7 +18,7 @@ NuGet Packages
   •	Swashbuckle.AspNetCore.Swagger {6.5.0}
   •	Swashbuckle.AspNetCore.SwaggerGen {6.5.0}
   •	Moq {4.20.70}SQL Server
-  
+   •	Moq {6.0.1.4}SQL Server-Afrina has installed this in her branch
 Getting Started
 To run ChicBotique locally, follow these steps:
 Prerequisites

@@ -50,6 +50,7 @@ namespace H6_ChicBotiqueTestProject.RepositoryTests
             _context.AccountInfo.Add(new AccountInfo
             {
                 Id= acc2id,
+                CreatedDate = DateTime.UtcNow,
                 UserId = 2
             });
             _context.User.Add(new User

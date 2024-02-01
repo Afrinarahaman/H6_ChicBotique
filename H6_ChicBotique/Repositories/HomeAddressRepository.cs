@@ -47,7 +47,7 @@ namespace H6_ChicBotique.Repositories
         // For updating the HomeAddressEnitity entity
         public async Task<HomeAddress> Update(HomeAddress HomeAddress)
         {
-            HomeAddress updateHomeAddress = await _context.HomeAddress.Include(a => a.AccountInfo)
+            HomeAddress updateHomeAddress = await _context.HomeAddress
                 .FirstOrDefaultAsync(a => a.Id == HomeAddress.Id);
 
             if (HomeAddress != null)

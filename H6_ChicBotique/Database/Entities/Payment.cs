@@ -13,8 +13,8 @@ namespace H6_ChicBotique.Database.Entities
 
         [Column(TypeName = "nvarchar(100)")]
         public string? TransactionId { get; set; }
-        // [Column(TypeName ="Decimal(10, 03)")]
-        //public decimal  Amount { get; set; }
+        [Column(TypeName ="Decimal(10, 03)")]
+        public decimal  Amount { get; set; }
         [Column(TypeName = "nvarchar(100)")]
         public string? PaymentMethod { get; set; }
         [Column(TypeName = "DateTime")]

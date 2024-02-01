@@ -22,6 +22,15 @@ namespace H6_ChicBotique.Helpers
             string actualHash = HashPassword($"{password}{salt}");
             return actualHash == expectedHash;
         }
-      
+        public static string GenerateSalt()
+        {
+            byte[] saltBytes = new byte[16];
+            using (var rngCsp = new RNGCryptoServiceProvider())
+            {
+                rngCsp.GetNonZeroBytes(saltBytes);
+            }
+            return Convert.ToBase64String(saltBytes);
+
+        }
     }
 }

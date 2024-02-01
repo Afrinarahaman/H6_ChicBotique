@@ -4,6 +4,7 @@ using H6_ChicBotique.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    partial class ChicBotiqueDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240201101520_chicbotiqueDB")]
+    partial class chicbotiqueDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
