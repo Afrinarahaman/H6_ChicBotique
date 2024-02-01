@@ -92,6 +92,73 @@ namespace H6_ChicBotiqueTestProject.RepositoryTests
             Assert.Equal(passwordEntityId, result.PasswordId);
         }
 
+        [Fact]
+        public async void InsertNewPasswordEntity_ShouldFailToAddPasswordEntity_WhenPasswordEntityIdAlreadyExists()
+        {
+            // Arrange 
+            await _context.Database.EnsureDeletedAsync();
+
+            // Creating a PasswordEntity with an existing Id
+            PasswordEntity passwordEntity = new PasswordEntity
+            {
+                PasswordId = 1,
+                UserId = 1,
+                Password = PasswordHelpers.HashPassword("password" + salt),
+                Salt = salt
+            };
+
+            _context.PasswordEntity.Add(passwordEntity);
+            await _context.SaveChangesAsync();
+
+            // Act
+            async Task action() => await _passwordEntityRepository.CreatePassword(passwordEntity);
+
+            // Assert
+            var ex = await Assert.ThrowsAsync<ArgumentException>(action);
+            Assert.Contains("An item with the same key has already been added", ex.Message);
+        }
+        // Test case for UpdateExistingPasswordEntity method
+        [Fact]
+        public async void UpdateExistingPasswordEntity_ShouldChangeValuesOnPasswordEntity()
+        {
+            // Arrange 
+            await _context.Database.EnsureDeletedAsync();
+            int passwordEntityId = 1;
+
+            // Creating a new PasswordEntity and updating it
+            PasswordEntity newPasswordEntity = new PasswordEntity
+            {
+                PasswordId = 1,
+                UserId = 1,
+                Password = PasswordHelpers.HashPassword("password" + salt),
+                Salt = salt
+
+
+            };
+        
+
+            _context.PasswordEntity.Add(newPasswordEntity);
+            await _context.SaveChangesAsync();
+
+            PasswordEntity updatePasswordEntity = new PasswordEntity
+            {
+                PasswordId = 1,
+                UserId = 1,
+                Password = PasswordHelpers.HashPassword("pass" + salt),
+                Salt = salt
+            };
+           
+
+            // Act
+            var result = await _passwordEntityRepository.UpdatePassword(updatePasswordEntity);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<PasswordEntity>(result);
+            Assert.Equal(passwordEntityId, result.PasswordId);
+            Assert.Equal(updatePasswordEntity.Password, result.Password);
+        }
+
 
     }
 }
