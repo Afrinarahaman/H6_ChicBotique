@@ -39,6 +39,15 @@ export class AuthService {
       }));
   }
 
+  /*logout() {
+    // remove customer from local storage to log customer out
+    sessionStorage.removeItem('currentMember');
+    // reset CurrentUserSubject, by fetching the value in sessionStorage, which is null at this point
+    //this.currentMemberSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentMember') as string));
+    // reset CurrentUser to the resat UserSubject, as an obserable
+    //this.currentUser = this.currentMemberSubject.asObservable();
+    this.currentMemberSubject.next(null);
+  }*/
   logout() {
     // remove user from local storage to log user out
     sessionStorage.removeItem('currentMember');
@@ -59,7 +68,7 @@ export class AuthService {
         return user;
       }));
   }
-/*  register_guest(email: string,firstName: string, LastName: string, address: string, telephone: string) {
+  register_guest(email: string,firstName: string, LastName: string, address: string, telephone: string) {
     return this.http.post<any>(`${environment.apiUrl}/User/guestRegister`, {  firstName, LastName, address, telephone, email})
       .pipe(map(user => {
         // store customer details and jwt token in local storage to keep customer logged in between page refreshes
@@ -68,6 +77,6 @@ export class AuthService {
         // console.log('login customer',customer);
         return user;
       }));
-  }*/
+  }
 
 }
