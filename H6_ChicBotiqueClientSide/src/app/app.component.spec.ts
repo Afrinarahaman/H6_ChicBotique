@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'H6_ChicBotiqueClientSide'`, () => {
+  it(`should have as title 'H6_ChicBotiqueClientSite'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('H6_ChicBotiqueClientSide');
+    expect(app.title).toEqual('H6_ChicBotiqueClientSite');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('H6_ChicBotiqueClientSide app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('H6_ChicBotiqueClientSite app is running!');
   });
 });

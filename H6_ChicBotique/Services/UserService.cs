@@ -12,11 +12,12 @@ namespace H6_ChicBotique.Services
     {
         Task<List<UserResponse>> GetAll(); // Method to retrieve all users as UserResponse objects
         Task<UserResponse> GetById(int UserId); // Method to retrieve a user by ID as a UserResponse object
+        Task<PasswordEntityResponse> GetPasswordByUserId(int UserId);
         Task<UserResponse> GetIdByEmail(string email); // Method to retrieve a user by email as a UserResponse object
         Task<LoginResponse> Authenticate(LoginRequest login); // Method to authenticate a user based on the provided login credentials.
         Task<UserResponse> Register(UserRegisterRequest newUser);//To register a user
         Task<GuestResponse> Register_Guest(GuestRequest newGuest);//To create a user as Guest withour having password
-        Task<UserResponse> Update(int UserId, UserRequest updateUser);//To update userprofile
+        Task<UserResponse> Update(int UserId, UserRequest updateUser);//To update userprofile        
         Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);//To change the password
     }
 
@@ -208,6 +209,26 @@ namespace H6_ChicBotique.Services
             }
 
             return null; // Return null if the provided password doesn't match the stored hashed password.
+        }
+
+        //Get Password by userid method
+        public async Task<PasswordEntityResponse> GetPasswordByUserId(int UserId)
+        {
+            PasswordEntity pwd = await _passwordEntityRepository.SelectByUserId(UserId);
+            if (pwd != null)
+            {
+
+                PasswordEntityResponse pwdresponse = new PasswordEntityResponse
+                {
+
+                    Password = pwd.Password,
+                    Salt = pwd.Salt,
+                    LastUpdatedDate = DateTime.Now
+
+                };
+                return pwdresponse;
+            }
+            return null;
         }
 
         // update function for password

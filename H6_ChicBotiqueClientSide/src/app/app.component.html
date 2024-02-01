@@ -1,2 +1,13 @@
+<!------Navbar (Always displayed in all pages)----->
+<app-navbar></app-navbar>
 
+<!------Application content including the route outlet for dynamic content------->
 <router-outlet></router-outlet>
+<!--<app-admin-user></app-admin-user>------->
+<!-- Only show these components when the specific routes are active-->
+<app-frontpage *ngIf="isFrontpageRoute()"></app-frontpage>
+<!--<app-administrator *ngIf="isAdminpageRoute()"></app-administrator>-->
+
+
+
+<!------Footer------->
