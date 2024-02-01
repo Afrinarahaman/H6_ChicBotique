@@ -52,7 +52,7 @@ namespace H6_ChicBotique.Repositories
 
         public async Task<ShippingDetails> Update(ShippingDetails ShippingDetails)
         {
-            ShippingDetails updateShippingDetails = await _context.ShippingDetails.Include(a => a.Order)
+            ShippingDetails updateShippingDetails = await _context.ShippingDetails
                 .FirstOrDefaultAsync(a => a.Id == ShippingDetails.Id);
 
             if (ShippingDetails != null)
