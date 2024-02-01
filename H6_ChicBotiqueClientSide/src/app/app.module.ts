@@ -9,13 +9,21 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { CartComponent } from './cart/cart.component';
+import { AdministratorComponent } from './_admin/administrator/administrator.component';
+import { AdminProductComponent } from './_admin/admin-product/admin-product.component';
+import { AdminUserComponent } from './_admin/admin-user/admin-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FrontpageComponent,
     SortPipe,
-    NavbarComponent
+    NavbarComponent,
+    CartComponent,
+    AdministratorComponent,
+    AdminProductComponent,
+    AdminUserComponent
   ],
   imports: [
     BrowserModule,
