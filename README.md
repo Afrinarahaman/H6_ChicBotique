@@ -22,8 +22,9 @@ Getting Started
 To run ChicBotique locally, follow these steps:
 Prerequisites
   •	.NET Core SDK (version 7.0.101)
-  •	Node.js (version 16)
-  •	Angular CLI (version 14.3.0 )
+  •	Node.js (version 16.17.0)
+  •	 Angular CLI: 14.2.13
+  • Package Manager: npm 10.4.0
 
 Installation
   1.	Clone the repository.
