@@ -1,5 +1,6 @@
-import { NgModule} from '@angular/core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CategoryProductsComponent } from './category-products/category-products.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,23 +9,42 @@ import { SortPipe } from './_pipes/sort.pipe';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { CartComponent } from './cart/cart.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FrontpageComponent,
     SortPipe,
-    NavbarComponent
+    NavbarComponent,
+    CategoryProductsComponent,
+    ProductDetailsComponent,
+    CartComponent,
+    WishlistComponent,
+    LoginComponent,
+    RegisterComponent,
+
+
+
+
   ],
+ // schemas: [NO_ERRORS_SCHEMA , CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule,
     HttpClientModule,
-    [FormsModule]
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add CUSTOM_ELEMENTS_SCHEMA
   bootstrap: [AppComponent]
 })
 export class AppModule { }

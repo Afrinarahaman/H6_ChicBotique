@@ -7,6 +7,7 @@ import { WishlistService } from '../_services/wishlist.service';
 import { WishlistItem } from '../_models/wishlistItem';
 
 
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',

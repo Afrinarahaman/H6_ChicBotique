@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../_services/product.service';
 import { Product } from '../_models/product';
-import { SearchService } from '../_services/search.service';
+
+
+
 
 @Component({
   selector: 'app-category-products',
