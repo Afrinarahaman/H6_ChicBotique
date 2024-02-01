@@ -3,7 +3,7 @@ using H6_ChicBotique.Authorization;
 using H6_ChicBotique.Database.Entities;
 using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Repositories;
-
+using H6_ChicBotique.Helpers;
 
 namespace H6_ChicBotique.Services
 {
@@ -142,7 +142,7 @@ namespace H6_ChicBotique.Services
                 //etc
             };
             homeaddress = await _homeAddressRepository.Create(homeaddress);
-            var salt = DateTime.Now.ToString();
+            var salt = PasswordHelpers.GenerateSalt();
             var HashedPW = Helpers.PasswordHelpers.HashPassword($"{newuser.Password}{salt}");
             PasswordEntity pwd = new()
             {
@@ -164,7 +164,7 @@ namespace H6_ChicBotique.Services
             user.LastName = newguest.LastName;
 
             user.Email = newguest.Email;
-            //Password = "No Need",
+           
             user.Role = Helpers.Role.Guest;
 
             user = await _userRepository.Create(user);
@@ -213,7 +213,7 @@ namespace H6_ChicBotique.Services
         // update function for password
         public async Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest)
         {
-            var salt = DateTime.Now.ToString();  //making salt
+            var salt = PasswordHelpers.GenerateSalt();  //making salt
             var HashedPW = Helpers.PasswordHelpers.HashPassword($"{passwordEntityRequest.Password}{salt}");///hashing the requested password with salt
             PasswordEntity pwd = await _passwordEntityRepository.SelectByUserId(passwordEntityRequest.UserId); ///getting the user by userId
             //putting the new hashed password, salt, date in the object

@@ -249,8 +249,8 @@ namespace H6_ChicBotique.Database
                 );
             // Seed Data for PasswordEntity
             // Generate a unique salt using the current date and time
-            var salt = DateTime.Now.ToString();
-
+            //var salt = DateTime.Now.ToString();
+            var salt = PasswordHelpers.GenerateSalt();
             modelBuilder.Entity<PasswordEntity>().HasData(
                 // PasswordEntity 1 for User 1
                 new PasswordEntity
