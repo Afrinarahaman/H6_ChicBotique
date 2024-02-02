@@ -5,6 +5,7 @@ import { CartService } from '../_services/cart.service';
 import { ProductService } from '../_services/product.service';
 import { WishlistService } from '../_services/wishlist.service';
 import { WishlistItem } from '../_models/wishlistItem';
+import { CartItem } from '../_models/cartItem';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   wishlist: number[] = [];
   category:Category ={ id: 0, categoryName: '' };
   public quantity:number=0;
+  public cartProducts: CartItem[] = [];  //property
+  public totalItem: number = this.cartService.getBasket().length;// totalitem of the cart
   product:Product={id: 0, title:"", price:0, description:"",image:"", stock:0,categoryId:0, category:this.category }
   wishlistItem : WishlistItem= {productId: 0, productTitle:"",productImage:"",productDescription:"",productPrice:0}
   constructor(
@@ -25,12 +28,13 @@ export class ProductDetailsComponent implements OnInit {
     private cartService:CartService,
     private route:ActivatedRoute,
      private wishlistService: WishlistService)
-     { }
+     { 
+     }
 
      addedToWishlist: boolean = false;
 
   ngOnInit(): void {
-
+    
     this.route.params.subscribe(params => {
       this.productId = +params['id'];
     });
@@ -52,7 +56,9 @@ export class ProductDetailsComponent implements OnInit {
       quantity:this.quantity + 1,
 
     });
-    window.location.reload();
+    this.cartProducts = this.cartService.getBasket();//
+    this.totalItem= this.cartService.getBasket().length;
+   
   }
 
  handleAddtoWishlist(product:Product)

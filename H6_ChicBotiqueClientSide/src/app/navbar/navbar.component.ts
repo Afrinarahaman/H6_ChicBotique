@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
   public totalItem: number = this.cartService.getBasket().length;
   public WL_totalItem: number = this.wishlistService.getWishlist().length;
 
-    showSearchResults: boolean = false;
+  showSearchResults: boolean = false;
   x: any;
   isAdmin = false;
   isHovered = false;

@@ -57,7 +57,26 @@ export class CartService {
     return grandTotal;
   }
 
+  clearBasket(): CartItem[] {
+    this.getBasket();
+    this.basket = [];
+    this.saveBasket();
+    return this.basket;
+  }
+  removeItemFromBasket(productId: number): void {
+    this.getBasket();
+    for (let i = 0; i < this.basket.length; i += 1) {
+      if (this.basket[i].productId === productId) {
 
+        this.basket.splice(i, 1);
+
+
+      }
+    }
+
+    this.saveBasket();
+
+  }
 async addOrder(): Promise<any> {
    //this is for memeber
     if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
@@ -69,7 +88,7 @@ async addOrder(): Promise<any> {
 
         console.log('GUID VALUE:', this.userGuid);
       });*/
-  /*   this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
+      /*this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
      console.log("User Guid to string", this.userGuid)
         this.orderService.getAddressData().subscribe((data) => {
           this.shippingAddressData = data;
@@ -126,30 +145,13 @@ async addOrder(): Promise<any> {
 
     }
 
-
-  }
-
-  clearBasket(): CartItem[] {
-    this.getBasket();
-    this.basket = [];
-    this.saveBasket();
-    return this.basket;
-  }
-  removeItemFromBasket(productId: number): void {
-    this.getBasket();
-    for (let i = 0; i < this.basket.length; i += 1) {
-      if (this.basket[i].productId === productId) {
-
-        this.basket.splice(i, 1);
-
-
-      }
-    }
-
-    this.saveBasket();
-
   }*/
+  
 
+  
+
+
+    
 }
-    }
+}
 }
