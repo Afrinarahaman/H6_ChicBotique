@@ -1,0 +1,89 @@
+/* Custom styles for the small navbar button */
+
+.custom-navbar-toggler {
+    font-size: 18px;
+    /* Adjust the font size as needed */
+    background-color: transparent;
+    border-style: inset;
+    padding: 12px;
+    /* Adjust padding as needed */
+}
+
+.custom-navbar-toggler:hover {
+    background-color: transparent;
+    /* Background color on hover (if needed) */
+    color: #0a3a16;
+    /* Text color on hover (if needed) */
+}
+
+.logo {
+    width: 100px;
+    border: solid rgb(6, 7, 8);
+    align-items: center;
+}
+
+.container {
+    margin-right: 5px;
+    margin-top: 100px;
+}
+
+p {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.custom-card {
+    width: 25rem;
+    height: 25rem;
+    padding: 20px;
+    border-radius: 25px;
+    /* Rounded corners */
+}
+
+
+/* Initial state */
+
+.card-hover {
+    transition: transform 0.3s ease;
+}
+
+
+/* Hover state */
+
+.card-hover:hover {
+    transform: scale(1.05);
+    /* Increase the scale for the pop-up effect */
+}
+
+
+/* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+
+@media (max-width: 768px) {
+    /* Adjust the styles for mobile screens here */
+    .navbar {
+        padding: 0;
+        /* Adjust the top and bottom padding as needed */
+    }
+    .logo {
+        width: 60px;
+        border: solid rgb(6, 7, 8);
+        align-items: center;
+    }
+    .container {
+        margin-left: 140px;
+    }
+    .custom-navbar-toggler {
+        font-size: 16px;
+        /* Reduce the font size */
+        padding: 5px 8px;
+        /* Adjust the padding as needed */
+    }
+    .custom-offcanvas-body {
+        padding: 25px;
+    }
+    /* You can further customize styles for smaller screens as needed */
+}

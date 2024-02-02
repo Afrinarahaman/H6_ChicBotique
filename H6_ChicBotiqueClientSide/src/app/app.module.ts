@@ -1,6 +1,6 @@
 import { CategoryProductsComponent } from './category-products/category-products.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { AdminProductComponent } from './_admin/admin-product/admin-product.component';
+
+
 
 @NgModule({
   declarations: [
@@ -29,17 +32,21 @@ import { LoginComponent } from './login/login.component';
     WishlistComponent,
     LoginComponent,
     RegisterComponent,
+    AdminProductComponent,
+
+
 
 
 
 
   ],
- // schemas: [NO_ERRORS_SCHEMA , CUSTOM_ELEMENTS_SCHEMA],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     RouterModule
   ],
