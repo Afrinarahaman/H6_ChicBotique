@@ -15,6 +15,7 @@ export class CartComponent implements OnInit {
   public grandTotal: number = 0;// variable declaration for storing total amount of the purchase
   public cartProducts: CartItem[] = [];  //property
   public basket = this.cartService.basket; //getting basket from the service
+  public totalItem: number =0;
   constructor(private cartService: CartService, private router: Router,private authService: AuthService) //dependency injection of different services
   { }
 
@@ -52,6 +53,7 @@ export class CartComponent implements OnInit {
       this.cartService.clearBasket();
    
       this.cartProducts=[];
+      window.location.reload;
 
   }
  

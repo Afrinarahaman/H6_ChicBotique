@@ -11,6 +11,7 @@ import { WishlistService } from '../_services/wishlist.service';
 import { SearchService } from '../_services/search.service';
 import { Product } from '../_models/product';
 import { ProductService } from '../_services/product.service';
+import { BehaviorSubject, Observable, Subject, observable } from 'rxjs';
 
 
 
@@ -40,7 +41,16 @@ export class NavbarComponent implements OnInit {
 
   products: Product[]=[];
 
-  public totalItem: number = this.cartService.getBasket().length;
+  /*private dataSub = new Subject();
+
+  getData$(){
+    return this.dataSub.asObservable();
+  }
+
+  setData(data:any) {
+    this.dataSub.next(data);
+  }*/
+  public totalItem = this.cartService.getBasket().length;
   public WL_totalItem: number = this.wishlistService.getWishlist().length;
 
   showSearchResults: boolean = false;
@@ -62,6 +72,7 @@ export class NavbarComponent implements OnInit {
       this.searchTerm = term;
       // Perform search or update your UI as needed when the search term changes
     });
+   
   }
 
   ngOnInit(): void {

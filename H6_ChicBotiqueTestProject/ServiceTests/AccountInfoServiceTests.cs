@@ -69,7 +69,7 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
             Assert.Equal(1, result.Count);
             Assert.IsType<List<AccountInfoResponse>>(result);
         }
-        // Test case for GetAccountInfoById method when product exists
+        // Test case for GetAccountInfoById method when AccountInfo exists
         [Fact]
         public async void GetAccountInfoById_ShouldReturnAccountInfoResponse_WhenAccountInfoExists()
         {
