@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../_services/auth.service';
-import { CartService } from '../_services/cart.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { CartService } from 'src/app/_services/cart.service';
 import { FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -67,7 +67,11 @@ export class LoginComponent implements OnInit {
              console.log('Successful login');
              const returnUrl =  '/';
              this.router.navigate(['/']);
+             if(this.authService.currentUserValue.role==0){
+              this.router.navigate(['/admin-panel']);
+             }
         },
+
         error: obj => {
           console.log('login error ', obj.error);
           if (obj.error.status == 400 || obj.error.status == 401 || obj.error.status == 500) {

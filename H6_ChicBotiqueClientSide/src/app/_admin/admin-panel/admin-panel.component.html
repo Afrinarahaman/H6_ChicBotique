@@ -36,7 +36,7 @@
     <!--Card for Categories--->
     <div class="col-md-2 ">
         <div class="card card text-black bg-light custom-card card-hover ">
-            <div class="card-body " routerLink="/admin/category ">
+            <div class="card-body " [routerLink]="['/admin/category']">
                 <i class="fas fa-puzzle-piece fa-3x p-4 bg-danger "></i>
                 <div class="mt-2 lead ">Categories</div>
                 <h2 class="card-title " style="font-size:1.8em; ">{{ categoryCount }}</h2>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-2 ">
             <div class="card card text-black bg-light custom-card card-hover ">
-                <div class="card-body " routerLink="/admin/user ">
+                <div class="card-body " [routerLink]="['/admin/user']">
                     <i class="fas fa-user-friends fa-2x "></i>
                     <div class="lead ">Total Members</div>
                     <h2 class="card-title ">{{ memberCount }}</h2>

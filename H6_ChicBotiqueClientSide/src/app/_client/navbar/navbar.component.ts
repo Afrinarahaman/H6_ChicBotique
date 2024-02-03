@@ -1,16 +1,16 @@
+import { CategoryService } from 'src/app/_services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from '../_services/category.service';
-import { Category } from '../_models/category';
-import { CartService } from '../_services/cart.service';
-import { User } from "../_models/user";
-import { AuthService } from '../_services/auth.service';
-import { Role } from '../_models/role';
-import { UserService } from '../_services/user.service';
-import { WishlistService } from '../_services/wishlist.service';
-import { SearchService } from '../_services/search.service';
-import { Product } from '../_models/product';
-import { ProductService } from '../_services/product.service';
+import { Category } from 'src/app/_models/category';
+import { CartService } from 'src/app/_services/cart.service';
+import { User } from "src/app/_models/user";
+import { AuthService } from 'src/app/_services/auth.service';
+import { Role } from 'src/app/_models/role';
+import { UserService } from 'src/app/_services/user.service';
+import { WishlistService } from 'src/app/_services/wishlist.service';
+import { SearchService } from 'src/app/_services/search.service';
+import { Product } from 'src/app/_models/product';
+import { ProductService } from 'src/app/_services/product.service';
 
 
 

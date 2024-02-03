@@ -1,9 +1,9 @@
-import { CartItem } from './../_models/cartItem';
+import { CartItem } from 'src/app/_models/cartItem';
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../_services/cart.service';
+import { CartService } from 'src/app/_services/cart.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../_services/auth.service';
-import { Role } from '../_models/role';
+import { AuthService } from 'src/app/_services/auth.service';
+import { Role } from 'src/app/_models/role';
 
 @Component({
   selector: 'app-cart',
