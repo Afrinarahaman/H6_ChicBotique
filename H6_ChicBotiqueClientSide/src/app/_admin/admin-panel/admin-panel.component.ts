@@ -68,7 +68,7 @@ products: any;
   ngOnInit(): void {
     this.currentDate= new Date();
 
-
+    //to count products
     this.productService.getProductCount().subscribe(count => {
         this.productCount = count;  });
     //to count categories

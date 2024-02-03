@@ -14,6 +14,8 @@ import { AdminUserComponent } from './_admin/admin-user/admin-user.component';
 import { FormsModule } from '@angular/forms';
 import { AdminProductComponent } from './_admin/admin-product/admin-product.component';
 import{ AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
+import { ProfileComponent } from './_client/profile/profile.component';
+import { GuestComponent } from './_client/guest/guest.component';
 
 const adminRoutes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent,canActivate: [AuthGuard] },
@@ -30,7 +32,9 @@ const clientRoutes: Routes = [
   { path: 'cart', component: CartComponent },
   {path:'wishlist',component:WishlistComponent},
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'guest', component: GuestComponent }
 ];
 
 @NgModule({

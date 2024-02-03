@@ -11,7 +11,7 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-6">
-            <h5>Choose Role:</h5>
+            <h5><b>Choose Role:</b></h5>
             <div class="input-group mb-3">
                 <select class="form-select" [(ngModel)]="selectedValue" (change)="onRoleChange($event)">
               <option value="0">Administrators</option>
@@ -32,7 +32,7 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Action</th>
+                        <th>Order Number</th>
                     </tr>
                 </thead>
 
@@ -42,11 +42,10 @@
                         <td>{{ admin.firstName }}</td>
                         <td>{{ admin.lastName }}</td>
                         <td>{{ admin.email }}</td>
-                        <!-- Display addresses for each admin -->
-                        <td>
-
-                        </td>
-
+                        <td>{{ admin.address }}</td>
+                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                          <u>Check Order details</u>
+                        </button></td>
                 </tbody>
 
                 <tbody *ngIf="(selectedValue==='1') && (users$ | async) as members ">
@@ -56,7 +55,9 @@
                         <td>{{ member.lastName }}</td>
                         <td>{{ member.email }}</td>
                         <td>{{ member.address }}</td>
-
+                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                          <u>Check Order details</u>
+                        </button></td>
                     </tr>
                 </tbody>
                 <tbody *ngIf="selectedValue==='2' && (users$ | async) as guests">
@@ -66,7 +67,9 @@
                         <td>{{ guest.lastName }}</td>
                         <td>{{ guest.email }}</td>
                         <td>{{ guest.address }}</td>
-
+                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                          <u>Check Order details</u>
+                        </button></td>
                     </tr>
                 </tbody>
 
@@ -76,31 +79,88 @@
 </div>
 
 
-<!-- Modal for updating a member -->
-<div class="modal " id="updateUserModal " tabindex="-1 " aria-labelledby="updateCategoryLabel " role="dialog " aria-hidden="true ">
+
+<!-- Modal for checking order details -->
+<div class="modal" id="orderDetailsModal" tabindex="-1" aria-labelledby="Order details" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Order Details</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <!-- Order Table -->
+                <table class="table table-hover table-stripped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product Title</th>
+                            <th>Product Quantity</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <!--
+          <tbody *ngIf="orders?.length !== 0">
+            <tr *ngFor="let order of orders">-->
+                    <tr>
+                        <td>order.id</td>
+                        <td>product.id</td>
+                        <td>product.quantiy | currency:'kr '</td>
+                        <td>payment-status</td>
+                    </tr>
+                    <!--  </tbody>-->
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                <!-- <button type="button" class="btn btn-warning" (click)="cancel()">Cancel</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal for checking order details -->
+<!---<div class="modal " id="orderDetailsModal" tabindex="-1 " aria-labelledby="Order details " role="dialog " aria-hidden="true ">
     <div class="modal-dialog ">
         <div class="modal-content ">
             <div class="modal-header ">
-                <h4 class="modal-title " id="exampleModalLabel ">Update Member</h4>
+                <h4 class="modal-title " id="exampleModalLabel ">Order Details</h4>
                 <button type="button " class="btn-close " data-bs-dismiss="modal " aria-label="Close ">
                                 <span aria-hidden="true ">&times;</span>
                             </button>
             </div>
             <div class="modal-body ">
-                <form>
-                    <div class="mb-3 ">
-                        <label>Title<input [(ngModel)]="user.firstName " class="form-control " id="title " name="title " placeholder="Enter product title "></label>
-                        <label>Description<input [(ngModel)]="user.lastName " class="form-control " id="description " name="description " placeholder="Enter product description "></label>
-                        <label>Price<input [(ngModel)]="user.email " class="form-control " id="price " name="price " placeholder="Enter product price "></label>
-                        <label>Stock<input [(ngModel)]="user.address " class="form-control " id="stock " name="stock " placeholder="Enter product stock "></label>
-                        <!--<label>Category ID<input [(ngModel)]="product.categoryId " class="form-control " id="categoryId " name="categoryId " placeholder="Enter category ID "></label>-->
-                    </div>
-                    <button type="button " class="btn btn-primary btn-lg " data-bs-dismiss="modal ">Update</button>
-                </form>
-            </div>
-            <div class="modal-footer ">
-                <button type="button " class="btn btn-warning " (click)="cancel() ">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+                <!-- Order Table -->
+<!--  <table class="table table-hover table-stripped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product Title</th>
+                            <th>Product Quantity</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>-->
+<!--
+                    <tbody *ngIf="orders?.length !== 0">
+                        <tr *ngFor="let order of orders">
+                            <td>{{ order.id }}</td>
+                            <td>{{ product.title }}</td>
+
+                            <td>{{ product.quantiy | currency:'kr ':'symbol':'1.2-2' }}</td>
+                            <td>{{ order.status }}</td>
+
+                        </tr>
+                    </tbody>-->
+
+<!--  <div class="modal-footer ">
+                        <button type="button" class="btn btn-primary "> OK
+                            <i class=" fas fa-trash text-danger " style="font-size: 20px; "></i>
+                      </button>
+                        <div class="modal-footer ">
+                            <button type="button " class="btn btn-warning " (click)="cancel() ">Cancel</button>
+                        </div>
+                    </div>-->

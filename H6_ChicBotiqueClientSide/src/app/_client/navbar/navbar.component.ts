@@ -130,7 +130,7 @@ export class NavbarComponent implements OnInit {
     }
     else {
       if (this.x === 0) {
-        this.router.navigate(['admin']);
+        this.router.navigate(['admin-panel']);
       }
       else {
         this.router.navigate(['/']);
