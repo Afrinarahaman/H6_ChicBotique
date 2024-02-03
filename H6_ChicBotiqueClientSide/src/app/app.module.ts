@@ -20,6 +20,12 @@ import { AdminProductComponent } from './_admin/admin-product/admin-product.comp
 import { AdminCategoryComponent } from './_admin/admin-category/admin-category.component';
 import { AdminUserComponent } from './_admin/admin-user/admin-user.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { ThankyouComponent } from './_client/thankyou/thankyou.component';
+import { CheckOutComponent } from './_client/check-out/check-out.component';
+import { PaymentComponent } from './_client/payment/payment.component';
+import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdetails.component';
+import { ProfileComponent } from './_client/profile/profile.component';
+import { GuestComponent } from './_client/guest/guest.component';
 
 
 
@@ -39,6 +45,12 @@ import { AuthGuard } from './_helpers/auth.guard';
     AdminPanelComponent,
     AdminCategoryComponent,
     AdminUserComponent,
+    ThankyouComponent,
+    CheckOutComponent,
+    PaymentComponent,
+    ShippingdetailsComponent,
+    ProfileComponent,
+    GuestComponent,
 
 
 
