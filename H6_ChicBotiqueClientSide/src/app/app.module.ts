@@ -26,7 +26,7 @@ import { PaymentComponent } from './_client/payment/payment.component';
 import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdetails.component';
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
-
+import { NgxPayPalModule } from 'ngx-paypal';
 
 
 @NgModule({
@@ -66,7 +66,8 @@ import { GuestComponent } from './_client/guest/guest.component';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    NgxPayPalModule
   ],
   providers: [AuthGuard],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add CUSTOM_ELEMENTS_SCHEMA

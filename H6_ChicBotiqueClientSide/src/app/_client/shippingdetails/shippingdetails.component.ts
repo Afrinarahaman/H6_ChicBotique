@@ -12,7 +12,7 @@ import { ProductService } from 'src/app/_services/product.service';
 })
 export class ShippingdetailsComponent implements OnInit {
 
-  shippingaddressFormGroup: FormGroup | any;
+ 
   
   public shippingdetails: any = {};
   id: any;

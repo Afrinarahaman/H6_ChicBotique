@@ -61,7 +61,7 @@ export class PaymentComponent implements OnInit {
  
       this.payPalConfig = {
         currency: 'DKK',
-        clientId: `${environment.Client_Id}`,
+        clientId: `${environment.Client_Id}`,       
         createOrderOnClient: (data) =>
 
         //const addressData=this.shippingdetails;
@@ -90,32 +90,8 @@ export class PaymentComponent implements OnInit {
             data,
             actions
           );
-          this.trasactionId=this.orderService.setTransactionId(data.orderID);
-          
-          actions.order.get().then(async (details: any) => {
-            this.orderService.getAddressData();
-          
-            this.paymentStatus=this.orderService.setPaymentStatus(details.status);
-            this.paymentMethod=this.orderService.setPaymentMethod(details.paymentMethod);
-            var result = await this.cartService.addOrder();
-          
-            
-            if( details.status=="success"){
-             // var result = await this.cartService.addOrder();n
-              this.id =result.id;
-              console.log('result', result);
-              this.cartService.clearBasket();
-              this.router.navigate(['/thankyou/', {orderid: this.id}]);
-             
-            }
-            else
-            {
-              console.log("Unsucces to make order")
-            }
-          });
-        },
-      
-   
+          },
+
       
         onClientAuthorization: (data) => {
           
