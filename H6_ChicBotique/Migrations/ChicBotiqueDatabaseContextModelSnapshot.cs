@@ -47,13 +47,21 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
+=======
+                            Id = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+>>>>>>> origin/Rizwanah
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
+=======
+                            Id = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+>>>>>>> origin/Rizwanah
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +142,11 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
+<<<<<<< HEAD
                             AccountInfoId = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
+=======
+                            AccountInfoId = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+>>>>>>> origin/Rizwanah
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,7 +156,11 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
+<<<<<<< HEAD
                             AccountInfoId = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
+=======
+                            AccountInfoId = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+>>>>>>> origin/Rizwanah
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -249,16 +265,26 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+<<<<<<< HEAD
                             Password = "35F80B6899DF91031114127769FF328E0E0F364166DF9D4699B729F2A9355D14",
                             Salt = "HhiT8fom8JMGzLWVN+0DDA==",
+=======
+                            Password = "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0",
+                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+>>>>>>> origin/Rizwanah
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+<<<<<<< HEAD
                             Password = "912849A03C9299A75B1551414BE183A9221CC851B6292488441F806671AE86C1",
                             Salt = "HhiT8fom8JMGzLWVN+0DDA==",
+=======
+                            Password = "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6",
+                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+>>>>>>> origin/Rizwanah
                             UserId = 2
                         });
                 });
