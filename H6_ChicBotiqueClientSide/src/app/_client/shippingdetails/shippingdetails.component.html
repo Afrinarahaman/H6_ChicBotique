@@ -1,1 +1,38 @@
 <p>shippingdetails works!</p>
+
+
+
+<br>
+<br>
+<br>
+
+
+<form #shippingForm="ngForm"  class="form-area"  >
+    <div class="row">
+      <div class="col-md-2"><label for="address"> Address</label></div>
+      <div ><input  [(ngModel)]="shippingdetails.address" name=" address"type="text" id="address" ></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><label for="city">City</label></div>
+      <div class="col-md-2"><input  [(ngModel)]="shippingdetails.city" name=" city" type="text" id="city" ></div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-2"><label for="postalCode">PostalCode</label></div>
+      <div class="col-md-2"><input [(ngModel)]="shippingdetails.postalcode"name=" postalcode" type="text" id="postalCode"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"><label for="country">Country</label></div>
+      <div class="col-md-2"><input [(ngModel)]="shippingdetails.country" name=" country" type="text" id="country" ></div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-2"><label for="telephone">Telephone</label></div>
+      <div class="col-md-2"><input [(ngModel)]="shippingdetails.phone"  name=" telephone" type="text" id="telephone" ></div>
+    </div>
+    <!-- Add more fields for state, zip code, etc. -->
+    <button type="submit" (click)="submitShippingForm()" >Submit</button>
+   
+    <!--<button type="submit" (click)="paymentProcedure()" >Proceed to Payment</button>-->
+    <button  routerLink="/cart" >Cancel</button>
+  </form>

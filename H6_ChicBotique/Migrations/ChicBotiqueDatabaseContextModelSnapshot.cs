@@ -47,21 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
-=======
-                            Id = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
->>>>>>> origin/Rizwanah
+                            Id = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-<<<<<<< HEAD
-                            Id = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
-=======
-                            Id = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
->>>>>>> origin/Rizwanah
+                            Id = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -142,11 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<< HEAD
-                            AccountInfoId = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
-=======
-                            AccountInfoId = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
->>>>>>> origin/Rizwanah
+                            AccountInfoId = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -156,11 +144,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-<<<<<<< HEAD
-                            AccountInfoId = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
-=======
-                            AccountInfoId = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
->>>>>>> origin/Rizwanah
+                            AccountInfoId = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -265,26 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-<<<<<<< HEAD
-                            Password = "35F80B6899DF91031114127769FF328E0E0F364166DF9D4699B729F2A9355D14",
-                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
-=======
-                            Password = "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
->>>>>>> origin/Rizwanah
+                            Password = "9C4A60BC9197517675CB2B6125F7862FD19E0A3492677BE7CD9F1AE246180601",
+                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-<<<<<<< HEAD
-                            Password = "912849A03C9299A75B1551414BE183A9221CC851B6292488441F806671AE86C1",
-                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
-=======
-                            Password = "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
->>>>>>> origin/Rizwanah
+                            Password = "A1DE10435B8B77297BC8F833A02D15AD5574DBF0173D375E8B82B0FCC7B321D9",
+                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
                             UserId = 2
                         });
                 });
@@ -406,7 +380,7 @@ namespace H6_ChicBotique.Migrations
                             Id = 6,
                             CategoryId = 3,
                             Description = "Summer clothing",
-                            Image = "floral-dress.jpg",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
                             Title = "Long dress"
@@ -415,11 +389,11 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 7,
                             CategoryId = 3,
-                            Description = "Party dress for women",
-                            Image = "Red-dress.jpg",
+                            Description = "Spring Floral dress for women",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
-                            Title = "Red dress"
+                            Title = "Floral dress"
                         });
                 });
 

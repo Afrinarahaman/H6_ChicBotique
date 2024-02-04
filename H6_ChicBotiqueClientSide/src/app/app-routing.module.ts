@@ -1,12 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
-import { FrontpageComponent } from './frontpage/frontpage.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CategoryProductsComponent } from './category-products/category-products.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CartComponent } from './cart/cart.component';
-=======
 import { AuthGuard } from './_helpers/auth.guard';
 import { FrontpageComponent } from './_client/frontpage/frontpage.component';
 import { NavbarComponent } from './_client/navbar/navbar.component';
@@ -23,7 +16,11 @@ import { AdminProductComponent } from './_admin/admin-product/admin-product.comp
 import{ AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
->>>>>>> origin/Rizwanah
+import { CheckOutComponent } from './_client/check-out/check-out.component';
+import { PaymentComponent } from './_client/payment/payment.component';
+import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdetails.component';
+import { ThankyouComponent } from './_client/thankyou/thankyou.component';
+
 
 const adminRoutes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent,canActivate: [AuthGuard] },
@@ -37,16 +34,17 @@ const clientRoutes: Routes = [
   { path: 'frontpage', component: FrontpageComponent},
   { path: 'category_products/:id', component: CategoryProductsComponent },
   { path: 'product_details/:id', component: ProductDetailsComponent},
-<<<<<<< HEAD
-  { path: 'cart', component: CartComponent }
-=======
   { path: 'cart', component: CartComponent },
-  {path:'wishlist',component:WishlistComponent},
+  {path:  'wishlist',component:WishlistComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'guest', component: GuestComponent }
->>>>>>> origin/Rizwanah
+  { path: 'guest', component: GuestComponent },
+  { path: 'checkout', component: CheckOutComponent },
+  {path: 'shippingdetails', component: ShippingdetailsComponent },
+  { path: 'thankyou', component:ThankyouComponent},
+  { path: 'payment', component: PaymentComponent,  canActivate: [AuthGuard]  }
+
 ];
 
 @NgModule({

@@ -11,67 +11,58 @@ import { Role } from 'src/app/_models/role';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  public quantity: number = 1;  // Initial quantity
-  public grandTotal: number = 0;
+  public quantity: number = 0;//variable declaration for Productquantity
+
+  public grandTotal: number = 0;// variable declaration for storing total amount of the purchase
   public cartProducts: CartItem[] = [];  //property
-
-
-
-  constructor(private cartService: CartService, private router: Router,private authService: AuthService) { }
+  public basket = this.cartService.basket; //getting basket from the service
+  public totalItem: number =0;
+  constructor(private cartService: CartService, private router: Router,private authService: AuthService) //dependency injection of different services
+  { }
 
   ngOnInit(): void {
-    this.cartProducts = this.cartService.getBasket();
-   this.grandTotal = this.calculateGrandTotal();
+    this.cartProducts = this.cartService.getBasket(); //getting all chosen cartproducts of the customer
+    this.grandTotal = this.cartService.getTotalPrice();//getting the total price of the items
   }
-
-  calculateGrandTotal(): number {
-    let grandTotal = 0 ;
-    for (let item of this.cartProducts) {
-      grandTotal += item.productPrice * item.quantity;
-    }
-    return grandTotal;
-  }
-
-
-
-  async createOrder() {
-    // let customerId=parseInt(this.authService.currentCustomerValue.id)
-
+  async processOrder() //method is for processing order after clicking the BUY button
+  {
+ 
+ 
     if (this.authService.currentUserValue == null || this.authService.currentUserValue.id == 0) {
     this.router.navigate(['checkout']);
     }
     else
     {
-      this.router.navigate(['/shippinsdetails/']);
-      //var result = await this.cartService.addOrder();
-      //console.log('result', result);
-             //this.cartService.clearBasket();
-           //this.router.navigate(['/thankyou/']);
+      this.router.navigate(['/shippingdetails/']);
+      
     }
+      
   }
-
-  public basket = this.cartService.basket;
-
   removeItem(productId: number) {
     console.log(productId);
     if (confirm("are you sure to remove?")) {
       this.cartService.removeItemFromBasket(productId);
+      this.cartProducts = this.cartService.getBasket();
 
     }
-
-    window.location.reload();
+   
+   
   }
+
   emptycart() {
     if (confirm("are u sure to remove?"))
       this.cartService.clearBasket();
-    window.location.reload();
-  }
+   
+      this.cartProducts=[];
+      window.location.reload;
 
+  }
 
   // Method to increase the quantity
   increaseQuantity(item: any): void {
     item.quantity++;
    this.quantity= item.quantity;
+   this.grandTotal = this.cartService.getTotalPrice();
 
   }
 
