@@ -103,7 +103,7 @@ namespace H6_ChicBotique.Services
                 {
                     Id = Order.Id,
                     OrderDate = Order.OrderDate,
-                    AccountId = Order.AccountInfo.Id,
+                    AccountInfoId = Order.AccountInfo.Id,
                     Status=Order.Payment.Status,
                     TransactionId=Order.Payment.TransactionId,
 

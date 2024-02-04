@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240131131037_ChicBotiqueDB")]
-    partial class ChicBotiqueDB
+    [Migration("20240204152008_chicBotiqueDB")]
+    partial class chicBotiqueDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,13 +49,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("93d9c8d5-0ad8-4af1-9167-cb36c3079f7a"),
+                            Id = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("f6447aa1-4142-45f9-b497-e8a6ab55e891"),
+                            Id = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -136,7 +136,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("93d9c8d5-0ad8-4af1-9167-cb36c3079f7a"),
+                            AccountInfoId = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -146,12 +146,12 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("f6447aa1-4142-45f9-b497-e8a6ab55e891"),
-                            Address = "Husum",
+                            AccountInfoId = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
+                            Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
-                            PostalCode = "2200",
-                            TelePhone = "+228415799"
+                            PostalCode = "2400",
+                            TelePhone = "+228515798"
                         });
                 });
 
@@ -162,9 +162,6 @@ namespace H6_ChicBotique.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AccountInfoId")
                         .HasColumnType("uniqueidentifier");
@@ -254,16 +251,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "13B82FBE7B2A82CC69A20F43912A6C467BC441CA301C0691B8C72CF547222D22",
-                            Salt = "31/01/2024 14.10.37",
+                            Password = "35F80B6899DF91031114127769FF328E0E0F364166DF9D4699B729F2A9355D14",
+                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "874B8CD1370E40E6F54280B921901DDC0DDBD5A85431BF34EDBD0472F422E571",
-                            Salt = "31/01/2024 14.10.37",
+                            Password = "912849A03C9299A75B1551414BE183A9221CC851B6292488441F806671AE86C1",
+                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
                             UserId = 2
                         });
                 });
@@ -276,14 +273,14 @@ namespace H6_ChicBotique.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(10,3)");
+
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("TimePaid")
-                        .HasColumnType("DateTime");
 
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(100)");

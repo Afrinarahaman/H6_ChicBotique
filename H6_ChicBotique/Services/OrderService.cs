@@ -64,13 +64,11 @@ namespace H6_ChicBotique.Services
         public async Task<OrderAndPaymentResponse> CreateOrder(OrderAndPaymentRequest newOrderRequest) //Add basketid to the controller and service call
         {
             Order newOrder = MapOrderRequestToOrder(newOrderRequest);
-            Payment newPayment = MapPaymentRequest(newOrderRequest);
-            //newOrder.shippingDetails = null;
+            
 
             Order insertOrder = await _orderRepository.CreateNewOrder(newOrder);
-            //insertOrder.ShippingDetails= null;
-            //newPayment.OrderId = insertOrder.Id;
-            await _paymentRepository.CreatePayment(newPayment); //make sure to check and subscribe on paypals payment success notfications before inserting a payment cause it can fail or not have succeeded yet
+            
+          //await _paymentRepository.CreatePayment(newPayment); //make sure to check and subscribe on paypals payment success notfications before inserting a payment cause it can fail or not have succeeded yet
             //await _stockHandlerService.ReservationSuccess(basketId); 
 
             if (insertOrder != null)
@@ -92,7 +90,7 @@ namespace H6_ChicBotique.Services
             {
                 Status = newOrder.Status,
                 TransactionId = newOrder.TransactionId,
-                //Amount = newOrder.Amount
+                Amount = newOrder.Amount
             };
         }
 
@@ -103,7 +101,7 @@ namespace H6_ChicBotique.Services
             return new Order()
             {
                 OrderDate = DateTime.Now,
-                AccountId =newOrder.AccountId,
+                AccountInfoId =newOrder.AccountInfoId,
 
                 OrderDetails = newOrder.OrderDetails.Select(x => new OrderDetails
                 {
@@ -124,8 +122,15 @@ namespace H6_ChicBotique.Services
                     PostalCode=newOrder.shippingDetails.PostalCode,
                     Phone=newOrder.shippingDetails.Phone
 
+                },
+                Payment =new Payment()
+                {
+                    Status = newOrder.Status,
+                    TransactionId = newOrder.TransactionId,
+                    Amount = newOrder.Amount,
+                    PaymentMethod = newOrder.PaymentMethod,
+                    //TimePaid = newOrder.TimePaid,
                 }
-
 
             };
         }
@@ -136,16 +141,17 @@ namespace H6_ChicBotique.Services
             {
                 Id = order.Id,
                 OrderDate = order.OrderDate,
-                AccountId = order.AccountId,
+                AccountInfoId = order.AccountInfoId,
                 Status=order.Payment.Status,
                 TransactionId =order.Payment.TransactionId,
-                //Amount=order.Payment.Amount,
+                PaymentMethod=order.Payment.PaymentMethod,
+                Amount=order.Payment.Amount,
                 Account = new AccountInfoResponse()
                 {
                     Id = order.AccountInfo.Id,
                     CreatedDate = order.AccountInfo.CreatedDate,
                     UserId = order.AccountInfo.UserId
-                   
+                  
                 },
                 ShippingDetails= new ShippingDetailsResponse()
                 {
@@ -168,7 +174,6 @@ namespace H6_ChicBotique.Services
                     Quantity = orderDetail.Quantity
 
                 }).ToList()
-
 
             };
 

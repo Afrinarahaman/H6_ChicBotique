@@ -8,7 +8,7 @@ namespace H6_ChicBotique.DTOs
 
         [Required]
 
-        public Guid AccountId { get; set; }
+        public Guid AccountInfoId { get; set; }
         [Required]
         public string? Status { get; set; }
 
@@ -17,8 +17,10 @@ namespace H6_ChicBotique.DTOs
 
         [Required]
         public string? PaymentMethod { get; set; }
+
         [Required]
-        public DateTime? TimePaid { get; set; }
+      
+        public decimal Amount { get; set; }
         [Required]
         public ShippingDetailsRequest shippingDetails { get; set; }
 

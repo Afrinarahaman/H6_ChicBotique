@@ -47,13 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dfb1115e-d665-430b-b355-f0a100108fd9"),
+                            Id = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("e82b284a-7352-4291-abf3-3fc4f8bc151c"),
+                            Id = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("dfb1115e-d665-430b-b355-f0a100108fd9"),
+                            AccountInfoId = new Guid("90272ff7-07bc-478b-a50e-adc422ef3fe3"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,12 +144,12 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("e82b284a-7352-4291-abf3-3fc4f8bc151c"),
-                            Address = "Husum",
+                            AccountInfoId = new Guid("adec1de6-e13f-4b64-b6d3-592741917d63"),
+                            Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
-                            PostalCode = "2200",
-                            TelePhone = "+228415799"
+                            PostalCode = "2400",
+                            TelePhone = "+228515798"
                         });
                 });
 
@@ -160,9 +160,6 @@ namespace H6_ChicBotique.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AccountInfoId")
                         .HasColumnType("uniqueidentifier");
@@ -252,16 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "BBE9717C41536B63870FDD80277DEE2E8B684F962E46FD8353BD7FEE6C7BEB3C",
-                            Salt = "ZnWQOJiFL6ttm59tXy/P9g==",
+                            Password = "35F80B6899DF91031114127769FF328E0E0F364166DF9D4699B729F2A9355D14",
+                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "A5A6BD707C493A5928BE9010EB2219B5C8520C2CE435C2BDBFA5AE1187D8AA09",
-                            Salt = "ZnWQOJiFL6ttm59tXy/P9g==",
+                            Password = "912849A03C9299A75B1551414BE183A9221CC851B6292488441F806671AE86C1",
+                            Salt = "HhiT8fom8JMGzLWVN+0DDA==",
                             UserId = 2
                         });
                 });
@@ -282,9 +279,6 @@ namespace H6_ChicBotique.Migrations
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("TimePaid")
-                        .HasColumnType("DateTime");
 
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(100)");
