@@ -60,19 +60,52 @@ export class CartComponent implements OnInit {
 
   // Method to increase the quantity
   increaseQuantity(item: any): void {
-    item.quantity++;
+    /*item.quantity++;
    this.quantity= item.quantity;
+   this.grandTotal = this.cartService.getTotalPrice();*/
+   let itemId;
+   itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
+
+
+
+   item.quantity = item.quantity + 1;
+   this.basket[itemId].quantity = item.quantity;
+
+
+   this.cartService.saveBasket4(this.basket);
+   this.cartProducts = this.cartService.getBasket();
    this.grandTotal = this.cartService.getTotalPrice();
 
   }
 
   // Method to decrease the quantity, ensuring it doesn't go below 1
   decreaseQuantity(item: any): void {
-    if (item.quantity > 1) {
+    /*if (item.quantity > 1) {
       item.quantity--;
       this.quantity= item.quantity;
-    }
+    }*/
+    if (item.quantity > 1) {
 
+      let itemId;
+      itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
+
+
+
+      item.quantity = item.quantity - 1;
+      this.basket[itemId].quantity = item.quantity;
+
+
+      this.cartService.saveBasket4(this.basket);
+      this.cartProducts = this.cartService.getBasket();
+      this.grandTotal = this.cartService.getTotalPrice();
+
+    }
+    else {
+      alert("Quantity can not be negative.")
+    }
+    this.cartService.saveBasket();
   }
+
+  
 
 }

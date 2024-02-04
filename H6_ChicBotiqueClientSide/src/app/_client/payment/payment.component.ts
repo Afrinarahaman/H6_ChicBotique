@@ -90,6 +90,33 @@ export class PaymentComponent implements OnInit {
             data,
             actions
           );
+          this.trasactionId=this.orderService.setTransactionId(data.orderID);
+          
+          actions.order.get().then(async (details: any) => {
+            this.orderService.getAddressData();
+          
+            this.paymentStatus=this.orderService.setPaymentStatus(details.status);
+            this.paymentMethod=this.orderService.setPaymentMethod(details.paymentMethod);
+            var result = await this.cartService.addOrder();
+          
+            
+            if( details.status=="APPROVED"){
+             // var result = await this.cartService.addOrder();n
+              this.id =result.id;
+              console.log('result', result);
+              this.cartService.clearBasket();
+              this.router.navigate(['/thankyou/', {orderid: this.id}]);
+              /*console.log(
+              'onApprove - you can get full order details inside onApprove: ',
+              
+              );            details=result
+              // console.log('Details of ORDERS:', details);*/
+            }
+            else
+            {
+              console.log("Unsucces to make order")
+            }
+          });
           },
 
       

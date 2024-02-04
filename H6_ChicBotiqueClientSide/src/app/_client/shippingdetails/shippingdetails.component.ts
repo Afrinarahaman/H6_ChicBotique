@@ -33,14 +33,9 @@ export class ShippingdetailsComponent implements OnInit {
     console.log(this.shippingdetails);
     const addressData=this.shippingdetails
     this.orderService.setAddressData(addressData);
-    //this.productService.GetProductStockbyId()
+    
    this.router.navigate(['/payment']); 
-    /*var result = await this.cartService.addOrder();
-    this.id =result.id;
-    console.log('result', result);
-    this.cartService.clearBasket();
-           
-    this.router.navigate(['/thankyou/', {orderid: this.id}]);*/
+   
 
     
   }

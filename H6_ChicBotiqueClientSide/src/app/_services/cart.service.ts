@@ -45,6 +45,10 @@ export class CartService {
   saveBasket(): void {
     localStorage.setItem(this.basketName, JSON.stringify(this.basket));
   }
+  saveBasket4(basket: CartItem[]) {
+    this.basket = basket;
+    this.saveBasket();
+  }
   addToBasket(item: CartItem): void {
     this.getBasket();
     let productFound = false;
