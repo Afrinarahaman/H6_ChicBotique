@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { UserService} from 'src/app/_services/user.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,9 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import{Role} from 'src/app/_models/role';
 import{User} from 'src/app/_models/user';
 import { Observable,map, of, tap } from 'rxjs';
-
-//import { HomeAddress } from 'src/app/_models/homeaddress';
-//import { AddressService } from 'src/app/_services/address.service';
+import { SearchService } from 'src/app/_services/search.service';  // SearchService
 
 
 
@@ -27,6 +24,7 @@ export class AdminUserComponent implements OnInit {
   userId = 1; // replace with the desired user ID
   shippingAddresses: string[] = [];
   address: any;
+  searchTerm: string = '';
 
  /// addresses: HomeAddress[]=[];
 /*  homeAddress: HomeAddress = {
@@ -57,7 +55,8 @@ export class AdminUserComponent implements OnInit {
 
   constructor(private userService: UserService,
     private http: HttpClient,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private searchService: SearchService) {
        // Fetch Members list by default when the component is initialized
     this.users$ = this.userService.getMembersList();
 
@@ -69,13 +68,66 @@ export class AdminUserComponent implements OnInit {
    // Fetch Members list by default
    this.users$ = this.userService.getMembersList();
  //  this.homeaddress$=this.addressService.getAllAddress();
-
    /* Subscribe to the address observable*/
  // this.addressService.getAllAddress().subscribe(address =>{
    // console.log("Home Address is: ",this.homeAddress.id);
    // console.log("Home Address Details are: ",this.homeAddress);
-  };
 
+    // Subscribe to changes in the search term
+    this.searchService.search$.subscribe((term) => {
+      // Update the local searchTerm whenever the search term changes
+      this.searchTerm = term;
+      //  call the searchProducts() method.
+      this.searchUsers();
+  });
+}
+// method to handle input changes in the search field
+onSearchInputChange() {
+  // Update the search term in the SearchService
+  this.searchService.updateSearchTerm(this.searchTerm);
+}
+
+   // method ot fetch all users
+fetchUsers() {
+  this.userService.getUsers().subscribe((u) => (this.users = u));
+}
+
+
+
+//method to search specific user
+  searchUsers() {
+
+    if (this.searchTerm == null || this.searchTerm == '' && (onkeyup)) {
+      alert('The search field is empty');
+      this.fetchUsers();
+
+    } else if (this.searchTerm.length >= 0) {
+      this.userService.getUsers().subscribe((users: User[]) => {
+        // Use the filter method to filter products based on the searchTerm
+        const filteredUsers = users.filter((user) => {
+          // Check if the data contains the searchTerm (case-insensitive)
+          const searchTerm = this.searchTerm.toLowerCase();
+          return (
+           user.firstName.toLowerCase().includes(searchTerm) ||
+           user.lastName.toLowerCase().includes(searchTerm) ||
+           user.email.toLowerCase().includes(searchTerm) ||
+           user.telephone.toLowerCase().includes(searchTerm)
+          );
+        });
+        // Update the users$ observable with the filtered results
+      this.users$ = of(filteredUsers);
+
+
+        // Check if no results were found
+        if (filteredUsers.length === 0) {
+          alert('No results found');
+        }
+
+
+
+      });
+    }
+  }
 
 
   // Method to handle role change
@@ -158,7 +210,7 @@ export class AdminUserComponent implements OnInit {
   }
 
 
-  
+
 
   cancel(): void {
     this.user =  { id: 0,email: '', firstName: '', lastName: '', password: '', address: '',
