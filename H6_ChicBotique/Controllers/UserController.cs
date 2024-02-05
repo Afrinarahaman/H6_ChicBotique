@@ -131,7 +131,7 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetIdByEmail([FromRoute] string email)
+        public async Task<IActionResult> GetUserByEmail([FromRoute] string email)
         {
             try
             {
