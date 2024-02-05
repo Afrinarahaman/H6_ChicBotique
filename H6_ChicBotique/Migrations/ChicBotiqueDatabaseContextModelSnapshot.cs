@@ -47,13 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
+                            Id = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
+                            Id = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
+                            AccountInfoId = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,7 +144,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
+                            AccountInfoId = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -249,16 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "9C4A60BC9197517675CB2B6125F7862FD19E0A3492677BE7CD9F1AE246180601",
-                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
+                            Password = "89D969DDBF37717FD4089D17C4614924CB82E6B23A07C829F1F01F5B13DA2B4E",
+                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "A1DE10435B8B77297BC8F833A02D15AD5574DBF0173D375E8B82B0FCC7B321D9",
-                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
+                            Password = "98C805B460789EE55E07947A708EF145E8813E19F4878ED3AF3E1CA197E3012D",
+                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
                             UserId = 2
                         });
                 });
@@ -279,6 +279,9 @@ namespace H6_ChicBotique.Migrations
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("TimePaid")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(100)");

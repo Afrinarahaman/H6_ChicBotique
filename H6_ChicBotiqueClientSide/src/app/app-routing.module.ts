@@ -16,6 +16,10 @@ import { AdminProductComponent } from './_admin/admin-product/admin-product.comp
 import{ AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
+import { CheckOutComponent } from './_client/check-out/check-out.component';
+import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdetails.component';
+import { ThankyouComponent } from './_client/thankyou/thankyou.component';
+import { PaymentComponent } from './_client/payment/payment.component';
 
 const adminRoutes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent,canActivate: [AuthGuard] },
@@ -28,7 +32,17 @@ const clientRoutes: Routes = [
   { path: '', component: NavbarComponent },
   { path: 'frontpage', component: FrontpageComponent},
   { path: 'category_products/:id', component: CategoryProductsComponent },
-  { path: 'product_details/:id', component: ProductDetailsComponent}
+  { path: 'product_details/:id', component: ProductDetailsComponent},
+  { path: 'cart', component: CartComponent },
+  {path:  'wishlist',component:WishlistComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'guest', component: GuestComponent },
+  { path: 'checkout', component: CheckOutComponent },
+  {path: 'shippingdetails', component: ShippingdetailsComponent },
+  { path: 'thankyou', component:ThankyouComponent},
+  { path: 'payment', component: PaymentComponent,  canActivate: [AuthGuard]  }
 ];
 
 @NgModule({
