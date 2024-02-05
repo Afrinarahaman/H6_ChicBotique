@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { CartItem } from '../_models/cartItem';
+
 import { AuthService } from './auth.service';
+
+
 import { User } from '../_models/user';
 import { UserService } from './user.service';
+import { CartItem } from '../_models/cartItem';
 
 
 @Injectable({
@@ -21,13 +24,14 @@ export class CartService {
   email:any;
   user: Observable<User[]> | undefined;
   public userGuid : string="";
-
-  constructor(private router: Router,private authService: AuthService,private userService:UserService)
+  public transactionID : string="";
+  public paymentStatus : string="";
+  constructor(private router: Router, private authService: AuthService,private userService:UserService)
     {
       //this.userGuid =Guid.create()
     }
 
-  getBasket(): CartItem[] {
+ getBasket(): CartItem[] {
     this.basket = JSON.parse(localStorage.getItem(this.basketName) || "[]");
     return this.basket;
   }
@@ -53,20 +57,38 @@ export class CartService {
     return grandTotal;
   }
 
- /*
+  clearBasket(): CartItem[] {
+    this.getBasket();
+    this.basket = [];
+    this.saveBasket();
+    return this.basket;
+  }
+  removeItemFromBasket(productId: number): void {
+    this.getBasket();
+    for (let i = 0; i < this.basket.length; i += 1) {
+      if (this.basket[i].productId === productId) {
+
+        this.basket.splice(i, 1);
+
+
+      }
+    }
+
+    this.saveBasket();
+
+  }
 async addOrder(): Promise<any> {
    //this is for memeber
     if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
 
       this.userId=this.authService.currentUserValue.id;
       console.log('USER ID:', this.userId);
-
        /*this.userService.getUserGuid(this.userId).subscribe(data => {
         this.userGuid = data;
 
         console.log('GUID VALUE:', this.userGuid);
       });*/
- /*     this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
+      /*this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
      console.log("User Guid to string", this.userGuid)
         this.orderService.getAddressData().subscribe((data) => {
           this.shippingAddressData = data;
@@ -121,30 +143,15 @@ async addOrder(): Promise<any> {
       return result;
 
 
-    }*/
-
-
-
-
-  clearBasket(): CartItem[] {
-    this.getBasket();
-    this.basket = [];
-    this.saveBasket();
-    return this.basket;
-  }
-  removeItemFromBasket(productId: number): void {
-    this.getBasket();
-    for (let i = 0; i < this.basket.length; i += 1) {
-      if (this.basket[i].productId === productId) {
-
-        this.basket.splice(i, 1);
-
-
-      }
     }
 
-    this.saveBasket();
+  }*/
+  
 
-  }
+  
 
+
+    
+}
+}
 }

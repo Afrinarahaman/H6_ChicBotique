@@ -19,6 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   wishlist: number[] = [];
   category:Category ={ id: 0, categoryName: '' };
   public quantity:number=0;
+  public totalItem:number=0;
   product:Product={id: 0, title:"", price:0, description:"",image:"", stock:0,categoryId:0, category:this.category }
   wishlistItem : WishlistItem= {productId: 0, productTitle:"",productImage:"",productDescription:"",productPrice:0}
   constructor(
@@ -54,6 +55,7 @@ export class ProductDetailsComponent implements OnInit {
 
     });
     window.location.reload();
+   // this.totalItem = this.cartService.getBasket().length;
   }
 
  handleAddtoWishlist(product:Product)
