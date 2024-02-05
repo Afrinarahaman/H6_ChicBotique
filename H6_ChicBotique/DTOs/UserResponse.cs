@@ -12,7 +12,7 @@ namespace H6_ChicBotique.DTOs
         public string LastName { get; set; }
 
         public Role Role { get; set; }
-        public AccountInfoResponse Account { get; set; }
+        public AccountInfoResponse AccountInfo { get; set; }
         public HomeAddressResponse HomeAddress { get; set; }
     }
 }

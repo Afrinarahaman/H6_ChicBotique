@@ -22,6 +22,8 @@ namespace H6_ChicBotique.DTOs
       
         public decimal Amount { get; set; }
         [Required]
+        public DateTime TimePaid { get; set; }
+        [Required]
         public ShippingDetailsRequest shippingDetails { get; set; }
 
         [Required]

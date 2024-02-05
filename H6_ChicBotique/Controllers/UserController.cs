@@ -123,36 +123,37 @@ namespace H6_ChicBotique.Controllers
                 }
             }
 
-            // Get User ID by Email
-            [HttpGet("{email}")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            [ProducesResponseType(StatusCodes.Status404NotFound)]
-            [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-            public async Task<IActionResult> GetIdByEmail([FromRoute] string email)
+        // Get User ID by Email
+        [AllowAnonymous]
+        [HttpGet("{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetIdByEmail([FromRoute] string email)
+        {
+            try
             {
-                try
-                {
-                    // Retrieve user information by email
-                    UserResponse user = await _userService.GetIdByEmail(email);
+                // Retrieve user information by email
+                UserResponse user = await _userService.GetIdByEmail(email);
 
-                    if (user == null)
-                    {
-                        return NotFound(); // Return 404 if user not found
-                    }
-
-                    return Ok(user); // Return user information if found
-                }
-                catch (Exception ex)
+                if (user == null)
                 {
-                    return Problem(ex.Message); // Return 500 if an unexpected error occurs
+                    return NotFound(); // Return 404 if user not found
                 }
+
+                return Ok(user); // Return user information if found
             }
-
-            // Update User Information
-         //  [Authorize(Role.Member, Role.Administrator)]
-            [HttpPut("{userId}")]
+            catch (Exception ex)
+            {
+                return Problem(ex.Message); // Return 500 if an unexpected error occurs
+            }
+        }
+        
+        // Update User Information
+        //[Authorize(Role.Member, Role.Administrator)]
+        [HttpPut("{userId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             [ProducesResponseType(StatusCodes.Status401Unauthorized)]

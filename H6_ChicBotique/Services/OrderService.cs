@@ -74,7 +74,7 @@ namespace H6_ChicBotique.Services
             if (insertOrder != null)
             {
 
-
+                //await _stockHandlerService.ReservationSuccess(basketId); 
                 Order orderWithIncludes = await _orderRepository.SelectOrderById(insertOrder.Id);
 
 
@@ -129,7 +129,7 @@ namespace H6_ChicBotique.Services
                     TransactionId = newOrder.TransactionId,
                     Amount = newOrder.Amount,
                     PaymentMethod = newOrder.PaymentMethod,
-                    //TimePaid = newOrder.TimePaid,
+                    TimePaid = newOrder.TimePaid
                 }
 
             };
