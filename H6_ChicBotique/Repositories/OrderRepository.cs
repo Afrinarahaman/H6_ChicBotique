@@ -42,13 +42,13 @@ namespace H6_ChicBotique.Repositories
             }
         }
         // Retrieve a specific user based on AccountId
-        public async Task<List<Order>> SelectOrdersByAccountInfoId(Guid AccountId)
+        public async Task<List<Order>> SelectOrdersByAccountInfoId(Guid AccountInfoId)
         {
             try
             {
                 return await _context.Order
                     .Include(o => o.AccountInfo)
-                         .Include(o => o.OrderDetails).ThenInclude(x => x.Product).Where(c => c.AccountId== AccountId)
+                         .Include(o => o.OrderDetails).ThenInclude(x => x.Product).Where(c => c.AccountInfoId== AccountInfoId)
                          .Include(s => s.ShippingDetails)
                           .ToListAsync();
             }

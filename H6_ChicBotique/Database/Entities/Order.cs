@@ -12,8 +12,8 @@ namespace H6_ChicBotique.Database.Entities
         [Column(TypeName = "Date")]  //this is a columnAttribute from System.ComponentModel.DataAnnotations (defined in enityframework.dll)
         public DateTime OrderDate { get; set; }
 
-        [ForeignKey("AccountId")]
-        public Guid AccountId { get; set; }
+        [ForeignKey("AccountInfoId")]
+        public Guid AccountInfoId { get; set; }
         public AccountInfo AccountInfo { get; set; }
         public ShippingDetails ShippingDetails { get; set; }
 

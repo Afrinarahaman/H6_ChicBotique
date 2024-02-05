@@ -41,14 +41,14 @@ namespace H6_ChicBotique.Repositories
         public async Task<User> SelectById(int userId)
         {
             // Retrieve a specific user based on user ID
-            return await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.User.Include(u=>u.AccountInfo).FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         // Implementation of SelectByEmail method
         public async Task<User> SelectByEmail(string email)
         {
             // Retrieve a specific user based on email address and also include user account information
-            return await _context.User.Include(a => a.AccountInfo).FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.User.Include(a => a.AccountInfo).ThenInclude(h=>h.HomeAddress).FirstOrDefaultAsync(u => u.Email == email);
         }
         //Implementation of Create method for creating a new entity in the user table
         public async Task<User> Create(User user)

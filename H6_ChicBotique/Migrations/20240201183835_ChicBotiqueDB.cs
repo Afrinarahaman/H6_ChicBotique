@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace H6_ChicBotique.Migrations
 {
-    public partial class chicBotiqueDB : Migration
+    public partial class ChicBotiqueDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,8 @@ namespace H6_ChicBotique.Migrations
                     Status = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     TransactionId = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Amount = table.Column<decimal>(type: "Decimal(10,3)", nullable: false),
-                    PaymentMethod = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    PaymentMethod = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    TimePaid = table.Column<DateTime>(type: "DateTime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -150,6 +151,7 @@ namespace H6_ChicBotique.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "getdate()"),
+                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AccountInfoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -248,13 +250,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240205085402_ChicBotiqueDB.cs
-                    { new Guid("348a2139-cdbd-4b3d-9dde-ec8fafcf532c"), 2 },
-                    { new Guid("97badd67-523f-4517-bedc-5eea9ee1c5f5"), 1 }
-========
-                    { new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"), 2 },
-                    { new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"), 1 }
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240204153020_chicBotiqueDB.cs
+                    { new Guid("071c5370-e41e-449f-ac9e-98893104d43a"), 2 },
+                    { new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -262,13 +259,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240205085402_ChicBotiqueDB.cs
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "123D11E0A6B053568317FFC4AF2E5F4D4FD59331A9929C77FCC7CCFD20ACF458", "cnu5NXfJhAfz69DDuRrHbA==", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "A6F89DB9D7B75F3AD44F5C84E9920B95A333DC78784468C0424B46438C7160CB", "cnu5NXfJhAfz69DDuRrHbA==", 2 }
-========
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9C4A60BC9197517675CB2B6125F7862FD19E0A3492677BE7CD9F1AE246180601", "koQGTj4Njo7uDhYyoAgQKQ==", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "A1DE10435B8B77297BC8F833A02D15AD5574DBF0173D375E8B82B0FCC7B321D9", "koQGTj4Njo7uDhYyoAgQKQ==", 2 }
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240204153020_chicBotiqueDB.cs
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0", "Ocev7byyauJiqs7mA/Xd+w==", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6", "Ocev7byyauJiqs7mA/Xd+w==", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -281,27 +273,19 @@ namespace H6_ChicBotique.Migrations
                     { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, (short)10, "Skirt" },
                     { 4, 1, "kids jumpersuit", "jumpersuit1.jpg", 279.99m, (short)10, "Jumpersuit" },
                     { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" },
-                    { 6, 3, "Summer clothing", "womendress2.jpg", 299.99m, (short)10, "Long dress" },
-                    { 7, 3, "Spring Floral dress for women", "womendress2.jpg", 299.99m, (short)10, "Floral dress" }
+                    { 6, 3, "Summer clothing", "floral-dress.jpg", 299.99m, (short)10, "Long dress" },
+                    { 7, 3, "Party dress for women", "Red-dress.jpg", 299.99m, (short)10, "Red dress" }
                 });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240205085402_ChicBotiqueDB.cs
-                values: new object[] { 1, new Guid("97badd67-523f-4517-bedc-5eea9ee1c5f5"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
-========
-                values: new object[] { 1, new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240204153020_chicBotiqueDB.cs
+                values: new object[] { 1, new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240205085402_ChicBotiqueDB.cs
-                values: new object[] { 2, new Guid("348a2139-cdbd-4b3d-9dde-ec8fafcf532c"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
-========
-                values: new object[] { 2, new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240204153020_chicBotiqueDB.cs
+                values: new object[] { 2, new Guid("071c5370-e41e-449f-ac9e-98893104d43a"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountInfo_UserId",

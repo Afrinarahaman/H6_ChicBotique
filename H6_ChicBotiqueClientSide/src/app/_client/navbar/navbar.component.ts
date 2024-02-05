@@ -40,19 +40,10 @@ export class NavbarComponent implements OnInit {
 
   products: Product[]=[];
 
-  /*private dataSub = new Subject();
-
-  getData$(){
-    return this.dataSub.asObservable();
-  }
-
-  setData(data:any) {
-    this.dataSub.next(data);
-  }*/
-  public totalItem = this.cartService.getBasket().length;
+  public totalItem: number = this.cartService.getBasket().length;
   public WL_totalItem: number = this.wishlistService.getWishlist().length;
 
-  showSearchResults: boolean = false;
+    showSearchResults: boolean = false;
   x: any;
   isAdmin = false;
   isHovered = false;

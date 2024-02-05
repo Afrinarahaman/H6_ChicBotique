@@ -20,3 +20,4 @@ namespace H6_ChicBotique.Database.Entities
         public User User { get; set; } //navigation object
     }
 }
+
