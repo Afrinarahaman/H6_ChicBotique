@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240201183835_ChicBotiqueDB")]
+    [Migration("20240205085402_ChicBotiqueDB")]
     partial class ChicBotiqueDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,13 +49,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+                            Id = new Guid("97badd67-523f-4517-bedc-5eea9ee1c5f5"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+                            Id = new Guid("348a2139-cdbd-4b3d-9dde-ec8fafcf532c"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -136,7 +136,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+                            AccountInfoId = new Guid("97badd67-523f-4517-bedc-5eea9ee1c5f5"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -146,7 +146,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+                            AccountInfoId = new Guid("348a2139-cdbd-4b3d-9dde-ec8fafcf532c"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -254,16 +254,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+                            Password = "123D11E0A6B053568317FFC4AF2E5F4D4FD59331A9929C77FCC7CCFD20ACF458",
+                            Salt = "cnu5NXfJhAfz69DDuRrHbA==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+                            Password = "A6F89DB9D7B75F3AD44F5C84E9920B95A333DC78784468C0424B46438C7160CB",
+                            Salt = "cnu5NXfJhAfz69DDuRrHbA==",
                             UserId = 2
                         });
                 });
@@ -388,7 +388,7 @@ namespace H6_ChicBotique.Migrations
                             Id = 6,
                             CategoryId = 3,
                             Description = "Summer clothing",
-                            Image = "floral-dress.jpg",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
                             Title = "Long dress"
@@ -397,11 +397,11 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 7,
                             CategoryId = 3,
-                            Description = "Party dress for women",
-                            Image = "Red-dress.jpg",
+                            Description = "Spring Floral dress for women",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
-                            Title = "Red dress"
+                            Title = "Floral dress"
                         });
                 });
 

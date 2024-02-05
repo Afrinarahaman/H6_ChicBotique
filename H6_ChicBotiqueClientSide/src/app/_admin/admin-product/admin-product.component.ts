@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Category, Product } from 'src/app/_models/product';
 import { ProductService } from 'src/app/_services/product.service';
 import Swal from 'sweetalert2';
-import { CurrencyPipe } from '@angular/common';
+import { SearchService } from 'src/app/_services/search.service';  // SearchService
 
 
 @Component({
@@ -22,22 +22,76 @@ export class AdminProductComponent implements OnInit {
   product: Product ={ id:0, title:"", price:0, description: "", image:"", stock:0, categoryId:0, category:this.category}
 
   message!: string;
+  searchTerm: string = '';
 
 
-
-
-  constructor(private productService:ProductService, private categoryService: CategoryService, private fb: FormBuilder) { }
+  constructor(private productService:ProductService,
+     private categoryService: CategoryService,
+      private fb: FormBuilder,
+      private searchService: SearchService  // Inject the SearchService
+      ) { }
 
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(p => this.products = p);
     this.categoryService.getAllCategories().subscribe(c=>this.categories=c);
-  }
+
+     // Subscribe to changes in the search term
+     this.searchService.search$.subscribe((term) => {
+      // Update the local searchTerm whenever the search term changes
+      this.searchTerm = term;
+      //  call the searchProducts() method.
+      this.searchProducts();
+  });
+}
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0]; //selects the first file in the list
       this.product.image = file.name; // this line assigns the name of the selected file (file.name) to the image property of the product object
     }}
+
+      // method to handle input changes in the search field
+  onSearchInputChange() {
+    // Update the search term in the SearchService
+    this.searchService.updateSearchTerm(this.searchTerm);
+  }
+
+     // method ot fetch all products
+  fetchProducts() {
+    this.productService.getAllProducts().subscribe((p) => (this.products = p));
+  }
+
+
+
+ //method to search specific product
+    searchProducts() {
+
+      if (this.searchTerm == null || this.searchTerm == '' && (onkeyup)) {
+        alert('The search field is empty');
+        this.fetchProducts();
+
+      } else if (this.searchTerm.length >= 0) {
+        this.productService.getAllProducts().subscribe((products: Product[]) => {
+          // Use the filter method to filter products based on the searchTerm
+          this.products = products.filter((product) => {
+            // Check if the product's title or description contains the searchTerm (case-insensitive)
+            const searchTerm = this.searchTerm.toLowerCase();
+            return (
+              product.title.toLowerCase().includes(searchTerm) ||
+              product.description.toLowerCase().includes(searchTerm)
+            );
+          });
+
+          // Check if no results were found
+          if (this.products.length === 0) {
+            alert('No results found');
+          }
+
+
+
+        });
+      }
+    }
 
   createProductForm(){
     this.productForm=this.fb.group({
