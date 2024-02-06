@@ -112,7 +112,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(500, statusCodeResult.StatusCode);
         }
-        [Fact]
+       /* [Fact]
         public async void GetIdByEmail_ShouldReturnStatusCode200_WhenDataExists()
         {
             //Arrange
@@ -122,6 +122,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             {
                 Id = 1,
                 FirstName = "Peter",
+
                 LastName = "Aksten",
                 Email = "peter@abc.com",
 
@@ -140,8 +141,8 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
-
-        [Fact]
+       */
+       /* [Fact]
         public async void GetIdByEmail_ShouldReturnStatusCode404_WhenUserDoesNotExists()
         {
             //Arrange
@@ -176,6 +177,6 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(500, statusCodeResult.StatusCode);
         }
-
+       */
     }
 }

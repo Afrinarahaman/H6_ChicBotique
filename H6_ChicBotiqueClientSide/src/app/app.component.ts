@@ -19,7 +19,7 @@ export class AppComponent {
 
   isAdminpageRoute(): boolean {
     // Check if the first child route exists and its routeConfig is not null
-    return this.route.snapshot.firstChild?.routeConfig?.path === 'admin';
+    return this.route.snapshot.firstChild?.routeConfig?.path === 'admin-panel';
   }
   title(title: any) {
     throw new Error('Method not implemented.');

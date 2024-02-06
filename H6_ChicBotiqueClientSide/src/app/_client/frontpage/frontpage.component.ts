@@ -1,10 +1,10 @@
 import { Component, OnInit,ElementRef } from '@angular/core';
-import { ProductService } from '../_services/product.service';
-import { Product } from '../_models/product';
-import { SearchService } from '../_services/search.service';
+import { ProductService } from 'src/app/_services/product.service';
+import { Product } from 'src/app/_models/product';
+import { SearchService } from 'src/app/_services/search.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { SortPipe } from '../_pipes/sort.pipe';
+import { SortPipe } from 'src/app/_pipes/sort.pipe';
 
 @Component({
   selector: 'app-frontpage',
@@ -68,7 +68,6 @@ navigateToAdminPage() {
     }}
 
   // Fetch a list of products from the ProductService
-
   private fetchProducts() {
     console.log("fetching product list");
     this.productService.getAllProducts().subscribe((products: Product[]) => {

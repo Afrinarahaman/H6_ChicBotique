@@ -1,13 +1,12 @@
 <!-- Admin Dashboard -->
-<nav class="navbar">
+<nav class="navbar d-flex justify-content-center">
     <div class="container">
         <button class="navbar-toggler custom-navbar-toggler btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      Admin Dashboard
-      <span class="navbar-toggler-icon"></span>
-  </button>
+    Admin Dashboard
+  <span class="navbar-toggler-icon"></span>
+    </button>
     </div>
 </nav>
-
 
 <!-- Widgets -->
 <!-- New Row -->
@@ -15,7 +14,7 @@
     <div class="col-md-2">
         <div class="card card text-black bg-light custom-card card-hover">
             <div class="card-body">
-                <i class="fas fa-line-chart fa-3x p-4 bg-primary "></i>
+                <i class="fas fa-check-circle fa-3x p-4 bg-success "></i>
                 <div class="mt-2 lead">Orders</div>
                 <p class="small text-muted">{{ greeting}}!
                     <br>{{ formattedDate}} </p>
@@ -36,7 +35,7 @@
     <!--Card for Categories--->
     <div class="col-md-2 ">
         <div class="card card text-black bg-light custom-card card-hover ">
-            <div class="card-body " routerLink="/admin/category ">
+            <div class="card-body " [routerLink]="['/admin/category']">
                 <i class="fas fa-puzzle-piece fa-3x p-4 bg-danger "></i>
                 <div class="mt-2 lead ">Categories</div>
                 <h2 class="card-title " style="font-size:1.8em; ">{{ categoryCount }}</h2>
@@ -44,7 +43,22 @@
         </div>
     </div>
 
-    <!-- 2nd Row -->
+    <div class="col-md-2 ">
+        <div class="card card text-black bg-light custom-card card-hover ">
+            <div class="card-body " [routerLink]="['/admin/user']">
+                <i class="fas fa-user-friends fa-2x "></i>
+                <div class="lead ">Total Members</div>
+                <h2 class="card-title ">{{ memberCount }}</h2>
+                <hr>
+                <i class="fas fa-mask fa-2x  "></i>
+                <div class="lead ">Total Guests</div>
+                <h2 class="card-title ">{{ guestCount }}</h2>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 2nd Row
     <div class="row justify-content-center ">
         <div class="col-md-2 ">
             <div class="card card text-black bg-light custom-card card-hover ">
@@ -55,60 +69,60 @@
                     <p>Total Orders: 100</p>
                     <p>Shipped: 50</p>
                     <p>Delivered: 20</p>
-                    <!-- <p>Total Orders: {{ totalOrders }}</p>
+                    <p>Total Orders: {{ totalOrders }}</p>
                    <p>Shipped: {{ shippedOrders }}</p>
                   <p>Delivered: {{ deliveredOrders }}</p>-->
-                </div>
+    <!--   </div>
             </div>
         </div>
-        <div class="col-md-2 ">
-            <div class="card card text-black bg-light custom-card card-hover ">
-                <div class="card-body " routerLink="/admin/user ">
-                    <i class="fas fa-user-friends fa-2x "></i>
-                    <div class="lead ">Total Members</div>
-                    <h2 class="card-title ">{{ memberCount }}</h2>
-                    <hr>
-                    <i class="fas fa-mask fa-2x "></i>
-                    <div class="lead ">Total Guests</div>
-                    <h2 class="card-title ">{{ guestCount }}</h2>
+    <div class="col-md-2 ">
+        <div class="card card text-black bg-light custom-card card-hover ">
+            <div class="card-body " [routerLink]="['/admin/user']">
+                <i class="fas fa-user-friends fa-2x "></i>
+                <div class="lead ">Total Members</div>
+                <h2 class="card-title ">{{ memberCount }}</h2>
+                <hr>
+                <i class="fas fa-mask fa-2x "></i>
+                <div class="lead ">Total Guests</div>
+                <h2 class="card-title ">{{ guestCount }}</h2>
 
-                </div>
             </div>
         </div>
     </div>
-    < <!---offcanvas for sidebar-->
-        < <div class="offcanvas offcanvas-start " tabindex="-1 " id="offcanvasNavbar " aria-labelledby="offcanvasNavbarLabel ">
-            <div class="offcanvas-header ">
-                <h5 class="offcanvas-title " id="offcanvasNavbarLabel ">
-                    <!--Logo of Chicbotique-->
-                    <img class="logo rounded-circle " style="width: 100px; align-items: flex-start; " src="assets/image/logo3.png "></h5>
-                <button type="button " class="btn-close text-reset " data-bs-dismiss="offcanvas " aria-label="Close "></button>
-            </div>
-            <div class="offcanvas-body custom-offcanvas-body ">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ">
-                    <li class="nav-item ">
-                        <p class="nav-link active " aria-current="page ">
-                            <i class="fas fa-user-tie r me-4 fs-1 "></i>Administrator</p>
-                    </li>
-                    <li class="nav-item ">
-                        <p class="nav-link " routerLink="/admin/user ">
-                            <i class="fas fa-user r me-4 "></i>Users
-                        </p>
-                    </li>
-                    <li class="nav-item ">
-                        <p class="nav-link " routerLink="/admin/product ">
-                            <i class="fa fa-product-hunt r me-4 "></i>Products
-                        </p>
-                    </li>
-                    <li class="nav-item ">
-                        <p class="nav-link " routerLink="/admin/category ">
-                            <i class="fa-solid fa-rectangle-list r me-4 "></i>Categories
-                        </p>
-                    </li>
-                </ul>
-                <div class="d-flex ">
-                    <input class="form-control me-2 " type="search " placeholder="Search " aria-label="Search ">
-                    <button class="btn btn-success " type="submit " (click)="performSearch() ">Search</button>
-                </div>
-            </div>
-</div>
+</div>-->
+
+    <!-- Offcanvas for sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                <!-- Logo of Chicbotique -->
+                <img class="logo rounded-circle" style="width: 100px; align-items: flex-start;" src="assets/image/logo3.png">
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body custom-offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <p class="nav-link active">
+                        <i class="fas fa-tachometer-alt-average me-4 fs-1"></i><b>My Dashboard</b>
+                    </p>
+                </li>
+                <li class="nav-item">
+                    <p class="nav-link" routerLink="/admin/user">
+                        <i class="fas fa-user r me-4 fs-1"></i>Users
+                    </p>
+                </li>
+                <li class="nav-item">
+                    <p class="nav-link" routerLink="/admin/product">
+                        <i class="fa fa-product-hunt r me-4 fs-1"></i>Products
+                    </p>
+                </li>
+                <li class="nav-item">
+                    <p class="nav-link" routerLink="/admin/category">
+                        <i class="fa-solid fa-rectangle-list r me-4 fs-1"></i>Categories
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+    </div>

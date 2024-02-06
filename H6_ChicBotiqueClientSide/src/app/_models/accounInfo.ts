@@ -1,4 +1,4 @@
-export interface Account {
+export interface AccountInfo {
   id: string;
   createdDate: string;
   userId: number;

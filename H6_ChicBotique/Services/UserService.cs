@@ -112,6 +112,7 @@ namespace H6_ChicBotique.Services
                 acc = new()
                 {
                     UserId = user.Id
+                    
                 };
                 acc = await _accountInfoRepository.Create(acc);
 
@@ -285,13 +286,31 @@ namespace H6_ChicBotique.Services
                 response.FirstName = user.FirstName;
                 response.LastName = user.LastName;
                 response.Role = user.Role;
+                response.HomeAddress= new HomeAddressResponse
+                {
+                    AccountId = user.AccountInfo.Id,
+                    Id = user.AccountInfo.HomeAddress.Id,
+                    Address=user.AccountInfo.HomeAddress.Address,
+                    City=user.AccountInfo.HomeAddress.City,
+                    PostalCode=user.AccountInfo.HomeAddress.PostalCode,
+                    Country = user.AccountInfo.HomeAddress.Country,
+                    Phone=user.AccountInfo.HomeAddress.TelePhone
 
+                };
                 // Create an AccountInfoResponse object within UserResponse
-                response.Account = new AccountInfoResponse
+                response.AccountInfo = new AccountInfoResponse
                 {
                     Id = user.AccountInfo.Id,
+
+
                 };
+
             }
+                    
+               
+
+
+        
 
             return response; // Return the mapped UserResponse object
         }

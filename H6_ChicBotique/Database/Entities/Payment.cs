@@ -17,7 +17,6 @@ namespace H6_ChicBotique.Database.Entities
         public decimal  Amount { get; set; }
         [Column(TypeName = "nvarchar(100)")]
         public string? PaymentMethod { get; set; }
-        [Column(TypeName = "DateTime")]
         public DateTime? TimePaid { get; set; }
         public Order Order { get; set; } //Navigational object for getting Order table's data from this class
     }

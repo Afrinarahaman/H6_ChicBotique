@@ -38,7 +38,7 @@ namespace H6_ChicBotiqueTestProject.RepositoryTests
                 Status="Paid",
                 PaymentMethod="CreditCard",
                 TransactionId="5377882222",
-                TimePaid=DateTime.Now,
+              
                 Amount=200
                
             };

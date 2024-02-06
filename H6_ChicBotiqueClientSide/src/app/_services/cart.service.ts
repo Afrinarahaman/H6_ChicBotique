@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { CartItem } from '../_models/cartItem';
+
 import { AuthService } from './auth.service';
+
+
 import { User } from '../_models/user';
 import { UserService } from './user.service';
+import { CartItem } from '../_models/cartItem';
+import { Order } from '../_models/order';
+import { OrderService } from './order.service';
 
 
 @Injectable({
@@ -21,8 +26,14 @@ export class CartService {
   email:any;
   user: Observable<User[]> | undefined;
   public userGuid : string="";
-
-  constructor(private router: Router,private authService: AuthService,private userService:UserService)
+  public transactionID : string="";
+  public paymentStatus : string="";
+  public paymentMethod : string="";
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private authService: AuthService,
+    private userService:UserService)
     {
       //this.userGuid =Guid.create()
     }
@@ -33,6 +44,10 @@ export class CartService {
   }
   saveBasket(): void {
     localStorage.setItem(this.basketName, JSON.stringify(this.basket));
+  }
+  saveBasket4(basket: CartItem[]) {
+    this.basket = basket;
+    this.saveBasket();
   }
   addToBasket(item: CartItem): void {
     this.getBasket();
@@ -53,35 +68,38 @@ export class CartService {
     return grandTotal;
   }
 
- /*
+
 async addOrder(): Promise<any> {
    //this is for memeber
     if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
 
       this.userId=this.authService.currentUserValue.id;
       console.log('USER ID:', this.userId);
-
        /*this.userService.getUserGuid(this.userId).subscribe(data => {
         this.userGuid = data;
 
         console.log('GUID VALUE:', this.userGuid);
       });*/
- /*     this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
+      this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
      console.log("User Guid to string", this.userGuid)
-        this.orderService.getAddressData().subscribe((data) => {
+        this.orderService.getAddressData().subscribe((data: any) => {
           this.shippingAddressData = data;
         });
       let orderitem: Order = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
         accountId: this.userGuid,
         amount: this.getTotalPrice(),
         transactionId: await firstValueFrom(this.orderService.getTransactionId() ),
-        paymentStatus:await firstValueFrom(this.orderService.getPaymentStatus()),
+        status:await firstValueFrom(this.orderService.getPaymentStatus()),
+        paymentMethod: await firstValueFrom(this.orderService.getPaymentMethod()),
         shippingDetails: {
           address: this.shippingAddressData.address ,
           city: this.shippingAddressData.city,
+
           postalCode:this.shippingAddressData.postalcode ,
           country:this.shippingAddressData.country ,
           phone: this.shippingAddressData.phone,
+
+
         },
 
         orderDetails: this.basket,
@@ -92,20 +110,27 @@ async addOrder(): Promise<any> {
       var result = await firstValueFrom(this.orderService.storeOrder(orderitem))//calling storeCartItem function for storing all of the ordereditems deatils into the database.
       return result;
 
-    } else {  //this is for guest
+    }
+    else {  //this is for guest
       this.email = sessionStorage.getItem('guestEmail');
 
     var user=  await firstValueFrom(this.userService.getUserbyEmail(this.email))
     this.userId=user.id;
     this.userGuid = await  firstValueFrom( this.userService.getUserGuid(this.userId));
     this.transactionID= await firstValueFrom(this.orderService.getTransactionId() );
-      this.paymentStatus= await firstValueFrom(this.orderService.getPaymentStatus());
+    this.orderService.getAddressData().subscribe((data: any) => {
+      this.shippingAddressData = data;
+    });
+    this.paymentStatus= await firstValueFrom(this.orderService.getPaymentStatus());
+    this.paymentMethod= await firstValueFrom(this.orderService.getPaymentMethod());
+
       let orderitem: Order = {
        accountId:this.userGuid,
         orderDetails: this.basket,
         amount: this.getTotalPrice(),
         transactionId: this.transactionID,
-        paymentStatus:this.paymentStatus,
+        status:this.paymentStatus,
+        paymentMethod: this.paymentMethod,
         shippingDetails: {
           address:this.shippingAddressData.address ,
           city: this.shippingAddressData.city,
@@ -117,14 +142,16 @@ async addOrder(): Promise<any> {
         }
       }
 
+      console.log('GuestUserID:', this.userId);
+      console.log(orderitem);
       var result = await firstValueFrom(this.orderService.storeOrder(orderitem));
       return result;
 
 
-    }*/
+    }
 
 
-
+  }
 
   clearBasket(): CartItem[] {
     this.getBasket();

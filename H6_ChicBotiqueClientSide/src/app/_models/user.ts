@@ -1,5 +1,5 @@
 import { Role } from "./role";
-import {Account} from "./account";
+
 import { ShippingDetails } from "./shippingdetails";
 
 export interface User {
@@ -15,7 +15,7 @@ export interface User {
     country: string;
     telephone: string;
     role: Role;
-    account?: any;
+    accountInfo?: any;
     homeaddress?: any;
     token?: string;
     shippingDetails?: ShippingDetails; // Optional shipping details

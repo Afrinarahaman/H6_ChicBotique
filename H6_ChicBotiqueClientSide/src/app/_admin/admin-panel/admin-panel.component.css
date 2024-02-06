@@ -1,19 +1,16 @@
 /* Custom styles for the small navbar button */
 
 .custom-navbar-toggler {
-    font-size: 18px;
-    /* Adjust the font size as needed */
-    background-color: transparent;
+    font-size: 24px;
+    background-color: rgb(86, 149, 77);
     border-style: inset;
-    padding: 12px;
-    /* Adjust padding as needed */
+    padding: 15px;
 }
 
 .custom-navbar-toggler:hover {
     background-color: transparent;
-    /* Background color on hover (if needed) */
+    /* Background color on hover  */
     color: #0a3a16;
-    /* Text color on hover (if needed) */
 }
 
 .logo {
@@ -23,8 +20,7 @@
 }
 
 .container {
-    margin-right: 5px;
-    margin-top: 100px;
+    margin-top: 160px;
 }
 
 p {
@@ -40,6 +36,7 @@ li {
     width: 25rem;
     height: 25rem;
     padding: 20px;
+    margin-top: 70px;
     border-radius: 25px;
     /* Rounded corners */
 }
@@ -66,7 +63,6 @@ li {
     /* Adjust the styles for mobile screens here */
     .navbar {
         padding: 0;
-        /* Adjust the top and bottom padding as needed */
     }
     .logo {
         width: 60px;
@@ -78,12 +74,9 @@ li {
     }
     .custom-navbar-toggler {
         font-size: 16px;
-        /* Reduce the font size */
         padding: 5px 8px;
-        /* Adjust the padding as needed */
     }
     .custom-offcanvas-body {
         padding: 25px;
     }
-    /* You can further customize styles for smaller screens as needed */
 }

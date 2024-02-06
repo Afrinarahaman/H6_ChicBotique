@@ -47,13 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+                            Id = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+                            Id = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"),
+                            AccountInfoId = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,7 +144,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("071c5370-e41e-449f-ac9e-98893104d43a"),
+                            AccountInfoId = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -160,9 +160,6 @@ namespace H6_ChicBotique.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AccountInfoId")
                         .HasColumnType("uniqueidentifier");
@@ -252,16 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+                            Password = "9C4A60BC9197517675CB2B6125F7862FD19E0A3492677BE7CD9F1AE246180601",
+                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6",
-                            Salt = "Ocev7byyauJiqs7mA/Xd+w==",
+                            Password = "A1DE10435B8B77297BC8F833A02D15AD5574DBF0173D375E8B82B0FCC7B321D9",
+                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
                             UserId = 2
                         });
                 });
@@ -282,9 +279,6 @@ namespace H6_ChicBotique.Migrations
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("TimePaid")
-                        .HasColumnType("DateTime");
 
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(100)");
@@ -386,7 +380,7 @@ namespace H6_ChicBotique.Migrations
                             Id = 6,
                             CategoryId = 3,
                             Description = "Summer clothing",
-                            Image = "floral-dress.jpg",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
                             Title = "Long dress"
@@ -395,11 +389,11 @@ namespace H6_ChicBotique.Migrations
                         {
                             Id = 7,
                             CategoryId = 3,
-                            Description = "Party dress for women",
-                            Image = "Red-dress.jpg",
+                            Description = "Spring Floral dress for women",
+                            Image = "womendress2.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
-                            Title = "Red dress"
+                            Title = "Floral dress"
                         });
                 });
 

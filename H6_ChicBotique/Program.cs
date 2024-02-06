@@ -58,8 +58,8 @@ builder.Services.AddDbContext<ChicBotiqueDatabaseContext>(
                         o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
-
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings")); // henter appsettings fra json 
+//builder.Services.AddSingleton<IStockHandlerService, StockHandlerService>();
+        builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings")); // henter appsettings fra json 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -111,7 +111,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+    
 app.UseAuthorization();
 //JWT middleware setup, use as replacement for  default Authorization
 app.UseMiddleware<JwtMiddleware>();

@@ -22,8 +22,8 @@ export class AdminPanelComponent implements OnInit {
   categoryCount: number= 0;
   memberCount: number= 0;
   guestCount: number= 0;
-admin: any;
-products: any;
+  admin: any;
+  products: any;
 
 
   toggleSidebar() {
@@ -36,9 +36,9 @@ products: any;
     private userService: UserService)
     {  // Format the date
       this.formattedDate = this.formatDate(this.currentDate);
-
       // Determine the time of the day for greeting
       this.greeting = this.getGreeting(this.currentDate);
+
     }
 
      formatDate(date: Date): string {
@@ -68,7 +68,7 @@ products: any;
   ngOnInit(): void {
     this.currentDate= new Date();
 
-
+    //to count products
     this.productService.getProductCount().subscribe(count => {
         this.productCount = count;  });
     //to count categories
@@ -81,7 +81,7 @@ products: any;
     this.userService.getGuestsCount().subscribe(count=>{
       this.guestCount= count;});
 
-
+    this.userService.getUsers().subscribe
   }
 
 

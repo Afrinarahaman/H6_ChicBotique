@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, Product } from '../_models/product';
+import { Category, Product } from 'src/app/_models/product';
 import { ActivatedRoute } from '@angular/router';
-import { CartService } from '../_services/cart.service';
-import { ProductService } from '../_services/product.service';
-import { WishlistService } from '../_services/wishlist.service';
-import { WishlistItem } from '../_models/wishlistItem';
+import { CartService } from 'src/app/_services/cart.service';
+import { ProductService } from 'src/app/_services/product.service';
+import { WishlistService } from 'src/app/_services/wishlist.service';
+import { WishlistItem } from 'src/app/_models/wishlistItem';
 
 
 
@@ -19,6 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   wishlist: number[] = [];
   category:Category ={ id: 0, categoryName: '' };
   public quantity:number=0;
+  public totalItem:number=0;
   product:Product={id: 0, title:"", price:0, description:"",image:"", stock:0,categoryId:0, category:this.category }
   wishlistItem : WishlistItem= {productId: 0, productTitle:"",productImage:"",productDescription:"",productPrice:0}
   constructor(
@@ -54,6 +55,7 @@ export class ProductDetailsComponent implements OnInit {
 
     });
     window.location.reload();
+   // this.totalItem = this.cartService.getBasket().length;
   }
 
  handleAddtoWishlist(product:Product)
