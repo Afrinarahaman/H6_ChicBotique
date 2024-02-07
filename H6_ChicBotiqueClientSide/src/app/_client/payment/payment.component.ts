@@ -19,6 +19,7 @@ export class PaymentComponent implements OnInit {
   
   cartTotal =0;
  public payPalConfig?: IPayPalConfig;
+ 
   showSuccess!: any;
   order:Order = {
     id: 0,
@@ -65,13 +66,15 @@ export class PaymentComponent implements OnInit {
  
       this.payPalConfig = {
         currency: 'DKK',
-        clientId: `${environment.Client_Id}`,       
+        clientId: `${environment.Client_Id}`,  
+          
         createOrderOnClient: (data) =>
 
         //const addressData=this.shippingdetails;
    
           <ICreateOrderRequest>{
-            
+
+           
             intent: 'CAPTURE',
             purchase_units: [
               {
@@ -82,7 +85,8 @@ export class PaymentComponent implements OnInit {
                 }
                 
               },
-       
+              //this.paymentService.GetAccessToken(),
+              //console.log("AccessToken", this.paymentService.GetAccessToken())
             ],
             
           },
@@ -105,6 +109,7 @@ export class PaymentComponent implements OnInit {
            
           
           this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
+          
             var result = await this.cartService.addOrder();
           
             
@@ -128,10 +133,13 @@ export class PaymentComponent implements OnInit {
 
       
         onClientAuthorization: (data) => {
+
+
           
         },
         onCancel: (data, actions) => {
           console.log('OnCancel', data, actions);
+          this.router.navigate(['cart'])
           
         },
         onError: (err) => {

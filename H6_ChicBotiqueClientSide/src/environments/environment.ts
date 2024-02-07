@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'https://localhost:7202/api',
-  Client_Id:'AaErQE9Kdpo5IohAvlEzMbycoU56Qg-tgxXeXyoQBlWaYQ3x37hqMrvaY7gT8HNeu4znXGqCX9y9_PQS'
+  Client_Id:'AV6EX8kgMXmpB9uNu0fBQR_3FpaYiXI7wnSSUb4RlxiepAvrRdB75JTd6-TGWV-FXw3JKMkfUl7Ie5FQ',
+  Client_Secret:'ECkmg6X0uKtP2-W6adJIvLycsm2Qau71iyZ5qntY7-qTL4VNerTTNEtAZKMSgoNLCkQIgsuDrJfs33tu'
 };
 
 /*
