@@ -132,11 +132,7 @@ export class PaymentComponent implements OnInit {
         },
         onCancel: (data, actions) => {
           console.log('OnCancel', data, actions);
-          if(data.orderID==null)
-          {
-            alert( "Cannot make the order");
-            this.router.navigate(['cart'])
-          }
+          
         },
         onError: (err) => {
           console.log('Try Again', err);
