@@ -12,6 +12,7 @@ export interface Order {
     transactionId: string;
     status: string;
     paymentMethod:string;
+    timePaid?:Date
     shippingDetails: ShippingDetails;
 
     orderDetails: CartItem[];

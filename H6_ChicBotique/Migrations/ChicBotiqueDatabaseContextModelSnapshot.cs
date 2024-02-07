@@ -47,13 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
+                            Id = new Guid("e6237295-737a-4058-b47e-e0011606ee7b"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
+                            Id = new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("b1590a2a-8e0b-40f4-800f-7f3b883b3919"),
+                            AccountInfoId = new Guid("e6237295-737a-4058-b47e-e0011606ee7b"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,7 +144,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("4bdc3417-6861-40e5-a7c9-92021f5b9428"),
+                            AccountInfoId = new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -249,16 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "9C4A60BC9197517675CB2B6125F7862FD19E0A3492677BE7CD9F1AE246180601",
-                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
+                            Password = "C83BDBE4C06EBFADA48E03356E80DD741634197952045D674210E177948160CC",
+                            Salt = "1qRdfLiRjiY1e8SzLSveFQ==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "A1DE10435B8B77297BC8F833A02D15AD5574DBF0173D375E8B82B0FCC7B321D9",
-                            Salt = "koQGTj4Njo7uDhYyoAgQKQ==",
+                            Password = "BCFE696C5BD7E57330E734B4AA35AE699E3BB6CF4119C4798FA0AB1C2FDC70A8",
+                            Salt = "1qRdfLiRjiY1e8SzLSveFQ==",
                             UserId = 2
                         });
                 });
@@ -279,6 +279,9 @@ namespace H6_ChicBotique.Migrations
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("TimePaid")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(100)");
@@ -380,7 +383,7 @@ namespace H6_ChicBotique.Migrations
                             Id = 6,
                             CategoryId = 3,
                             Description = "Summer clothing",
-                            Image = "womendress2.jpg",
+                            Image = "womendress1.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
                             Title = "Long dress"

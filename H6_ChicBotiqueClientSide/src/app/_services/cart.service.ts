@@ -91,6 +91,7 @@ async addOrder(): Promise<any> {
         transactionId: await firstValueFrom(this.orderService.getTransactionId() ),
         status:await firstValueFrom(this.orderService.getPaymentStatus()),
         paymentMethod: await firstValueFrom(this.orderService.getPaymentMethod()),
+        timePaid:new Date(),
         shippingDetails: {
           address: this.shippingAddressData.address ,
           city: this.shippingAddressData.city,
@@ -131,6 +132,7 @@ async addOrder(): Promise<any> {
         transactionId: this.transactionID,
         status:this.paymentStatus,
         paymentMethod: this.paymentMethod,
+        timePaid:new Date(),
         shippingDetails: {
           address:this.shippingAddressData.address ,
           city: this.shippingAddressData.city,

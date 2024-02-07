@@ -32,7 +32,7 @@ namespace H6_ChicBotique.Migrations
                     TransactionId = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Amount = table.Column<decimal>(type: "Decimal(10,3)", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    TimePaid = table.Column<DateTime>(type: "DateTime", nullable: true)
+                    TimePaid = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,7 +151,6 @@ namespace H6_ChicBotique.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "Date", nullable: false, defaultValueSql: "getdate()"),
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AccountInfoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -250,8 +249,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("071c5370-e41e-449f-ac9e-98893104d43a"), 2 },
-                    { new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"), 1 }
+                    { new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"), 2 },
+                    { new Guid("e6237295-737a-4058-b47e-e0011606ee7b"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -259,8 +258,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "2700BCCFA391C265F77442150437E1FD8DE5F31D4A574CBB882342036D7837D0", "Ocev7byyauJiqs7mA/Xd+w==", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "1E3DBF502BE86DFD967C9B27A86BD1122F809D2F9A149EC4C126C714BE43F3A6", "Ocev7byyauJiqs7mA/Xd+w==", 2 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "C83BDBE4C06EBFADA48E03356E80DD741634197952045D674210E177948160CC", "1qRdfLiRjiY1e8SzLSveFQ==", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "BCFE696C5BD7E57330E734B4AA35AE699E3BB6CF4119C4798FA0AB1C2FDC70A8", "1qRdfLiRjiY1e8SzLSveFQ==", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -273,19 +272,19 @@ namespace H6_ChicBotique.Migrations
                     { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, (short)10, "Skirt" },
                     { 4, 1, "kids jumpersuit", "jumpersuit1.jpg", 279.99m, (short)10, "Jumpersuit" },
                     { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" },
-                    { 6, 3, "Summer clothing", "floral-dress.jpg", 299.99m, (short)10, "Long dress" },
-                    { 7, 3, "Party dress for women", "Red-dress.jpg", 299.99m, (short)10, "Red dress" }
+                    { 6, 3, "Summer clothing", "womendress1.jpg", 299.99m, (short)10, "Long dress" },
+                    { 7, 3, "Spring Floral dress for women", "womendress2.jpg", 299.99m, (short)10, "Floral dress" }
                 });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 1, new Guid("9395e4ef-9a90-4979-8212-a689fd757c88"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+                values: new object[] { 1, new Guid("e6237295-737a-4058-b47e-e0011606ee7b"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 2, new Guid("071c5370-e41e-449f-ac9e-98893104d43a"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
+                values: new object[] { 2, new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountInfo_UserId",
