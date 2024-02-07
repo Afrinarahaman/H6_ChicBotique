@@ -150,9 +150,9 @@ namespace H6_ChicBotique.Controllers
                 return Problem(ex.Message); // Return 500 if an unexpected error occurs
             }
         }
-        
+
         // Update User Information
-        //[Authorize(Role.Member, Role.Administrator)]
+        //[Authorize(Roles = "Member,Administrator")]        
         [HttpPut("{userId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]

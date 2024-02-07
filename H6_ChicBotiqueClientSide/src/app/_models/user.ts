@@ -1,3 +1,4 @@
+import { HomeAddress } from "./homeaddress";
 import { Role } from "./role";
 
 import { ShippingDetails } from "./shippingdetails";
@@ -16,8 +17,6 @@ export interface User {
     telephone: string;
     role: Role;
     accountInfo?: any;
-    homeaddress?: any;
-    token?: string;
+    homeAddress?: HomeAddress;
     shippingDetails?: ShippingDetails; // Optional shipping details
   }
-
