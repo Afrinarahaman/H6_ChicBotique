@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators'; // Import the map operator
 })
 export class ProductService {
   private apiUrl_product = environment.apiUrl +  '/product';
+  private apiUrl_stock =environment.apiUrl + '/stock';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -47,5 +48,8 @@ export class ProductService {
     return this.http.delete<boolean>(`${this.apiUrl_product}/${productId}`, this.httpOptions);
   }
 
+  getAvailableStock(productId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl_stock}/${productId}`, this.httpOptions);
+  }
 
 }

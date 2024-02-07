@@ -17,7 +17,7 @@ import { OrderService } from './order.service';
 })
 export class CartService {
 
-  private basketName = "WebShopProjectBasket";
+  private basketName = "ChicBotiqueProjectBasket";
   public basket: CartItem[] = [];
   public search = new BehaviorSubject<string>("");
   public shippingAddressData: any;

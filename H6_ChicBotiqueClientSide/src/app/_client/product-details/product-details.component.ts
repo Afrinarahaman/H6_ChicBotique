@@ -5,6 +5,9 @@ import { CartService } from 'src/app/_services/cart.service';
 import { ProductService } from 'src/app/_services/product.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
 import { WishlistItem } from 'src/app/_models/wishlistItem';
+import { Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { CartItem } from 'src/app/_models/cartItem';
 
 
 
@@ -43,21 +46,47 @@ export class ProductDetailsComponent implements OnInit {
     });
 
   }
-  addToCart(product:Product)
+  /*addToCart(product:Product)
   {
 
+    
     this.cartService.addToBasket({
       productId:product.id,
       productTitle:product.title,
       productPrice:product.price,
       productImage:product.image,
-      quantity:this.quantity + 1,
+      quantity: this.quantity+1
+      
 
     });
+    
     window.location.reload();
-   // this.totalItem = this.cartService.getBasket().length;
-  }
 
+    
+   // this.totalItem = this.cartService.getBasket().length;
+  }*/
+  async addToCart(product: Product): Promise<any> {
+    try {
+      const availableStock = await firstValueFrom(this.productService.getAvailableStock(product.id));
+      if (product.stock <= availableStock) {
+        const item: CartItem = {
+        
+          productId: product.id,
+          productTitle: product.title,
+          productPrice: product.price,
+          productImage: product.image,
+          quantity: this.quantity+1
+        };
+        console.log("AvailableStock",availableStock);
+        this.cartService.addToBasket(item);
+      } else {
+         alert('Not enough stock');
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      // Handle error as needed
+    }
+  }
  handleAddtoWishlist(product:Product)
  {
     this.wishlistService.addToWishlist({
@@ -82,7 +111,9 @@ export class ProductDetailsComponent implements OnInit {
     this.addedToWishlist= false;
 
   }
-
+ 
 
 }
+
+
 

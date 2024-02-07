@@ -60,9 +60,7 @@ export class CartComponent implements OnInit {
 
   // Method to increase the quantity
   increaseQuantity(item: any): void {
-    /*item.quantity++;
-   this.quantity= item.quantity;
-   this.grandTotal = this.cartService.getTotalPrice();*/
+ 
    let itemId;
    itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
 
