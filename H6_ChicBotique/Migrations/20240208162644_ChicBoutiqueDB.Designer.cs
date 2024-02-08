@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-    [Migration("20240206083509_ChicBotiqueDB")]
-    partial class ChicBotiqueDB
-========
-    [Migration("20240205211103_chicBotiqueDB")]
-    partial class chicBotiqueDB
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+    [Migration("20240208162644_ChicBoutiqueDB")]
+    partial class ChicBoutiqueDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +49,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            Id = new Guid("e6237295-737a-4058-b47e-e0011606ee7b"),
-========
-                            Id = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            Id = new Guid("0a75207c-2365-4c0c-9d95-714ed9ac7208"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            Id = new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"),
-========
-                            Id = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            Id = new Guid("a4e71bf9-a6c2-48b1-8c3a-b0d7fff27274"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -149,11 +136,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            AccountInfoId = new Guid("e6237295-737a-4058-b47e-e0011606ee7b"),
-========
-                            AccountInfoId = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            AccountInfoId = new Guid("0a75207c-2365-4c0c-9d95-714ed9ac7208"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -163,11 +146,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            AccountInfoId = new Guid("1ccd6fbc-df47-4c7e-84a2-d5168b24a0aa"),
-========
-                            AccountInfoId = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            AccountInfoId = new Guid("a4e71bf9-a6c2-48b1-8c3a-b0d7fff27274"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -272,26 +251,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            Password = "C83BDBE4C06EBFADA48E03356E80DD741634197952045D674210E177948160CC",
-                            Salt = "1qRdfLiRjiY1e8SzLSveFQ==",
-========
-                            Password = "89D969DDBF37717FD4089D17C4614924CB82E6B23A07C829F1F01F5B13DA2B4E",
-                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            Password = "17029976737CB9A6C501A4C231155E773A1D8A06F4A5BA650690C04FEA660013",
+                            Salt = "+bkjHtC83GJUJ3ZBJ53SpQ==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-<<<<<<<< HEAD:H6_ChicBotique/Migrations/20240206083509_ChicBotiqueDB.Designer.cs
-                            Password = "BCFE696C5BD7E57330E734B4AA35AE699E3BB6CF4119C4798FA0AB1C2FDC70A8",
-                            Salt = "1qRdfLiRjiY1e8SzLSveFQ==",
-========
-                            Password = "98C805B460789EE55E07947A708EF145E8813E19F4878ED3AF3E1CA197E3012D",
-                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
->>>>>>>> origin/Afrina:H6_ChicBotique/Migrations/20240205211103_chicBotiqueDB.Designer.cs
+                            Password = "3E3FCAC5E506B7583A2DDD94C4A943CBDCEF4D50F35469306623C4B0F643BCCE",
+                            Salt = "+bkjHtC83GJUJ3ZBJ53SpQ==",
                             UserId = 2
                         });
                 });
