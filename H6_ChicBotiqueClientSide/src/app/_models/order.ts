@@ -6,13 +6,13 @@ import { ShippingDetails } from "./shippingdetails";
 export interface Order {
 
     id?: number;
-    accountId: string;
+    accountInfoId: string;
     orderDate?: Date;
     amount: number;
     transactionId: string;
     status: string;
     paymentMethod:string;
-    timePaid?:Date
+    timePaid?:Date;
     shippingDetails: ShippingDetails;
 
     orderDetails: CartItem[];

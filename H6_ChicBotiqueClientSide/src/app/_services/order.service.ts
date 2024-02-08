@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Order } from '../_models/order';
+import { PaymentService } from './payment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,15 @@ export class OrderService {
   public paymentStatus =new BehaviorSubject<any>([])
 
   public paymentMethod =new BehaviorSubject<any>([])
+  constructor(private http: HttpClient, private paymentService:PaymentService) { }
   apiUrl1 = environment.apiUrl + '/Order';
-
+  public accessToken:any= this.paymentService.getAccessToken();
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.accessToken}` }),
   };
-  constructor(private http: HttpClient) { }
+  
 
   setAddressData(data: any) {
     this.shippingdetails.next(data);

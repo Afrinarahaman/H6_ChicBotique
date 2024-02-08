@@ -2,17 +2,69 @@
 
     
   
-  <br>
-  <br>
- <h1>Helloooo
+ <br>
+ <br>
+ <br>
+ <br>
 
- </h1>
  <br>
  <br>
- <br>
- <br>
- <br>
- <br>
+
+ <h1 class="h3 mb-5 mt-3">Payment Page</h1>
+ 
+ 
+ 
+ 
+ 
+ <!---Right-->
+ 
+ <div class="p-5" style="background-color: #88618d;">
+   <div class="mx-auto p-3" style="width:420px;">
+ 
+     <h2>Order Summary</h2>
+     <div class="row mb-3">
+       <div class="col-5"> Delivery Address</div>
+       <div class="col-7">
+ 
+ 
+         <table class="w3-table w3-bordered w3-striped">
+           <tbody>
+             <tr>
+               <th>Address</th>
+               <th>City</th>
+               <th>Country</th>
+ 
+               <th>PostalCode</th>
+               <th>TelePhone Number</th>
+ 
+             </tr>
+             <tr>
+ 
+               <td>{{ shippingdetails}}</td>
+               <td>{{ shippingdetails.city }}</td>
+               <td>{{ shippingdetails.country }}</td>
+               <td>{{ shippingdetails.postalcode }}</td>
+               <td>{{ shippingdetails.phone }}</td>
+ 
+ 
+             </tr>
+           </tbody>
+         </table>
+ 
+       </div>
+ 
+     </div>
+     <div class="row mb-3">
+       <div class="col-5"> Total Amount 
+       <span>TOTAL</span> <strong class="text-dark">{{cartTotal}} DKK</strong>
+      </div>
+ 
+     </div>
+ 
+ 
+     
+   </div>
+ 
  <br>
  <br>
  <div></div>
@@ -31,24 +83,3 @@
 
 
 
-
-  <!--
-<div class="col-lg-3">
-    <div class="card position-sticky top=0">
-        <div class="paypal-container">
-            <div class="amount"> Total amount to pay: {{this.cartTotal}}DKK
-
-            </div>
-            <div #paymentRef>
-
-            </div>
-      
-            <p>payment works!</p>
-            <br>
-
-
-            <button class="back" (click)="cancel()" >Cancel</button>
-        </div>
-    </div>
-</div>
--->

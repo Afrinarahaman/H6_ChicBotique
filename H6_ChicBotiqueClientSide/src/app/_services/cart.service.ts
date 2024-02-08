@@ -86,7 +86,7 @@ async addOrder(): Promise<any> {
           this.shippingAddressData = data;
         });
       let orderitem: Order = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
-        accountId: this.userGuid,
+        accountInfoId: this.userGuid,
         amount: this.getTotalPrice(),
         transactionId: await firstValueFrom(this.orderService.getTransactionId() ),
         status:await firstValueFrom(this.orderService.getPaymentStatus()),
@@ -126,14 +126,14 @@ async addOrder(): Promise<any> {
     this.paymentMethod= await firstValueFrom(this.orderService.getPaymentMethod());
 
       let orderitem: Order = {
-       accountId:this.userGuid,
+       accountInfoId:this.userGuid,
         orderDetails: this.basket,
         amount: this.getTotalPrice(),
         transactionId: this.transactionID,
         status:this.paymentStatus,
         paymentMethod: this.paymentMethod,
         timePaid:new Date(),
-        shippingDetails: {
+        shippingDetails: { 
           address:this.shippingAddressData.address ,
           city: this.shippingAddressData.city,
 

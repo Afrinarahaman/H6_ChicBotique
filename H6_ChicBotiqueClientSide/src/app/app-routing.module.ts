@@ -17,10 +17,9 @@ import{ AdminPanelComponent } from './_admin/admin-panel/admin-panel.component';
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
 import { CheckOutComponent } from './_client/check-out/check-out.component';
-import { PaymentComponent } from './_client/payment/payment.component';
 import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdetails.component';
 import { ThankyouComponent } from './_client/thankyou/thankyou.component';
-
+import { PaymentComponent } from './_client/payment/payment.component';
 
 const adminRoutes: Routes = [
   { path: 'admin-panel', component: AdminPanelComponent,canActivate: [AuthGuard] },
@@ -44,7 +43,6 @@ const clientRoutes: Routes = [
   {path: 'shippingdetails', component: ShippingdetailsComponent },
   { path: 'thankyou', component:ThankyouComponent},
   { path: 'payment', component: PaymentComponent,  canActivate: [AuthGuard]  }
-
 ];
 
 @NgModule({

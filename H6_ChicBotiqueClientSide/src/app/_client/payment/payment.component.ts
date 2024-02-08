@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { Observable, of } from 'rxjs';
 import { Order } from 'src/app/_models/order';
+import { ShippingDetails } from 'src/app/_models/shippingdetails';
 import { CartService } from 'src/app/_services/cart.service';
 import { OrderService } from 'src/app/_services/order.service';
 import { PaymentService } from 'src/app/_services/payment.service';
@@ -17,10 +19,11 @@ export class PaymentComponent implements OnInit {
 
   cartTotal =0;
  public payPalConfig?: IPayPalConfig;
+ 
   showSuccess!: any;
   order:Order = {
     id: 0,
-    accountId: '',
+    accountInfoId: '',
     shippingDetails: {
       address: "",
       city: '',
@@ -38,6 +41,7 @@ export class PaymentComponent implements OnInit {
 
   //@ViewChild('paymentRef', {static : true}) paymentRef!: ElementRef;
   shippingdetails: any;
+ 
   id: any;
   trasactionId:  any;
  paymentStatus:any;
@@ -48,7 +52,8 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
     this.cartTotal= this.cartService.getTotalPrice();
     this.shippingdetails=this.orderService.getAddressData()
-
+  
+    console.log("Shipping Address",this.shippingdetails)
   localStorage.getItem('Cart Total') as any;
     console.log(this.cartTotal);
     console.log();
@@ -61,13 +66,15 @@ export class PaymentComponent implements OnInit {
 
       this.payPalConfig = {
         currency: 'DKK',
-        clientId: `${environment.Client_Id}`,
+        clientId: `${environment.Client_Id}`,  
+          
         createOrderOnClient: (data) =>
 
         //const addressData=this.shippingdetails;
 
           <ICreateOrderRequest>{
 
+           
             intent: 'CAPTURE',
             purchase_units: [
               {
@@ -78,57 +85,67 @@ export class PaymentComponent implements OnInit {
                 }
 
               },
-
+              //this.paymentService.GetAccessToken(),
+              //console.log("AccessToken", this.paymentService.GetAccessToken())
             ],
 
           },
+       
+       
+        onApprove: (data, actions) => {
+          var test:any = data;
+          console.log(
+            test.paymentSource,
+            'onApprove - transaction was approved',
+            data,
+            actions
+          );
+          this.trasactionId=this.orderService.setTransactionId(data.orderID);
+          
+          actions.order.get().then(async (details: any) => {
+            this.orderService.getAddressData();
+            console.log(details);
+            this.paymentStatus=this.orderService.setPaymentStatus(details.status);
+           
+          
+          this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
+          
+            var result = await this.cartService.addOrder();
+          
+            
+          
+             // var result = await this.cartService.addOrder();n
+              this.id =result.id;
+              console.log('result', result);
+              this.cartService.clearBasket();
+              this.router.navigate(['/thankyou/', {orderId: this.id}]);
+              window.location.reload;
+              /*console.log(
+              'onApprove - you can get full order details inside onApprove: ',
+              
+              );            details=result
+              // console.log('Details of ORDERS:', details);*/
+            
+          });
+        },
+      
+   
 
-
-          onApprove: (data, actions) => {
-            var test:any = data;
-            console.log(
-              test.paymentSource,
-              'onApprove - transaction was approved',
-              data,
-              actions
-            );
-            this.trasactionId=this.orderService.setTransactionId(data.orderID);
-
-            actions.order.get().then(async (details: any) => {
-              this.orderService.getAddressData();
-              console.log(details);
-              this.paymentStatus=this.orderService.setPaymentStatus(details.status);
-
-
-            this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
-              var result = await this.cartService.addOrder();
-
-
-
-               // var result = await this.cartService.addOrder();n
-                this.id =result.id;
-                console.log('result', result);
-                this.cartService.clearBasket();
-                this.router.navigate(['/thankyou/', {orderId: this.id}]);
-                window.location.reload;
-                /*console.log(
-                'onApprove - you can get full order details inside onApprove: ',
-
-                );            details=result
-                // console.log('Details of ORDERS:', details);*/
-
-            });
-          },
-
-
+      
         onClientAuthorization: (data) => {
 
+
+          
         },
         onCancel: (data, actions) => {
           console.log('OnCancel', data, actions);
+          this.router.navigate(['cart'])
+          
         },
         onError: (err) => {
-          console.log('OnError', err);
+          console.log('Try Again', err);
+          alert("Try Again")
+          this.router.navigate(['cart']);
         },
 
       };
