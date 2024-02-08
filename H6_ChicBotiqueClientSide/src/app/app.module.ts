@@ -27,6 +27,7 @@ import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdeta
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { FilterByUserIdPipe } from './_pipes/filterByUserId.pipe';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AppComponent,
     FrontpageComponent,
     SortPipe,
+    FilterByUserIdPipe,
     NavbarComponent,
     CategoryProductsComponent,
     ProductDetailsComponent,

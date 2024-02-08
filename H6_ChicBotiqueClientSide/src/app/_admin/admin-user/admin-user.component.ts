@@ -2,11 +2,13 @@ import { User } from './../../_models/user';
 import { Component, OnInit } from '@angular/core';
 import { UserService} from 'src/app/_services/user.service';
 import { HttpClient } from '@angular/common/http';
-import Swal from 'sweetalert2'
+import { DatePipe } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import{Role} from 'src/app/_models/role';
 import { Observable,map, of, tap } from 'rxjs';
 import { SearchService } from 'src/app/_services/search.service';  // SearchService
+import { OrderService } from 'src/app/_services/order.service';
+import { Order } from 'src/app/_models/order';
 
 
 
@@ -27,9 +29,9 @@ export class AdminUserComponent implements OnInit {
   users$!: Observable<User[]>;
   searchTerm: string = '';
   searched: boolean = false; // Initialize searched to false
-
   message: string = '';
   roles!: Role
+  orders:Order[]=[];
 
 
   user: User = {
@@ -40,9 +42,12 @@ export class AdminUserComponent implements OnInit {
   constructor(private userService: UserService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private searchService: SearchService) {
+
+    private searchService: SearchService,
+    private orderService:OrderService) {
        // Fetch All Users list by default when the component is initialized
     this.users$ = this.userService.getUsers();
+
 
     }
 
@@ -50,6 +55,20 @@ export class AdminUserComponent implements OnInit {
     this.userService.getUsers().subscribe(
       u => {this.users = u
         console.log(u);});
+
+    // Fetch orders after getting users
+    this.orderService.getAllOrders().subscribe(orders => {
+    this.orders = orders;
+    console.log("List of orders",orders);
+   })
+
+    // Associate orders with users based on userId
+    this.users.forEach(user => {
+      user.accountInfo = this.orders.filter(order => order.userId === user.id);
+    });
+
+    console.log(this.users);
+
 
     // Subscribe to changes in the search term
     this.searchService.search$.subscribe((term) => {
@@ -172,14 +191,8 @@ searchUser(): void {
   }
 
 
-  delete_member(user: User): void {
-    if (confirm('Delete user: '+user.firstName+' '+ user.lastName+'?')) {
-      this.userService.deleteUser(user.id)
-      .subscribe(() => {
-        this.users = this.users.filter(cus => cus.id != user.id)
-      })
-    }
-  }
+
+
 
 
 

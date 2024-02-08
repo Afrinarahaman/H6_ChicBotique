@@ -19,11 +19,12 @@ export class PaymentComponent implements OnInit {
 
   cartTotal =0;
  public payPalConfig?: IPayPalConfig;
- 
+
   showSuccess!: any;
   order:Order = {
     id: 0,
     accountInfoId: '',
+    userId:0,
     shippingDetails: {
       address: "",
       city: '',
@@ -41,7 +42,7 @@ export class PaymentComponent implements OnInit {
 
   //@ViewChild('paymentRef', {static : true}) paymentRef!: ElementRef;
   shippingdetails: any;
- 
+
   id: any;
   trasactionId:  any;
  paymentStatus:any;
@@ -52,7 +53,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
     this.cartTotal= this.cartService.getTotalPrice();
     this.shippingdetails=this.orderService.getAddressData()
-  
+
     console.log("Shipping Address",this.shippingdetails)
   localStorage.getItem('Cart Total') as any;
     console.log(this.cartTotal);
@@ -66,15 +67,15 @@ export class PaymentComponent implements OnInit {
 
       this.payPalConfig = {
         currency: 'DKK',
-        clientId: `${environment.Client_Id}`,  
-          
+        clientId: `${environment.Client_Id}`,
+
         createOrderOnClient: (data) =>
 
         //const addressData=this.shippingdetails;
 
           <ICreateOrderRequest>{
 
-           
+
             intent: 'CAPTURE',
             purchase_units: [
               {
@@ -90,8 +91,8 @@ export class PaymentComponent implements OnInit {
             ],
 
           },
-       
-       
+
+
         onApprove: (data, actions) => {
           var test:any = data;
           console.log(
@@ -101,19 +102,19 @@ export class PaymentComponent implements OnInit {
             actions
           );
           this.trasactionId=this.orderService.setTransactionId(data.orderID);
-          
+
           actions.order.get().then(async (details: any) => {
             this.orderService.getAddressData();
             console.log(details);
             this.paymentStatus=this.orderService.setPaymentStatus(details.status);
-           
-          
+
+
           this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
-          
+
             var result = await this.cartService.addOrder();
-          
-            
-          
+
+
+
              // var result = await this.cartService.addOrder();n
               this.id =result.id;
               console.log('result', result);
@@ -122,25 +123,25 @@ export class PaymentComponent implements OnInit {
               window.location.reload;
               /*console.log(
               'onApprove - you can get full order details inside onApprove: ',
-              
+
               );            details=result
               // console.log('Details of ORDERS:', details);*/
-            
+
           });
         },
-      
-   
 
-      
+
+
+
         onClientAuthorization: (data) => {
 
 
-          
+
         },
         onCancel: (data, actions) => {
           console.log('OnCancel', data, actions);
           this.router.navigate(['cart'])
-          
+
         },
         onError: (err) => {
           console.log('Try Again', err);

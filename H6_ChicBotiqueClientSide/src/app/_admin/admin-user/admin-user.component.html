@@ -65,16 +65,11 @@
             </div>
         </div>
 
-
-
-
-
     </div>
     <!---Table to show user data according to role-->
     <br>
     <div class="table ">
         <div class="container mt-2 ">
-
             <table class="table table-hover table-stripped table-responsive ">
                 <thead>
                     <tr>
@@ -86,10 +81,7 @@
                     </tr>
                 </thead>
 
-
-
                 <!-- Display role-specific tables -->
-
                 <tbody *ngIf="(selectedValue==='0' ) && (users$ | async) as users ">
                     <!-- All Users Table -->
                     <tr *ngFor="let user of users ">
@@ -173,26 +165,37 @@
                     <thead>
                         <tr>
                             <th>Order ID</th>
+                            <th>Order Date</th>
                             <th>Product Title</th>
                             <th>Product Quantity</th>
+                            <th>Payment Method</th>
                             <th>Payment Status</th>
                         </tr>
                     </thead>
-                    <!--
-          <tbody *ngIf="orders?.length !==0 ">
-            <tr *ngFor="let order of orders ">-->
-                    <tr>
-                        <td>order.id</td>
-                        <td>product.id</td>
-                        <td>product.quantiy | currency:'kr '</td>
-                        <td>payment-status</td>
-                    </tr>
-                    <!--  </tbody>-->
+
+                    <tbody *ngIf="orders?.length !==0 ">
+
+                        <tr *ngFor="let order of orders">
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.orderDate | date: 'dd-MM-yy' }}</td>
+                            <td>
+                                <div *ngFor="let orderDetail of order.orderDetails">
+                                    {{ orderDetail.productTitle}}
+                                </div>
+                            </td>
+                            <td>
+                                <div *ngFor="let orderDetail of order.orderDetails">
+                                    {{ orderDetail.quantity }}
+                                </div>
+                            </td>
+                            <td>{{ order.paymentMethod}}</td>
+                            <td>{{ order.status}}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="modal-footer ">
                 <button type="button " class="btn btn-primary " data-bs-dismiss="modal">OK</button>
-
             </div>
         </div>
     </div>

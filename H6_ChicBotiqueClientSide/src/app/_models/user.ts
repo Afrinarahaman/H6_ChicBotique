@@ -19,4 +19,12 @@ export interface User {
     accountInfo?: any;
     homeAddress?: HomeAddress;
     shippingDetails?: ShippingDetails; // Optional shipping details
-  }
+    orders?: Order[];  // Array of orders associated with the user
+}
+
+// order.model.ts
+export interface Order {
+ 
+  userId?: number;  // Link order to a user
+}
+
