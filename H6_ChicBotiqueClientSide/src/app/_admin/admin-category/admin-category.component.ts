@@ -69,8 +69,6 @@ export class AdminCategoryComponent implements OnInit {
           alert('No results found');
         }
 
-
-
       });
     }
   }

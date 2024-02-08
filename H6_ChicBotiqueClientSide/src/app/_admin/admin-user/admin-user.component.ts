@@ -1,10 +1,10 @@
+import { User } from './../../_models/user';
 import { Component, OnInit } from '@angular/core';
 import { UserService} from 'src/app/_services/user.service';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2'
 import { FormBuilder } from '@angular/forms';
 import{Role} from 'src/app/_models/role';
-import{User} from 'src/app/_models/user';
 import { Observable,map, of, tap } from 'rxjs';
 import { SearchService } from 'src/app/_services/search.service';  // SearchService
 
@@ -16,69 +16,47 @@ import { SearchService } from 'src/app/_services/search.service';  // SearchServ
   styleUrls: ['./admin-user.component.css']
 })
 export class AdminUserComponent implements OnInit {
- selectedValue = '1';
+ selectedValue = '0';
   users: User[]= [];
   admins: User[] = [];
   members: User[] = [];
   guests: User[] = [];
   userId = 1; // replace with the desired user ID
-  shippingAddresses: string[] = [];
-  address: any;
+
+  // Declare members$ here
+  users$!: Observable<User[]>;
   searchTerm: string = '';
-
- /// addresses: HomeAddress[]=[];
-/*  homeAddress: HomeAddress = {
-    accountId:'',
-    id: 0,
-    address: '',
-    city: '',
-    postalCode: '',
-    country:'',
-    phone:''
-  }
-*/
-
-  user: User = {
-    id: 0,email: '', firstName: '', lastName: '', password: '', address: '',
-    city: '', postalcode: '', country: '', telephone: '', role: 0}
-
-
-
+  searched: boolean = false; // Initialize searched to false
 
   message: string = '';
   roles!: Role
-  p: any;
-  // Declare members$ here
- users$!: Observable<User[]>;
-// homeaddress$!: Observable<HomeAddress[]>;
+
+
+  user: User = {
+    id: 0, email: '', firstName: '', lastName: '', password: '', address: '',
+    city: '', postalcode: '', country: '', telephone: '', role: 0}
 
 
   constructor(private userService: UserService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private searchService: SearchService) {
-       // Fetch Members list by default when the component is initialized
-    this.users$ = this.userService.getMembersList();
+       // Fetch All Users list by default when the component is initialized
+    this.users$ = this.userService.getUsers();
 
     }
 
   ngOnInit(): void {
-   // Set default selected value to '1' for Members
-   this.selectedValue = '1';
-   // Fetch Members list by default
-   this.users$ = this.userService.getMembersList();
- //  this.homeaddress$=this.addressService.getAllAddress();
-   /* Subscribe to the address observable*/
- // this.addressService.getAllAddress().subscribe(address =>{
-   // console.log("Home Address is: ",this.homeAddress.id);
-   // console.log("Home Address Details are: ",this.homeAddress);
+    this.userService.getUsers().subscribe(
+      u => {this.users = u
+        console.log(u);});
 
     // Subscribe to changes in the search term
     this.searchService.search$.subscribe((term) => {
       // Update the local searchTerm whenever the search term changes
       this.searchTerm = term;
       //  call the searchProducts() method.
-      this.searchUsers();
+      this.searchUser();
   });
 }
 // method to handle input changes in the search field
@@ -95,40 +73,73 @@ fetchUsers() {
 
 
 //method to search specific user
-  searchUsers() {
+/* searchUser() {
 
-    if (this.searchTerm == null || this.searchTerm == '' && (onkeyup)) {
-      alert('The search field is empty');
-      this.fetchUsers();
+  if (this.searchTerm == null || this.searchTerm == '' && (onkeyup)) {
+    alert('The search field is empty');
+    this.fetchUsers();
 
-    } else if (this.searchTerm.length >= 0) {
-      this.userService.getUsers().subscribe((users: User[]) => {
-        // Use the filter method to filter products based on the searchTerm
-        const filteredUsers = users.filter((user) => {
-          // Check if the data contains the searchTerm (case-insensitive)
-          const searchTerm = this.searchTerm.toLowerCase();
-          return (
-           user.firstName.toLowerCase().includes(searchTerm) ||
-           user.lastName.toLowerCase().includes(searchTerm) ||
-           user.email.toLowerCase().includes(searchTerm) ||
-           user.telephone.toLowerCase().includes(searchTerm)
-          );
-        });
-        // Update the users$ observable with the filtered results
-      this.users$ = of(filteredUsers);
+  } else if (this.searchTerm.length >= 0) {
+    this.userService.getUsers().subscribe((categories: User[]) => {
+      // Use the filter method to filter categories based on the searchTerm
+      this.users = this.users.filter((user) => {
+        // Check if the category name contains the searchTerm (case-insensitive)
+        const searchTerm = this.searchTerm.toLowerCase();
+        return (
+          user.firstName.toLowerCase().includes(searchTerm)
 
-
-        // Check if no results were found
-        if (filteredUsers.length === 0) {
-          alert('No results found');
-        }
-
-
-
+        );
       });
-    }
-  }
+      console.log(this.searchTerm);
 
+      // Check if no results were found
+      if (this.users.length === 0) {
+        alert('No results found');
+      }
+
+    });
+  }
+}*/
+
+// Method to search specific user
+searchUser(): void {
+  if (!this.searchTerm.trim()) {
+    alert('The search field is empty');
+    this.fetchUsers();
+  } else {
+    this.users$.subscribe((users: User[]) => {
+      // Use a temporary array to store the filtered users
+      const filteredUsers = users.filter((user) => {
+        // Check if the user's first name contains the searchTerm (case-insensitive)
+        return user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase());
+      });
+
+      // Update the main users array with the filtered results
+      this.users = filteredUsers;
+        // Set searched to true after the search is performed
+    this.searched = true;
+
+      // Check if no results were found
+      if (filteredUsers.length === 0) {
+        alert('No results found');
+      }
+    });
+  }
+}
+
+ // Function to get role name based on role number
+ getRoleName(roleNumber: number): string {
+  switch (roleNumber) {
+      case 0:
+          return 'Administrator';
+      case 1:
+          return 'Member';
+      case 2:
+          return 'Guest';
+      default:
+          return 'Unknown';
+  }
+}
 
   // Method to handle role change
   onRoleChange(event:any): void {
@@ -137,19 +148,26 @@ fetchUsers() {
 
  // Fetch user information based on the selected role
   switch (this.selectedValue) {
-      case '0':
+    case '0':
+      console.log('Fetching Users');
+      // Assign the observable to members$
+      this.users$ = this.userService.getUsers();
+      break;
+
+
+      case '1':
         console.log('Fetching Admins');
         // Assign the observable to members$
         this.users$ = this.userService.getAdminsList();
         break;
 
-      case '1':
+      case '2':
         console.log('Fetching Members');
         // Assign the observable to members$
         this.users$ = this.userService.getMembersList();
         break;
 
-      case '2':
+      case '3':
         console.log('Fetching Guests');
         // Assign the observable to members$
         this.users$ = this.userService.getGuestsList();
@@ -162,33 +180,16 @@ fetchUsers() {
          this.users$ = this.userService.getMembersList();
         break;
     }
-     // Now, also fetch and print the address
-/*this.addressService.getAllAddress().subscribe((allAddresses) => {
-  console.log('All Addresses on Role Change:', allAddresses);*/
+
 
   // Assuming that the user has a property named 'userId' that corresponds to the 'id' in HomeAddress
   this.users$.subscribe((users) => {
     const userIds = users.map(user => user.id);
 
-    // Fetch addresses for specific users based on their IDs
-  /*  this.addressService.getAddressByIds(userIds).subscribe((userAddresses) => {
-      console.log('Addresses for Users on Role Change:', userAddresses);
-
-      // Combine userAddresses with allAddresses as needed
-      // For example, you can merge the arrays or create a new array
-      const combinedAddresses: HomeAddress[] = allAddresses.concat(userAddresses);
-
-
-      // Assign the combined addresses to homeaddress$
-      this.homeaddress$ = of(combinedAddresses);*/
     });
 
 
-
   }
-
-
-
 
 
 

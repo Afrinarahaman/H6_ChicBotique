@@ -6,12 +6,47 @@
     <!-- Search button -->
     <div class="search-bar-container ms-4">
         <div class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search for a user..." [(ngModel)]="searchTerm">
-            <button class="btn btn-success" type="submit" (click)="searchUsers()">Search</button>
+            <input class="form-control me-2" type="search" placeholder="Search for a user..." [(ngModel)]="searchTerm" (input)="searchUser()">
+            <button class="btn btn-success" type="submit" (click)="searchUser()">Search</button>
         </div>
     </div>
 
 </div>
+
+<!-- Display users based on search -->
+<div *ngIf="searched && users.length > 0; else noResults">
+
+    <table class="table table-hover table-stripped table-responsive">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ getRoleName(user.role) }}</td>
+                <!-- Display role name based on role number -->
+                <td>
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                      <u>Check Order details</u>
+                  </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Display message if no results found -->
+<ng-template #noResults>
+    <p *ngIf="searchTerm && searched">No results found.</p>
+</ng-template>
 
 
 <div class="container mt-3">
@@ -20,17 +55,19 @@
             <h5><b>Choose Role:</b></h5>
             <div class="input-group mb-3">
                 <select class="form-select" [(ngModel)]="selectedValue" (change)="onRoleChange($event)">
-              <option value="0">Administrators</option>
-              <option value="1">Members</option>
-              <option value="2">Guests</option>
+                 <option value="0">All</option>
+              <option value="1">Administrators</option>
+              <option value="2">Members</option>
+              <option value="3">Guests</option>
             </select>
             </div>
         </div>
     </div>
-
+    <!---Table to show user data according to role-->
     <br>
     <div class="table">
         <div class="container mt-2">
+
             <table class="table table-hover table-stripped table-responsive">
                 <thead>
                     <tr>
@@ -42,40 +79,69 @@
                     </tr>
                 </thead>
 
-                <tbody *ngIf=" (selectedValue==='0' ) && (users$ | async) as admins">
+
+
+                <!-- Display role-specific tables -->
+
+                <tbody *ngIf="(selectedValue==='0' ) && (users$ | async) as users">
+                    <!-- All Users Table -->
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.homeAddress?.address}}</td>
+
+
+                        <td>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                            <u>Check Order details</u>
+                        </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="(selectedValue==='1' ) && (users$ | async) as admins">
                     <!-- Admins Table -->
-                    <tr *ngFor="let admin of admins ">
+                    <tr *ngFor="let admin of admins">
                         <td>{{ admin.firstName }}</td>
                         <td>{{ admin.lastName }}</td>
                         <td>{{ admin.email }}</td>
                         <td>{{ admin.address }}</td>
-                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
-                          <u>Check Order details</u>
-                        </button></td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                            <u>Check Order details</u>
+                        </button>
+                        </td>
+                    </tr>
                 </tbody>
 
-                <tbody *ngIf="(selectedValue==='1') && (users$ | async) as members ">
+                <tbody *ngIf="(selectedValue==='2') && (users$ | async) as members">
                     <!-- Members Table -->
-                    <tr *ngFor="let member of members ">
+                    <tr *ngFor="let member of members">
                         <td>{{ member.firstName }}</td>
                         <td>{{ member.lastName }}</td>
                         <td>{{ member.email }}</td>
                         <td>{{ member.address }}</td>
-                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
-                          <u>Check Order details</u>
-                        </button></td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                            <u>Check Order details</u>
+                        </button>
+                        </td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="selectedValue==='2' && (users$ | async) as guests">
+
+                <tbody *ngIf="selectedValue==='3' && (users$ | async) as guests">
                     <!-- Guests Table -->
-                    <tr *ngFor="let guest of guests ">
+                    <tr *ngFor="let guest of guests">
                         <td>{{ guest.firstName }}</td>
                         <td>{{ guest.lastName }}</td>
                         <td>{{ guest.email }}</td>
                         <td>{{ guest.address }}</td>
-                        <td> <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
-                          <u>Check Order details</u>
-                        </button></td>
+                        <td>
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
+                            <u>Check Order details</u>
+                        </button>
+                        </td>
                     </tr>
                 </tbody>
 
@@ -83,8 +149,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- Modal for checking order details -->
 <div class="modal" id="orderDetailsModal" tabindex="-1" aria-labelledby="Order details" role="dialog" aria-hidden="true">
