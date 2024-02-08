@@ -1,38 +1,53 @@
-<p>shippingdetails works!</p>
+<div class="container">
+    <div class="card mx-auto" style="max-width: 600px; margin-top:45px; ">
+        <div class="card-body">
+            <h3 class="card-title mb-4">Shipping Details</h3>
+
+            <form #shippingForm="ngForm" class="form-area form-group">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="address">Address</label>
+                        <input [(ngModel)]="shippingdetails.address" name="address" type="text" class="form-control" id="address">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="city">City</label>
+                        <input [(ngModel)]="shippingdetails.city" name="city" type="text" class="form-control" id="city">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="postalCode">Postal Code</label>
+                        <input [(ngModel)]="shippingdetails.postalcode" name="postalcode" type="text" class="form-control" id="postalCode">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="country">Country</label>
+                        <input [(ngModel)]="shippingdetails.country" name="country" type="text" class="form-control" id="country">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="telephone">Telephone</label>
+                        <input [(ngModel)]="shippingdetails.phone" name="telephone" type="text" class="form-control" id="telephone">
+                    </div>
+                </div>
 
 
+                <div class="form-row">
+                    <div class="col-md-6 mt-2">
+                        <button type="button" class="btn btn-success px-5" (click)="submitShippingForm()">Submit</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary  px-5" routerLink="/cart">Cancel</button>
+                    </div>
 
-<br>
-<br>
-<br>
-
-
-<form #shippingForm="ngForm"  class="form-area"  >
-    <div class="row">
-      <div class="col-md-2"><label for="address"> Address</label></div>
-      <div ><input  [(ngModel)]="shippingdetails.address" name=" address"type="text" id="address" ></div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-md-2"><label for="city">City</label></div>
-      <div class="col-md-2"><input  [(ngModel)]="shippingdetails.city" name=" city" type="text" id="city" ></div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-2"><label for="postalCode">PostalCode</label></div>
-      <div class="col-md-2"><input [(ngModel)]="shippingdetails.postalcode"name=" postalcode" type="text" id="postalCode"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-2"><label for="country">Country</label></div>
-      <div class="col-md-2"><input [(ngModel)]="shippingdetails.country" name=" country" type="text" id="country" ></div>
-    </div>
-    
-    <div class="row">
-      <div class="col-md-2"><label for="telephone">Telephone</label></div>
-      <div class="col-md-2"><input [(ngModel)]="shippingdetails.phone"  name=" telephone" type="text" id="telephone" ></div>
-    </div>
-    <!-- Add more fields for state, zip code, etc. -->
-    <button type="submit" (click)="submitShippingForm()" >Submit</button>
-   
-    <!--<button type="submit" (click)="paymentProcedure()" >Proceed to Payment</button>-->
-    <button  routerLink="/cart" >Cancel</button>
-  </form>
+</div>

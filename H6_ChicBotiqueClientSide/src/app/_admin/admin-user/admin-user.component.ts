@@ -70,61 +70,32 @@ fetchUsers() {
   this.userService.getUsers().subscribe((u) => (this.users = u));
 }
 
-
-
-//method to search specific user
-/* searchUser() {
-
-  if (this.searchTerm == null || this.searchTerm == '' && (onkeyup)) {
-    alert('The search field is empty');
-    this.fetchUsers();
-
-  } else if (this.searchTerm.length >= 0) {
-    this.userService.getUsers().subscribe((categories: User[]) => {
-      // Use the filter method to filter categories based on the searchTerm
-      this.users = this.users.filter((user) => {
-        // Check if the category name contains the searchTerm (case-insensitive)
-        const searchTerm = this.searchTerm.toLowerCase();
-        return (
-          user.firstName.toLowerCase().includes(searchTerm)
-
-        );
-      });
-      console.log(this.searchTerm);
-
-      // Check if no results were found
-      if (this.users.length === 0) {
-        alert('No results found');
-      }
-
-    });
-  }
-}*/
-
 // Method to search specific user
 searchUser(): void {
-  if (!this.searchTerm.trim()) {
-    alert('The search field is empty');
-    this.fetchUsers();
-  } else {
-    this.users$.subscribe((users: User[]) => {
+  this.users$.subscribe((users: User[]) => {
+    if (this.searchTerm == null || this.searchTerm.trim() === '') {
+      // If search term is empty, do not display any list of users
+      this.users = [];
+      this.searched = false;  // Set searched to false when search term is empty
+    } else {
       // Use a temporary array to store the filtered users
       const filteredUsers = users.filter((user) => {
         // Check if the user's first name contains the searchTerm (case-insensitive)
-        return user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase());
+        return user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase())  ||
+        user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase())||
+        user.email.toLowerCase().includes(this.searchTerm.toLowerCase())||
+        user.homeAddress?.address.toLowerCase().includes(this.searchTerm.toLowerCase())
       });
 
-      // Update the main users array with the filtered results
-      this.users = filteredUsers;
-        // Set searched to true after the search is performed
-    this.searched = true;
+      this.users = filteredUsers;  // Update the main users array with the filtered results
+      this.searched = true;  // Set searched to true after the search is performed
 
       // Check if no results were found
       if (filteredUsers.length === 0) {
         alert('No results found');
       }
-    });
-  }
+    }
+  });
 }
 
  // Function to get role name based on role number
