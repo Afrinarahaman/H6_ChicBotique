@@ -10,6 +10,7 @@ namespace H6_ChicBotique.Services
     // Interface definition for user service
     public interface IUserService
     {
+       // Task<List<UserResponse>> GetAllAsync(); // Method to retrieve all users as UserResponse objects
         Task<List<UserResponse>> GetAll(); // Method to retrieve all users as UserResponse objects
         Task<UserResponse> GetById(int UserId); // Method to retrieve a user by ID as a UserResponse object
         Task<PasswordEntityResponse> GetPasswordByUserId(int UserId);
@@ -42,22 +43,48 @@ namespace H6_ChicBotique.Services
             _homeAddressRepository= homeAddressRepository;
         }
 
-        // Implementation of GetAll method
+        /*  // Implementation of GetAll method
+           public async Task<List<UserResponse>> GetAll()
+           {
+               // Retrieve all users from the repository
+              List<User> users = await _userRepository.SelectAll();
+
+                     // If users are not null, map each user to a UserResponse object
+                         return users == null ? null : users.Select(u => new UserResponse
+                           {
+                               Id = u.Id,
+                               FirstName = u.FirstName,
+                               LastName = u.LastName,
+                               Email = u.Email,
+                               Role = u.Role,
+
+                            }).ToList();
+
+            } */
+
+
         public async Task<List<UserResponse>> GetAll()
         {
-            // Retrieve all users from the repository
-            List<User> users = await _userRepository.SelectAll();
-
-            // If users are not null, map each user to a UserResponse object
-            return users == null ? null : users.Select(u => new UserResponse
+            try
             {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                Role = u.Role
-            }).ToList();
+                // Retrieve all users from the repository
+                List<User> users = await _userRepository.SelectAll();
+
+                // If users are not null, map each user to a UserResponse object with home address
+                return users?.Select(u => MapUserToUserResponse(u)).ToList() ?? new List<UserResponse>();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions or log them as needed
+                // You may want to replace Exception with a more specific exception type
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return new List<UserResponse>();
+            }
         }
+
+
+
+
 
         // Implementation of GetById method
         public async Task<UserResponse> GetById(int UserId)
@@ -74,6 +101,7 @@ namespace H6_ChicBotique.Services
             return null; // Return null if the user is not found
         }
 
+
         // Implementation of GetIdByEmail method
         public async Task<UserResponse> GetIdByEmail(string email)
         {
@@ -88,6 +116,8 @@ namespace H6_ChicBotique.Services
 
             return null; // Return null if the user is not found
         }
+
+        //Register method
         public async Task<UserResponse> Register(UserRegisterRequest newuser)
         {
             User user = await _userRepository.SelectByEmail(newuser.Email);
@@ -131,7 +161,7 @@ namespace H6_ChicBotique.Services
                 user = await _userRepository.Update(user.Id, user);
 
             }
-            HomeAddress homeaddress = new HomeAddress()
+           HomeAddress homeaddress = new HomeAddress()
             {
                 AccountInfoId = acc.Id,
                 Address = newuser.Address,
@@ -143,7 +173,7 @@ namespace H6_ChicBotique.Services
 
                 //etc
             };
-            homeaddress = await _homeAddressRepository.Create(homeaddress);
+            homeaddress = await _homeAddressRepository.Create(homeaddress); 
             var salt = PasswordHelpers.GenerateSalt();
             var HashedPW = Helpers.PasswordHelpers.HashPassword($"{newuser.Password}{salt}");
             PasswordEntity pwd = new()
@@ -273,7 +303,44 @@ namespace H6_ChicBotique.Services
         }
 
 
-        // Private method to map a User object to a UserResponse object
+        /*    // Private method to map a User object to a UserResponse object
+            private static UserResponse MapUserToUserResponse(User user)
+            {
+                UserResponse response = new UserResponse();
+
+                // If the user is not null, map relevant properties to the UserResponse object
+                if (user != null)
+                {
+                    response.Id = user.Id;
+                    response.Email = user.Email;
+                    response.FirstName = user.FirstName;
+                    response.LastName = user.LastName;
+                    response.Role = user.Role;
+                    response.HomeAddress= new HomeAddressResponse
+                    {
+                        AccountId = user.AccountInfo.Id,
+                        Id = user.AccountInfo.HomeAddress.Id,
+                        Address=user.AccountInfo.HomeAddress.Address,
+                        City=user.AccountInfo.HomeAddress.City,
+                        PostalCode=user.AccountInfo.HomeAddress.PostalCode,
+                        Country = user.AccountInfo.HomeAddress.Country,
+                        Phone=user.AccountInfo.HomeAddress.TelePhone
+
+                    };
+                    // Create an AccountInfoResponse object within UserResponse
+                    response.AccountInfo = new AccountInfoResponse
+                    {
+                        Id = user.AccountInfo.Id,
+
+
+                    };
+
+                }
+
+
+                    return response; // Return the mapped UserResponse object
+            }  */
+
         private static UserResponse MapUserToUserResponse(User user)
         {
             UserResponse response = new UserResponse();
@@ -286,34 +353,43 @@ namespace H6_ChicBotique.Services
                 response.FirstName = user.FirstName;
                 response.LastName = user.LastName;
                 response.Role = user.Role;
-                response.HomeAddress= new HomeAddressResponse
+
+                // Check if AccountInfo is not null before accessing its properties
+                if (user.AccountInfo != null)
                 {
-                    AccountId = user.AccountInfo.Id,
-                    Id = user.AccountInfo.HomeAddress.Id,
-                    Address=user.AccountInfo.HomeAddress.Address,
-                    City=user.AccountInfo.HomeAddress.City,
-                    PostalCode=user.AccountInfo.HomeAddress.PostalCode,
-                    Country = user.AccountInfo.HomeAddress.Country,
-                    Phone=user.AccountInfo.HomeAddress.TelePhone
+                    // Map home address details
+                    response.HomeAddress = new HomeAddressResponse
+                    {
+                        AccountId = user.AccountInfo.Id,
+                        Id = user.AccountInfo.HomeAddress?.Id ?? 0,
+                        Address = user.AccountInfo.HomeAddress?.Address,
+                        City = user.AccountInfo.HomeAddress?.City,
+                        PostalCode = user.AccountInfo.HomeAddress?.PostalCode,
+                        Country = user.AccountInfo.HomeAddress?.Country,
+                        Phone = user.AccountInfo.HomeAddress?.TelePhone
+                    };
 
-                };
-                // Create an AccountInfoResponse object within UserResponse
-                response.AccountInfo = new AccountInfoResponse
-                {
-                    Id = user.AccountInfo.Id,
-
-
-                };
-
+                    // Check if HomeAddress is not null before accessing AccountInfo's properties
+                    if (user.AccountInfo.HomeAddress != null)
+                    {
+                        // Create an AccountInfoResponse object within UserResponse
+                        response.AccountInfo = new AccountInfoResponse
+                        {
+                            Id = user.AccountInfo.Id,
+                            // Include other properties as needed
+                        };
+                    }
+                }
             }
-                    
-               
-
-
-        
 
             return response; // Return the mapped UserResponse object
         }
+
+
+
+
+
+
         private static GuestResponse MapGuestToGuestResponse(User user)
         {
 

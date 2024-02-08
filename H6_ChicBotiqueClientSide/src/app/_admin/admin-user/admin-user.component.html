@@ -106,7 +106,7 @@
                         <td>{{ admin.firstName }}</td>
                         <td>{{ admin.lastName }}</td>
                         <td>{{ admin.email }}</td>
-                        <td>{{ admin.address }}</td>
+                        <td>{{ admin.homeAddress?.address}}</td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
                             <u>Check Order details</u>
@@ -121,7 +121,7 @@
                         <td>{{ member.firstName }}</td>
                         <td>{{ member.lastName }}</td>
                         <td>{{ member.email }}</td>
-                        <td>{{ member.address }}</td>
+                        <td>{{ member.homeAddress?.address}}</td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
                             <u>Check Order details</u>
@@ -136,7 +136,7 @@
                         <td>{{ guest.firstName }}</td>
                         <td>{{ guest.lastName }}</td>
                         <td>{{ guest.email }}</td>
-                        <td>{{ guest.address }}</td>
+                        <td>{{ guest.homeAddress?.address}}</td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#orderDetailsModal" onclick="">
                             <u>Check Order details</u>

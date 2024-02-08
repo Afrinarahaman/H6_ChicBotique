@@ -34,7 +34,7 @@ namespace H6_ChicBotique.Repositories
         public async Task<List<User>> SelectAll()
         {
             // Retrieve all users from the database
-            return await _context.User.ToListAsync();
+            return await _context.User.Include(h => h.AccountInfo.HomeAddress).ToListAsync();
         }
 
         // Implementation of SelectById method
@@ -48,8 +48,11 @@ namespace H6_ChicBotique.Repositories
         public async Task<User> SelectByEmail(string email)
         {
             // Retrieve a specific user based on email address and also include user account information
-            return await _context.User.Include(a => a.AccountInfo).ThenInclude(h=>h.HomeAddress).FirstOrDefaultAsync(u => u.Email == email);
+            
+             return await _context.User.Include(a => a.AccountInfo).ThenInclude(h => h.HomeAddress).FirstOrDefaultAsync(u => u.Email == email);
         }
+
+
         //Implementation of Create method for creating a new entity in the user table
         public async Task<User> Create(User user)
         {
