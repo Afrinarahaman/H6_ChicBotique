@@ -20,73 +20,38 @@
     <button type="checkbox" class="btn btn-success" (click)="detail()">See Detail</button>
 
    <div class="row container-fluid" id="divshow" *ngIf="isShown">
-       
-        <ng-container >
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
+    <ng-container *ngIf="orderDetails.length !=0">
+        <div class="container">
+            <div class="card-table">
+                <div class="card-product">
+    
+                    <table class="table table-responsive ">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr. No</th>
+                                <th scope="col">ProductID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Image</th>
+    
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of order.orderDetails">
+                                <td>{{product.productTitle}}</td>
+                                <td>{{product.productPrice}}</td>
+                                <td>{{product.quantity}}</td>
+                            
+                            </tr>
                         
-                        <th scope="col">Order ID</th>
-                       
-                        
-                        
-                       
-                    </tr>
-                 
-                </thead>
-                <tbody>
-                    <tr  >
-                        <th scope="row">1</th>
-                    
-                        <td>{{order.id}}</td>
-                       
-                        
-                    </tr>
-                </tbody>
-
-                <thead>
-                    <tr>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Product Price</th>
-                        <th scope="col">Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-
-                    <tr *ngFor="let product of order.orderDetails">
-                        <td>{{product.productTitle}}</td>
-                        <td>{{product.productPrice}}</td>
-                        <td>{{product.quantity}}</td>
-                    </tr>
-                    
-                </tbody>
-                <h2>Shipping Details</h2>
-                <thead>
-                    <tr>
-                        <th scope="col">Address</th>
-                        <th scope="col">City</th>
-                       
-                        <th scope="col">PostalCode</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">Telephone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-
-                    <tr >
-                        <td>{{shippingdetails.address}}</td>
-                        <td>{{shippingdetails.city}}</td>
-                      
-                        <td>{{shippingdetails.postalCode}}</td>
-                        <td>{{shippingdetails.country}}</td>
-                        <td>{{shippingdetails.phone}}</td>
-                    </tr> 
-                    
-                </tbody>
-            </table>
-            </ng-container>
-    </div>  
+                        </tbody>
+                    </table>
+    
+                </div>
+            </div>
+        </div>
+    </ng-container>
 </div>
