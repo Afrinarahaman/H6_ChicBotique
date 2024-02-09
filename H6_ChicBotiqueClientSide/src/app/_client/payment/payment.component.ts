@@ -115,7 +115,7 @@ export class PaymentComponent implements OnInit {
            this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
           
             var result = await this.cartService.addOrder();
-            await this.productService.reservationSuccess(this.clientBasketId);
+          
           
             
           

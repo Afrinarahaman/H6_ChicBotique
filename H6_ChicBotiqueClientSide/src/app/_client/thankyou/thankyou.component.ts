@@ -42,7 +42,7 @@ export class ThankyouComponent implements OnInit {
   postalCode: '',
   country: '',
   phone: ''}
-  //customerId:number=this.authService.currentCustomerValue.id  ;
+
   orderId:number=0; 
   localAccountId:string ="";
   ngOnInit(): void {
@@ -51,29 +51,18 @@ export class ThankyouComponent implements OnInit {
   
    detail(){
 
-    this.orderId = parseInt(this.route.snapshot.paramMap.get('orderid')||'0');
+    this.orderId = parseInt(this.route.snapshot.paramMap.get('orderId')||'0');
    
     this.orderService.getOrderDetailsByOrderId(this.orderId).subscribe(res => {
       this.order = res;
 
-      /*console.log('orderDetails',this.order.orderDetails);
-      this.shippingdetails=this.order.shippingDetails;
-      this.userService.getUserGuid(this.authService.currentUserValue.id).subscribe(data=> {
-        this.localAccountId= data
-        //console.log('GUID VALUE:', this.userGuid);
-        });*/
-     /* if(res.accountId===this.localAccountId)
-      {
-        this.isShown = ! this.isShown;
-      }*/
+     
      if(res.id!=0)
      {
       this.isShown = ! this.isShown;
      }
 
-    // if (this.productList.id) window.localStorage.setItem('orderId', this.result.order_id.toString());
     
-    // this.isShown = ! this.isShown;
   });
     
   }
