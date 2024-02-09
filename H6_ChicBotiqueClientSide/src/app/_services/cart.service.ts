@@ -10,6 +10,7 @@ import { UserService } from './user.service';
 import { CartItem } from '../_models/cartItem';
 import { Order } from '../_models/order';
 import { OrderService } from './order.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Injectable({
@@ -19,6 +20,7 @@ export class CartService {
 
   private basketName = "ChicBotiqueProjectBasket";
   public basket: CartItem[] = [];
+  public clientBasketId:string ="";
   public search = new BehaviorSubject<string>("");
   public shippingAddressData: any;
   id:number=0;
@@ -33,7 +35,8 @@ export class CartService {
     private router: Router, 
     private orderService: OrderService, 
     private authService: AuthService,
-    private userService:UserService) 
+    private userService:UserService,
+    private cookieService:CookieService) 
     { 
       //this.userGuid =Guid.create()
     }
@@ -87,6 +90,7 @@ async addOrder(): Promise<any> {
         });
       let orderitem: Order = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
         accountInfoId: this.userGuid,
+        clientBasketId:this.cookieService.get('VisitorID').toString(),
         amount: this.getTotalPrice(),
         transactionId: await firstValueFrom(this.orderService.getTransactionId() ),
         status:await firstValueFrom(this.orderService.getPaymentStatus()),
@@ -127,6 +131,7 @@ async addOrder(): Promise<any> {
 
       let orderitem: Order = {
        accountInfoId:this.userGuid,
+       clientBasketId:this.cookieService.get('VisitorID').toString(),
         orderDetails: this.basket,
         amount: this.getTotalPrice(),
         transactionId: this.transactionID,

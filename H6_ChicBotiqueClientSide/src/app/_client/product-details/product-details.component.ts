@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category, Product } from 'src/app/_models/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/_services/cart.service';
 import { ProductService } from 'src/app/_services/product.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
@@ -8,6 +8,8 @@ import { WishlistItem } from 'src/app/_models/wishlistItem';
 import { Observable, firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CartItem } from 'src/app/_models/cartItem';
+import { ReserveQuantity } from 'src/app/_models/reservequantity';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -25,24 +27,30 @@ export class ProductDetailsComponent implements OnInit {
   public totalItem:number=0;
   product:Product={id: 0, title:"", price:0, description:"",image:"", stock:0,categoryId:0, category:this.category }
   wishlistItem : WishlistItem= {productId: 0, productTitle:"",productImage:"",productDescription:"",productPrice:0}
+  reserveQuantity:ReserveQuantity ={clientBasketId:"", productId:0, amountToReserve:0}
+  clientbasketId: string=this.cookieService.get('VisitorID').toString();
   constructor(
     private productService:ProductService,
     private cartService:CartService,
     private route:ActivatedRoute,
-     private wishlistService: WishlistService)
-     { }
+     private wishlistService: WishlistService,
+     private router:Router,
+     private cookieService:CookieService)
+     {
+     
+      }
 
      addedToWishlist: boolean = false;
-
+     
   ngOnInit(): void {
-
+    
     this.route.params.subscribe(params => {
       this.productId = +params['id'];
     });
     this.productService.getProductById(this.productId).subscribe(x=>
       { this.product=x,
 
-      console.log(this.product.stock);
+      console.log("product stock: ",this.product.stock);
     });
 
   }
@@ -68,7 +76,8 @@ export class ProductDetailsComponent implements OnInit {
   async addToCart(product: Product): Promise<any> {
     try {
       const availableStock = await firstValueFrom(this.productService.getAvailableStock(product.id));
-      if (product.stock <= availableStock) {
+      console.log("AvailableStock",availableStock);
+      if (product.stock <=availableStock) {
         const item: CartItem = {
         
           productId: product.id,
@@ -77,10 +86,27 @@ export class ProductDetailsComponent implements OnInit {
           productImage: product.image,
           quantity: this.quantity+1
         };
-        console.log("AvailableStock",availableStock);
+       // console.log("AvailableStock",availableStock);
         this.cartService.addToBasket(item);
-      } else {
-         alert('Not enough stock');
+        //this.productService.
+        this.cartService.saveBasket();
+        
+        let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
+          clientBasketId: this.clientbasketId,
+          productId:item.productId,
+          amountToReserve:item.quantity
+
+        }
+        var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+        if(reserve==true)
+        {
+        console.log("reserved stock")
+        }
+        else console.log("cannot reserved stock")
+      } 
+      else {
+         alert('Not enough stock,choose another');
+         this.router.navigate(['/']);
       }
     } catch (error) {
       console.error('Error adding to cart:', error);

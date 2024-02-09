@@ -1,4 +1,5 @@
-﻿using H6_ChicBotique.Repositories;
+﻿using H6_ChicBotique.DTOs;
+using H6_ChicBotique.Repositories;
 
 namespace H6_ChicBotique.Services
 {
@@ -7,7 +8,7 @@ namespace H6_ChicBotique.Services
 
 
         Task<int> GetAvailableStock(int productId);
-        Task<bool> ReserveStock(string clientBasketId, int productId, int amountToReserve);
+        Task<bool> ReserveStock(ReserveStockRequest reserveStock);
         Task<bool> ReservationSuccess(string clientBasketId);
 
     }
@@ -45,30 +46,30 @@ namespace H6_ChicBotique.Services
             }
 
         }
-        public async Task<bool> ReserveStock(string clientBasketId, int productId, int amountToReserve) //To reserve the stock for the clients requested products and registers the basket for tracking
+        public async Task<bool> ReserveStock(ReserveStockRequest reserveStock) //To reserve the stock for the clients requested products and registers the basket for tracking
         {
             try
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var transientService = scope.ServiceProvider.GetRequiredService<IProductRepository>();
-                    var product = await transientService.SelectProductById(productId); // get the product such that you can check the actual stored stock
+                    var product = await transientService.SelectProductById(reserveStock.productId); // get the product such that you can check the actual stored stock
 
-                    if (product.Stock - (await GetAvailableStock(productId) + amountToReserve) >= 0) // check whether or not the reserved amount plus the amount to reserve is available in the total stock of the product meaning that the remainder should be 0 or more.
+                    if ((product.Stock - (await GetAvailableStock(reserveStock.productId))+ reserveStock.amountToReserve) >= 0) // check whether or not the reserved amount plus the amount to reserve is available in the total stock of the product meaning that the remainder should be 0 or more.
                     {
                         List<Tuple<int, int>> tuples; //create an empty list of tuples which is used later to instantiate a new list within the clientstockentries for the specific client
-                        var clientListDoesNotExist = !ClientStockEntries.TryGetValue(clientBasketId, out tuples); // check whether or not the client already has a list of entries and if they do put it into the tuples list
+                        var clientListDoesNotExist = !ClientStockEntries.TryGetValue(reserveStock.clientBasketId, out tuples); // check whether or not the client already has a list of entries and if they do put it into the tuples list
                         if (clientListDoesNotExist) //create new values for the client
                         {
                             tuples = new List<Tuple<int, int>>();
-                            tuples.Add(new(productId, amountToReserve));
-                            ClientStockEntries.Add(clientBasketId, tuples);
+                            tuples.Add(new(reserveStock.productId, reserveStock.amountToReserve));
+                            ClientStockEntries.Add(reserveStock.clientBasketId, tuples);
                         }
                         else //find already existing values and replace them with the new values
                         {
-                            var existingTuple = tuples.FirstOrDefault(tuple => tuple.Item1 == productId);
+                            var existingTuple = tuples.FirstOrDefault(tuple => tuple.Item1 ==   reserveStock.productId);
                             tuples.Remove(existingTuple);
-                            tuples.Add(new(productId, amountToReserve));
+                            tuples.Add(new(reserveStock.productId, reserveStock.amountToReserve));
                         }
                         return true;
                     }

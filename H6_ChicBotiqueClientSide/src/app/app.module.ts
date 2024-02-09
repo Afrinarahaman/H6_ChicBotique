@@ -27,6 +27,7 @@ import { ShippingdetailsComponent } from './_client/shippingdetails/shippingdeta
 import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -69,7 +70,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     RouterModule,
     NgxPayPalModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,CookieService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add CUSTOM_ELEMENTS_SCHEMA
   bootstrap: [AppComponent]
 })

@@ -195,10 +195,10 @@ namespace H6_ChicBotique.Controllers
 
                 var getProductAvailableStock = await _stockHandlerService.GetAvailableStock(productId);
 
-                if (getProductAvailableStock <0)
+               /* if (getProductAvailableStock <1)
                 {
                     return NotFound();
-                }
+                }*/
 
                 return Ok(getProductAvailableStock);
 
@@ -214,15 +214,15 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ReserveStock([FromBody] string clientBasketId, int productId, int amountToReserve)
+        public async Task<IActionResult> ReserveStock([FromBody] ReserveStockRequest reserveStock)
         {
             try
             {
-                bool result = await _stockHandlerService.ReserveStock(clientBasketId, productId, amountToReserve);
+                bool result = await _stockHandlerService.ReserveStock(reserveStock);
 
                 if (result == false)
                 {
-                    return Ok(new { Status = "Failure", Message = "Stock is not available" });
+                    return Ok(false);
                 }
 
                 return Ok(true);
@@ -233,7 +233,7 @@ namespace H6_ChicBotique.Controllers
             }
 
         }
-        [HttpPut("ReservationSuccess/{clientbasketid}")]
+        [HttpPut("ReservationSuccess")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

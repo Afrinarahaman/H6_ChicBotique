@@ -7,6 +7,7 @@ export interface Order {
 
     id?: number;
     accountInfoId: string;
+    clientBasketId: string;
     orderDate?: Date;
     amount: number;
     transactionId: string;
