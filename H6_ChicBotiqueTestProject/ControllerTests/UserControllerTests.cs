@@ -112,7 +112,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(500, statusCodeResult.StatusCode);
         }
-       /* [Fact]
+        [Fact]
         public async void GetIdByEmail_ShouldReturnStatusCode200_WhenDataExists()
         {
             //Arrange
@@ -135,48 +135,14 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 .ReturnsAsync(User);
 
             //Act
-            var result = await _userController.GetIdByEmail(Email);
+            var result = await _userController.GetUserByEmail(Email);
 
             //Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
-       */
-       /* [Fact]
-        public async void GetIdByEmail_ShouldReturnStatusCode404_WhenUserDoesNotExists()
-        {
-            //Arrange
-            //int userId = 1;
-            string UserEmail = "peter@abc.com";
-
-            _mockuserService
-                .Setup(x => x.GetIdByEmail(It.IsAny<string>()))
-                .ReturnsAsync(() => null);
-
-            //Act
-            var result = await _userController.GetIdByEmail(UserEmail);
-
-            //Assert
-            var statusCodeResult = (IStatusCodeActionResult)result;
-            Assert.Equal(404, statusCodeResult.StatusCode);
-        }
-
-        [Fact]
-        public async void GetIdByEmail_ShouldReturnStatusCode500_WhenExceptionIsRaised()
-        {
-            //Arrange
-
-            _mockuserService
-                .Setup(x => x.GetIdByEmail(It.IsAny<string>()))
-                .ReturnsAsync(() => throw new System.Exception("This is an Exception"));
-
-            //Act
-            var result = await _userController.GetIdByEmail("peter@abc.com");
-
-            //Assert
-            var statusCodeResult = (IStatusCodeActionResult)result;
-            Assert.Equal(500, statusCodeResult.StatusCode);
-        }
-       */
+       
+        
+       
     }
 }
