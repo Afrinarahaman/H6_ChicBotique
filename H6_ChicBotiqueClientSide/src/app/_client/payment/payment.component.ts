@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { Observable, of } from 'rxjs';
 import { Order } from 'src/app/_models/order';
@@ -7,6 +8,7 @@ import { ShippingDetails } from 'src/app/_models/shippingdetails';
 import { CartService } from 'src/app/_services/cart.service';
 import { OrderService } from 'src/app/_services/order.service';
 import { PaymentService } from 'src/app/_services/payment.service';
+import { ProductService } from 'src/app/_services/product.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -19,12 +21,12 @@ export class PaymentComponent implements OnInit {
 
   cartTotal =0;
  public payPalConfig?: IPayPalConfig;
-
+  public clientBasketId:string =this.cookieService.get('VisitorID').toString();
   showSuccess!: any;
   order:Order = {
     id: 0,
     accountInfoId: '',
-    userId:0,
+    clientBasketId:'',
     shippingDetails: {
       address: "",
       city: '',
@@ -47,8 +49,9 @@ export class PaymentComponent implements OnInit {
   trasactionId:  any;
  paymentStatus:any;
  paymentMethod:any;
-  constructor(private router: Router, private cartService:CartService,
-    private orderService:OrderService, private paymentService: PaymentService) { }
+  constructor(private router: Router, private cartService:CartService, 
+    private orderService:OrderService, private paymentService: PaymentService,
+    private productService:ProductService, private cookieService:CookieService) { }
 
   ngOnInit(): void {
     this.cartTotal= this.cartService.getTotalPrice();
@@ -107,20 +110,22 @@ export class PaymentComponent implements OnInit {
             this.orderService.getAddressData();
             console.log(details);
             this.paymentStatus=this.orderService.setPaymentStatus(details.status);
-
-
-          this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
-
+           
+          
+           this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
+          
             var result = await this.cartService.addOrder();
-
-
-
+          
+          
+            
+          
              // var result = await this.cartService.addOrder();n
               this.id =result.id;
               console.log('result', result);
               this.cartService.clearBasket();
               this.router.navigate(['/thankyou/', {orderId: this.id}]);
-              window.location.reload;
+              //window.location.reload;
+              this.cartService.saveBasket();
               /*console.log(
               'onApprove - you can get full order details inside onApprove: ',
 

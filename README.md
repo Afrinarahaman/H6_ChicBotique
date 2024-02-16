@@ -45,4 +45,9 @@ Installation
      •	Start the application in Visual Studio Enterprise.
   5.	View the Application.
      •	Open a web browser and navigate to https://localhost:4200 (or the specified port).
+  6. Insatll in Angular
+ •	npm i ngx-paypal --force   ->For paypal integration
+ •	 npm i ngx-cookie-service --force  -->For Getting Cookie Service from angular
+ •	 npm i guid-typescript --force   ---->For getting Guid value
+ •	npm i ngx-cookie-service --force    ------>For having cookie service in angular
 

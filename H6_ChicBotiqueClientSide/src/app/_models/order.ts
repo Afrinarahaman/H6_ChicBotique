@@ -14,6 +14,7 @@ export interface Order {
 
     id?: number;
     accountInfoId: string;
+    clientBasketId: string;
     orderDate?: Date;
     amount: number;
     userId?:number;
@@ -24,6 +25,9 @@ export interface Order {
     shippingDetails: ShippingDetails;
 
     orderDetails: CartItem[];
+    
+   
+}
   
 
 

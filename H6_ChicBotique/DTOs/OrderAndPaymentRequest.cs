@@ -10,6 +10,9 @@ namespace H6_ChicBotique.DTOs
 
         public Guid AccountInfoId { get; set; }
         [Required]
+
+        public string ClientBasketId { get; set; }
+        [Required]
         public string? Status { get; set; }
 
         [Required]

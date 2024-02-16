@@ -4,6 +4,8 @@ import { CartService } from 'src/app/_services/cart.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Role } from 'src/app/_models/role';
+import { firstValueFrom } from 'rxjs';
+import { ProductService } from 'src/app/_services/product.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +19,11 @@ export class CartComponent implements OnInit {
   public cartProducts: CartItem[] = [];  //property
   public basket = this.cartService.basket; //getting basket from the service
   public totalItem: number =0;
-  constructor(private cartService: CartService, private router: Router,private authService: AuthService) //dependency injection of different services
+  constructor(
+    private cartService: CartService, 
+    private router: Router,
+    private authService: AuthService,
+    private productService:ProductService) //dependency injection of different services
   { }
 
   ngOnInit(): void {
@@ -59,23 +65,25 @@ export class CartComponent implements OnInit {
   }
 
   // Method to increase the quantity
-  increaseQuantity(item: any): void {
-    /*item.quantity++;
-   this.quantity= item.quantity;
-   this.grandTotal = this.cartService.getTotalPrice();*/
+  async increaseQuantity(item: any): Promise<void> {
+ 
    let itemId;
    itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
 
 
+    const availableStock = await firstValueFrom(this.productService.getAvailableStock(item.productId));
+    console.log("AvailableStock",availableStock);
+      if(item.quantity<availableStock)
+      {   
+        item.quantity = item.quantity + 1;
+        this.basket[itemId].quantity = item.quantity;
 
-   item.quantity = item.quantity + 1;
-   this.basket[itemId].quantity = item.quantity;
 
-
-   this.cartService.saveBasket4(this.basket);
-   this.cartProducts = this.cartService.getBasket();
-   this.grandTotal = this.cartService.getTotalPrice();
-
+        this.cartService.saveBasket4(this.basket);
+        this.cartProducts = this.cartService.getBasket();
+        this.grandTotal = this.cartService.getTotalPrice();
+   
+      }
   }
 
   // Method to decrease the quantity, ensuring it doesn't go below 1

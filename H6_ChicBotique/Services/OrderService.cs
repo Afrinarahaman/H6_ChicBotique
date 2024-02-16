@@ -22,14 +22,16 @@ namespace H6_ChicBotique.Services
         private readonly IShippingDetailsRepository _shippingDetailsRepository;
         // private readonly IStockHandlerService _stockHandlerService;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IStockHandlerService _stockHandlerService;
 
         public OrderService(IOrderRepository orderRepository,
-             IShippingDetailsRepository shippingDetailsRepository, IPaymentRepository paymentRepository)//IStockHandlerService stockHandlerService
+             IShippingDetailsRepository shippingDetailsRepository, IPaymentRepository paymentRepository,IStockHandlerService stockHandlerService)//IStockHandlerService stockHandlerService
         {
             _orderRepository = orderRepository;
            
             _shippingDetailsRepository = shippingDetailsRepository;
             _paymentRepository=paymentRepository;
+            _stockHandlerService=stockHandlerService;
         }
 
 
@@ -74,7 +76,7 @@ namespace H6_ChicBotique.Services
             if (insertOrder != null)
             {
 
-                //await _stockHandlerService.ReservationSuccess(basketId); 
+                await _stockHandlerService.ReservationSuccess(newOrderRequest.ClientBasketId); 
                 Order orderWithIncludes = await _orderRepository.SelectOrderById(insertOrder.Id);
 
 

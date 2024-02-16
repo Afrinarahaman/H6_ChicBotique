@@ -1,4 +1,54 @@
 <div class="container">
 
-    <h1>Thankyou for your order!</h1>
+
+
+
+
+
+
+<br>
+<br>
+<br>
+
+<br>
+<br>
+
+<h1>thankyou for your order!</h1>
+<p>thankyou works!</p>
+<div class="container">
+    <h1>Thank you for your order!</h1>
+
+    <button type="checkbox" class="btn btn-success" (click)="detail()">See Detail</button>
+
+   <div class="row container-fluid" id="divshow" *ngIf="isShown">
+    <ng-container *ngIf="orderDetails.length !=0">
+        <div class="container">
+            <div class="card-table">
+                <div class="card-product">
+    
+                    <table class="table table-responsive ">
+                        <thead>
+                            <tr>
+                                
+                                    <th scope="col">Product Title</th>
+                                    <th scope="col">Product Price</th>
+                                    <th scope="col">Quantity</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of order.orderDetails">
+                                <td>{{product.productTitle}}</td>
+                                <td>{{product.productPrice}}</td>
+                                <td>{{product.quantity}}</td>
+                            
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+    
+                </div>
+            </div>
+        </div>
+    </ng-container>
 </div>

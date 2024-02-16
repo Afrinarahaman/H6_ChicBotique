@@ -9,10 +9,11 @@ namespace H6_ChicBotique.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService; //Creating an instance of IProductService
-
-        public ProductController(IProductService productService) ///Dependency injection of IProductService
+        private readonly IStockHandlerService _stockHandlerService;
+        public ProductController(IProductService productService, IStockHandlerService stockHandlerService) ///Dependency injection of IProductService
         {
             _productService = productService;
+            _stockHandlerService=stockHandlerService;
         }
 
         
@@ -181,6 +182,80 @@ namespace H6_ChicBotique.Controllers
             {
                 return Problem(ex.Message);
             }
+        }
+        [HttpGet("stock/{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetProductStockbyId([FromRoute] int productId)
+        {
+            try
+            {
+
+                var getProductAvailableStock = await _stockHandlerService.GetAvailableStock(productId);
+
+               /* if (getProductAvailableStock <1)
+                {
+                    return NotFound();
+                }*/
+
+                return Ok(getProductAvailableStock);
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+
+        }
+        [HttpPost("ReserveStock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ReserveStock([FromBody] ReserveStockRequest reserveStock)
+        {
+            try
+            {
+                bool result = await _stockHandlerService.ReserveStock(reserveStock);
+
+                if (result == false)
+                {
+                    return Ok(false);
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+
+        }
+        [HttpPut("ReservationSuccess")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ReservationSuccess([FromBody] string clientBasketId)
+        {
+            try
+            {
+                bool result = await _stockHandlerService.ReservationSuccess(clientBasketId);
+
+                if (result == false)
+                {
+                    return Problem("Failure");
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+
         }
     }
 }

@@ -14,12 +14,13 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Mocked ProductService for dependency injection in ProductController
         private readonly Mock<IProductService> _mockProductService = new();
+        private readonly Mock<IStockHandlerService> _mockStockHandlerService = new();
 
         // Constructor initializes the ProductControllerTests instance
         public ProductControllerTests()
         {
             // Inject the mock ProductService into the ProductController
-            _productController = new(_mockProductService.Object);
+            _productController = new(_mockProductService.Object, _mockStockHandlerService.Object);
         }
 
         // Test case: GetAll should return StatusCode 200 when products exist
