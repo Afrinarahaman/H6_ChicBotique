@@ -1,3 +1,4 @@
+import { AccountInfo } from "./accounInfo";
 import { HomeAddress } from "./homeaddress";
 import { Role } from "./role";
 
@@ -16,7 +17,7 @@ export interface User {
     country: string;
     telephone: string;
     role: Role;
-    accountInfo?: any;
+    accountInfo?:AccountInfo;
     homeAddress?: HomeAddress;
     shippingDetails?: ShippingDetails; // Optional shipping details
     orders?: Order[];  // Array of orders associated with the user
@@ -24,7 +25,6 @@ export interface User {
 
 // order.model.ts
 export interface Order {
- 
+
   userId?: number;  // Link order to a user
 }
-

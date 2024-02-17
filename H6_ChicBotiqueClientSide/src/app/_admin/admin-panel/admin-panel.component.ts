@@ -8,9 +8,6 @@ import { CommonModule} from '@angular/common';
 import { Order } from 'src/app/_models/order';
 
 
-
-
-
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',

@@ -25,11 +25,7 @@ export interface Order {
     shippingDetails: ShippingDetails;
 
     orderDetails: CartItem[];
-    
-   
+
+
 }
-  
-
-
-};
 

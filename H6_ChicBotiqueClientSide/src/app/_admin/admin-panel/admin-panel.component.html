@@ -155,7 +155,7 @@
 
                             <tr *ngFor="let order of orders">
                                 <td>{{ order.id }}</td>
-                                <td>{{ order.orderDate | date: 'dd-MM-yy' }}</td>
+                                <td>{{ order.orderDate | date: 'dd-MM-yy ' }}</td>
                                 <td>
                                     <div *ngFor="let orderDetail of order.orderDetails">
                                         {{ orderDetail.productTitle}}
