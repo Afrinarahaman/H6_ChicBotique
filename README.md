@@ -18,7 +18,7 @@ NuGet Packages
   •	Swashbuckle.AspNetCore.Swagger {6.5.0}
   •	Swashbuckle.AspNetCore.SwaggerGen {6.5.0}
   •	Moq {4.20.70}SQL Server
-   •	Moq {6.0.1.4}SQL Server-Afrina has installed this in her branch
+   •	Moq {6.0.1.4}SQL Server
 Getting Started
 To run ChicBotique locally, follow these steps:
 Prerequisites
