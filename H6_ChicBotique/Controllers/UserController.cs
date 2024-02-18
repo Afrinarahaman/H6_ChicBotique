@@ -28,7 +28,7 @@ namespace H6_ChicBotique.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllUsers()
         {
             //Getting all users
             try
@@ -154,10 +154,10 @@ namespace H6_ChicBotique.Controllers
         // Update User Information
         //[Authorize(Role.Member, Role.Administrator)]
         [HttpPut("{userId}")]
-            [ProducesResponseType(StatusCodes.Status200OK)]
-            [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-            [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
             public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserRequest updateUser)
             {
                 try
