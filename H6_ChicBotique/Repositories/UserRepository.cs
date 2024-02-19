@@ -75,10 +75,17 @@ namespace H6_ChicBotique.Repositories
             {
                 updateUser.Email = user.Email;
                 updateUser.FirstName = user.FirstName;
-
                 updateUser.LastName = user.LastName;
-
                 updateUser.Role = user.Role;
+                // Update AccountInfo if it exists
+                if (updateUser.AccountInfo != null)
+                {
+                    updateUser.AccountInfo.HomeAddress.Address = user.AccountInfo.HomeAddress.Address;
+                    updateUser.AccountInfo.HomeAddress.City = user.AccountInfo.HomeAddress.City;
+                    updateUser.AccountInfo.HomeAddress.PostalCode = user.AccountInfo.HomeAddress.PostalCode;
+                    updateUser.AccountInfo.HomeAddress.Country = user.AccountInfo.HomeAddress.Country;
+                    updateUser.AccountInfo.HomeAddress.TelePhone = user.AccountInfo.HomeAddress.TelePhone;
+                }
 
                 // _context.Entry(updateUser).CurrentValues.SetValues(user);
                 await _context.SaveChangesAsync();

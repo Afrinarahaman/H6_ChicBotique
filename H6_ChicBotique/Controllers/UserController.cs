@@ -159,7 +159,7 @@ namespace H6_ChicBotique.Controllers
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             [ProducesResponseType(StatusCodes.Status401Unauthorized)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserRequest updateUser)
+            public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserUpdateRequest updateUser)
             {
                 try
                 {

@@ -18,7 +18,7 @@ namespace H6_ChicBotique.Services
         Task<LoginResponse> Authenticate(LoginRequest login); // Method to authenticate a user based on the provided login credentials.
         Task<UserResponse> Register(UserRegisterRequest newUser);//To register a user
         Task<GuestResponse> Register_Guest(GuestRequest newGuest);//To create a user as Guest withour having password
-        Task<UserResponse> Update(int UserId, UserRequest updateUser);//To update userprofile        
+        Task<UserResponse> Update(int UserId, UserUpdateRequest updateUser);//To update userprofile        
         Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);//To change the password
     }
 
@@ -129,9 +129,7 @@ namespace H6_ChicBotique.Services
                 {
 
                     FirstName = newuser.FirstName,
-                    LastName = newuser.LastName,
-                    //Address = newuser.Address,
-                    //Telephone = newuser.Telephone,
+                    LastName = newuser.LastName,                   
                     Email = newuser.Email,
                     //Password = HashedPW,
                     //Salt = salt,
@@ -277,69 +275,71 @@ namespace H6_ChicBotique.Services
 
             return true;
         }
+
+
         // Updates user information for the specified UserId.
-        public async Task<UserResponse> Update(int UserId, UserRequest updateUser)
-        {
+        public async Task<UserResponse> Update(int userId, UserUpdateRequest updateUser)
+         {
+
             // Create a new User object with updated information from UserRequest.
             User user = new User
             {
                 FirstName = updateUser.FirstName,
                 LastName = updateUser.LastName,
-                Email = updateUser.Email
+                Email = updateUser.Email,
+               
             };
+                user = await _userRepository.Update(userId,user);
+                AccountInfo acc = new()
+                 {
+                UserId = user.Id
+                };
+
+            acc = await _accountInfoRepository.Update(acc);
 
             // Perform the update operation in the UserRepository.
-            user = await _userRepository.Update(UserId, user);
+            user = await _userRepository.Update(userId, user);
+
+            AccountInfo accountInfo = new AccountInfo();
+            if (accountInfo != null)
+            {
+                // Update account information if it exists.
+                // Modify the logic based on your requirements.
+                accountInfo.HomeAddress.Address = user.AccountInfo.HomeAddress.Address; // Update some property based on your logic;
+                accountInfo.HomeAddress.City = user.AccountInfo.HomeAddress.City; 
+                accountInfo.HomeAddress.PostalCode = user.AccountInfo.HomeAddress.PostalCode;
+                accountInfo.HomeAddress.Country = user.AccountInfo.HomeAddress.Country;
+                accountInfo.HomeAddress.TelePhone = user.AccountInfo.HomeAddress.TelePhone;
+
+                await _accountInfoRepository.Update(accountInfo);
+            }
 
             // Return a UserResponse with the updated user information, or null if the update was unsuccessful.
-            return user == null ? null : new UserResponse
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Role = user.Role
-            };
-        }
-
-
-        /*    // Private method to map a User object to a UserResponse object
-            private static UserResponse MapUserToUserResponse(User user)
-            {
-                UserResponse response = new UserResponse();
-
-                // If the user is not null, map relevant properties to the UserResponse object
-                if (user != null)
-                {
-                    response.Id = user.Id;
-                    response.Email = user.Email;
-                    response.FirstName = user.FirstName;
-                    response.LastName = user.LastName;
-                    response.Role = user.Role;
-                    response.HomeAddress= new HomeAddressResponse
+               return user == null ? null : new UserResponse
+                     {
+                         Id = user.Id,
+                         FirstName = user.FirstName,
+                         LastName = user.LastName,
+                         Email = user.Email,
+                         Role = user.Role,
+              
+                // Map home address details
+                    HomeAddress = new HomeAddressResponse
                     {
                         AccountId = user.AccountInfo.Id,
-                        Id = user.AccountInfo.HomeAddress.Id,
-                        Address=user.AccountInfo.HomeAddress.Address,
-                        City=user.AccountInfo.HomeAddress.City,
-                        PostalCode=user.AccountInfo.HomeAddress.PostalCode,
-                        Country = user.AccountInfo.HomeAddress.Country,
-                        Phone=user.AccountInfo.HomeAddress.TelePhone
-
-                    };
-                    // Create an AccountInfoResponse object within UserResponse
-                    response.AccountInfo = new AccountInfoResponse
-                    {
-                        Id = user.AccountInfo.Id,
+                        Id = user.AccountInfo.HomeAddress?.Id ?? 0,
+                        Address = user.AccountInfo.HomeAddress?.Address,
+                        City = user.AccountInfo.HomeAddress?.City,
+                        PostalCode = user.AccountInfo.HomeAddress?.PostalCode,
+                        Country = user.AccountInfo.HomeAddress?.Country,
+                        Phone = user.AccountInfo.HomeAddress?.TelePhone
+                    }
 
 
-                    };
-
-                }
-
-
-                    return response; // Return the mapped UserResponse object
-            }  */
+            };
+           // return MapUserToUserResponse(user);
+        }
+        
 
         private static UserResponse MapUserToUserResponse(User user)
         {
