@@ -29,6 +29,8 @@ namespace H6_ChicBotique.Database.Entities
         // Role is an Enum datatype which consists set of constant values(Admin, Member, Guest )
         public Role Role { get; set; }
         public AccountInfo AccountInfo { get; set; }
+       
+        
 
     }
 

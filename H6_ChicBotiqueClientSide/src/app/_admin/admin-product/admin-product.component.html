@@ -5,7 +5,19 @@
     <!-- Add spacing between buttons -->
     <div class="ms-2"></div>
     <button class="btn btn-success btn-lg my-4 my-sm-0 " data-bs-toggle="modal" data-bs-target="#createProductModal" (click)="save()">Add Product</button>
+
 </div>
+<!-- Search button -->
+<div class="search-bar-container ms-4">
+    <div class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search for a product..." aria-label="Search" [(ngModel)]="searchTerm" (input)="searchProducts()">
+        <button class="btn btn-success" type="submit" (click)="searchProducts()">Search</button>
+
+        <!---we can use input property also to search products with keypress(input)="searchProducts()-->
+    </div>
+
+</div>
+
 
 <div class="container mt-2">
     <!-- Product Table -->

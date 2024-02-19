@@ -28,6 +28,7 @@ import { ProfileComponent } from './_client/profile/profile.component';
 import { GuestComponent } from './_client/guest/guest.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { CookieService } from 'ngx-cookie-service';
+import { FilterByUserIdPipe } from './_pipes/filterByUserId.pipe';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CookieService } from 'ngx-cookie-service';
     AppComponent,
     FrontpageComponent,
     SortPipe,
+    FilterByUserIdPipe,
     NavbarComponent,
     CategoryProductsComponent,
     ProductDetailsComponent,

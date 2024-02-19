@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240205211103_chicBotiqueDB")]
-    partial class chicBotiqueDB
+    [Migration("20240216235309_ChicBoutiqueDB")]
+    partial class ChicBoutiqueDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,13 +49,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
+                            Id = new Guid("bca81762-61e8-4a2e-a334-468e510c915c"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
+                            Id = new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -136,7 +136,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"),
+                            AccountInfoId = new Guid("bca81762-61e8-4a2e-a334-468e510c915c"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -146,7 +146,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"),
+                            AccountInfoId = new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -251,16 +251,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "89D969DDBF37717FD4089D17C4614924CB82E6B23A07C829F1F01F5B13DA2B4E",
-                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
+                            Password = "D167DE3CE2F9DFE046A6FAA53A8E504B1428A57C71050D6B6301699F56EEA838",
+                            Salt = "0szkfsgKH8h/j4quLoy99w==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "98C805B460789EE55E07947A708EF145E8813E19F4878ED3AF3E1CA197E3012D",
-                            Salt = "Nu9JDjXoDpphDlMYcg1y9g==",
+                            Password = "28955661F5437161C069A473720454D85103F49596B490088F638C7388B1668D",
+                            Salt = "0szkfsgKH8h/j4quLoy99w==",
                             UserId = 2
                         });
                 });
@@ -385,7 +385,7 @@ namespace H6_ChicBotique.Migrations
                             Id = 6,
                             CategoryId = 3,
                             Description = "Summer clothing",
-                            Image = "womendress2.jpg",
+                            Image = "womendress1.jpg",
                             Price = 299.99m,
                             Stock = (short)10,
                             Title = "Long dress"

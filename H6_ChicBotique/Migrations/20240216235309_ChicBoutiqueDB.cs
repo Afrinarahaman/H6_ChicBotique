@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace H6_ChicBotique.Migrations
 {
-    public partial class chicBotiqueDB : Migration
+    public partial class ChicBoutiqueDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -249,8 +249,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"), 1 },
-                    { new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"), 2 }
+                    { new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"), 2 },
+                    { new Guid("bca81762-61e8-4a2e-a334-468e510c915c"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -258,8 +258,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "89D969DDBF37717FD4089D17C4614924CB82E6B23A07C829F1F01F5B13DA2B4E", "Nu9JDjXoDpphDlMYcg1y9g==", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "98C805B460789EE55E07947A708EF145E8813E19F4878ED3AF3E1CA197E3012D", "Nu9JDjXoDpphDlMYcg1y9g==", 2 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "D167DE3CE2F9DFE046A6FAA53A8E504B1428A57C71050D6B6301699F56EEA838", "0szkfsgKH8h/j4quLoy99w==", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "28955661F5437161C069A473720454D85103F49596B490088F638C7388B1668D", "0szkfsgKH8h/j4quLoy99w==", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -272,19 +272,19 @@ namespace H6_ChicBotique.Migrations
                     { 3, 1, "Girls skirt", "skirt1.jpg", 159.99m, (short)10, "Skirt" },
                     { 4, 1, "kids jumpersuit", "jumpersuit1.jpg", 279.99m, (short)10, "Jumpersuit" },
                     { 5, 2, "T-Shirt for men", "RedT-Shirt.jpg", 199.99m, (short)10, "Red T-Shirt" },
-                    { 6, 3, "Summer clothing", "womendress2.jpg", 299.99m, (short)10, "Long dress" },
+                    { 6, 3, "Summer clothing", "womendress1.jpg", 299.99m, (short)10, "Long dress" },
                     { 7, 3, "Spring Floral dress for women", "womendress2.jpg", 299.99m, (short)10, "Floral dress" }
                 });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 1, new Guid("46e295b3-d03d-46d8-9144-c7e66e438d9a"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+                values: new object[] { 1, new Guid("bca81762-61e8-4a2e-a334-468e510c915c"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 2, new Guid("619ebb7b-c2bd-4732-9a7a-ca245a751a07"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
+                values: new object[] { 2, new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountInfo_UserId",

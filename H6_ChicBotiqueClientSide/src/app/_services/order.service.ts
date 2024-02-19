@@ -12,18 +12,31 @@ export class OrderService {
 
   public shippingdetails = new BehaviorSubject<any>([]);
   public transactionId = new BehaviorSubject<any>([]);
-  public paymentStatus =new BehaviorSubject<any>([])
+  public paymentStatus =new BehaviorSubject<any>([]);
+  public paymentMethod =new BehaviorSubject<any>([]);
 
-  public paymentMethod =new BehaviorSubject<any>([])
-  constructor(private http: HttpClient, private paymentService:PaymentService) { }
-  apiUrl1 = environment.apiUrl + '/Order';
+
+  apiUrl_Order = environment.apiUrl + '/Order';
   public accessToken:any= this.paymentService.getAccessToken();
+
   httpOptions = {
-    headers: new HttpHeaders({ 
+    headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.accessToken}` }),
   };
-  
+
+
+  constructor(private http: HttpClient, private paymentService:PaymentService) { }
+
+  //Method for getting all orders
+  getAllOrders():Observable <Order[]>{
+  return this.http.get<Order[]> (this.apiUrl_Order);
+}
+
+getOrderDetailsByOrderId(orderId:number):Observable<any>{
+  return this.http.get<Order>(`${this.apiUrl_Order}/${orderId}`, this.httpOptions);
+  }
+
 
   setAddressData(data: any) {
     this.shippingdetails.next(data);
@@ -58,14 +71,11 @@ getPaymentMethod() {
 
   storeOrder(newOrder: Order): Observable<Order> {
     // console.log("mandag");
-    console.log("storeORder", newOrder);
-    console.log(this.apiUrl1);
+    console.log("storeOrder", newOrder);
+    console.log(this.apiUrl_Order);
     // return this.http.get<Order[]>(this.apiUrl);
-   return this.http.post<Order>(this.apiUrl1, newOrder, this.httpOptions);
+   return this.http.post<Order>(this.apiUrl_Order, newOrder, this.httpOptions);
   }
-  
-  getOrderDetailsByOrderId(orderId:number):Observable<any>{
 
-  return this.http.get<Order>(`${this.apiUrl1}/${orderId}`, this.httpOptions);
-  }
+
 }

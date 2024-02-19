@@ -68,7 +68,6 @@ navigateToAdminPage() {
     }}
 
   // Fetch a list of products from the ProductService
-
   private fetchProducts() {
     console.log("fetching product list");
     this.productService.getAllProducts().subscribe((products: Product[]) => {

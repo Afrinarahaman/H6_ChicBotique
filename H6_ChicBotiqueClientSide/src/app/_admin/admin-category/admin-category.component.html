@@ -6,6 +6,15 @@
     <div class="ms-2"></div>
     <button class="btn btn-success btn-lg my-4 my-sm-0 " data-bs-toggle="modal" data-bs-target="#createCategoryModal" (click)="save()">Add Category</button>
 </div>
+<!-- Search button -->
+<div class="search-bar-container ms-4">
+    <div class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search for a category..." aria-label="Search" [(ngModel)]="searchTerm" (input)="searchCategory()">
+        <button class="btn btn-success" type="submit" (click)="searchCategory()">Search</button>
+
+    </div>
+
+</div>
 
 <!----Category table ---->
 <div class="container mt-2">
@@ -17,8 +26,8 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody *ngIf="categorys?.length != 0">
-            <tr *ngFor="let category of categorys">
+        <tbody *ngIf="categories?.length != 0">
+            <tr *ngFor="let category of categories">
                 <td> {{category.categoryName}}</td>
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#updateCategoryModal" (click)="edit(category)">
                   <i class="fas fa-edit text-primary" style="font-size: 20px;"></i></button>

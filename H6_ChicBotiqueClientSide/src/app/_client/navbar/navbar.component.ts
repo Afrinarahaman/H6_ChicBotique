@@ -22,7 +22,7 @@ import { ProductService } from 'src/app/_services/product.service';
 })
 export class NavbarComponent implements OnInit {
 
-  title = 'Webshop_H5-Client';
+  title = 'ChicBotiqueClient';
   categories: Category[] = [];
   category: Category = { id: 0, categoryName: "" };
   currentUser: User = {
@@ -62,6 +62,7 @@ export class NavbarComponent implements OnInit {
       this.searchTerm = term;
       // Perform search or update your UI as needed when the search term changes
     });
+
   }
 
   ngOnInit(): void {

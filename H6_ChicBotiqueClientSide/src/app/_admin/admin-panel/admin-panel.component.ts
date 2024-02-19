@@ -1,11 +1,11 @@
+import { OrderService } from 'src/app/_services/order.service';
 import { CategoryService } from 'src/app/_services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../_services/product.service';
 import { UserService } from 'src/app/_services/user.service';
 import { CommonModule} from '@angular/common';
-
-
+import { Order } from 'src/app/_models/order';
 
 
 @Component({
@@ -22,8 +22,9 @@ export class AdminPanelComponent implements OnInit {
   categoryCount: number= 0;
   memberCount: number= 0;
   guestCount: number= 0;
-admin: any;
-products: any;
+  admin: any;
+  products: any;
+  orders:Order[]=[];
 
 
   toggleSidebar() {
@@ -33,12 +34,14 @@ products: any;
   constructor(private router:Router,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private userService: UserService)
+    private userService: UserService,
+    private orderService:OrderService
+    )
     {  // Format the date
       this.formattedDate = this.formatDate(this.currentDate);
-
       // Determine the time of the day for greeting
       this.greeting = this.getGreeting(this.currentDate);
+
     }
 
      formatDate(date: Date): string {
@@ -81,8 +84,12 @@ products: any;
     this.userService.getGuestsCount().subscribe(count=>{
       this.guestCount= count;});
 
-
-  }
+    // Fetch orders after getting users
+    this.orderService.getAllOrders().subscribe(orders => {
+      this.orders = orders;
+      console.log("List of orders",orders);
+    })
+}
 
 
   navigateToAdminPage() {
@@ -93,7 +100,9 @@ products: any;
   performSearch() {
     // Add your search logic here
   }
+  openOrderDetailsModal(): void {
 
+  }
 
 
 }
