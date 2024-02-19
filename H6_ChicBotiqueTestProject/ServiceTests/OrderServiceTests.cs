@@ -166,7 +166,16 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
         public async void CreateOrder_ShouldReturnOrderResponse_WhenCreateIsSuccess()
         {
             // Arrange
-            // Creating a new category request
+            // Creating a new order request
+            List<OrderDetailsRequest> orderDetailsRequest = new List<OrderDetailsRequest>();
+            orderDetailsRequest.Add(new OrderDetailsRequest
+            {
+                ProductId =1,
+                ProductTitle = "asd",
+                ProductPrice = 145,
+                Quantity=1
+
+            });
             ShippingDetailsRequest shippingDetailsRequest = new()
             {
                 Address="zxc",
@@ -175,50 +184,6 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
                 PostalCode="2200",
                 Phone="12345678"
             };
-            ShippingDetails newShippingDetails = new()
-            {
-                Id=1,
-                Address="zxc",
-                City="cph",
-                Country="dk",
-                PostalCode="2200",
-                Phone="12345678"
-
-            };
-
-            Payment newPayment = new()
-            {
-                Id=1,
-                Status="paid",
-                Amount=255,
-                PaymentMethod="credit",
-                TimePaid=DateTime.UtcNow,
-                TransactionId="1234564321"
-            };
-            AccountInfo newAccountInfo = new()
-            {
-                Id = acc1id,
-                CreatedDate = DateTime.UtcNow,
-
-            };
-            List<OrderDetailsRequest> newOrderDetails = new List<OrderDetailsRequest>();
-            newOrderDetails.Add(new OrderDetailsRequest
-            {
-                ProductId =1,
-                ProductTitle = "asd",
-                ProductPrice = 145,
-                Quantity=1
-
-            });
-            List<OrderDetails> orderDetails = new List<OrderDetails>();
-            orderDetails.Add(new OrderDetails
-            {
-                ProductId =1,
-                ProductTitle = "asd",
-                ProductPrice = 145,
-                Quantity=1
-
-            });
             OrderAndPaymentRequest newOrderRequest = new OrderAndPaymentRequest
             {
                 OrderDate =DateTime.Now,
@@ -229,18 +194,52 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
                 PaymentMethod="card",
                 Amount=100,
                 TimePaid=DateTime.Now,
-                OrderDetails=newOrderDetails,
+                OrderDetails=orderDetailsRequest,
                 shippingDetails=shippingDetailsRequest,
-                
 
-                
+
+
 
             };
-            
-            // Setting up the category ID for testing
+            _mockStockHandlerService.Setup(x => x.ReservationSuccess(It.IsAny<string>()))
+                .ReturnsAsync(true);
+            // Creating a created order with existing values
+            AccountInfo newAccountInfo = new()
+            {
+                Id = acc1id,
+                CreatedDate = DateTime.UtcNow,
+                UserId =1
+
+            };
+            List<OrderDetails> orderDetails = new List<OrderDetails>();
+            orderDetails.Add(new OrderDetails
+            {
+                ProductId =1,
+                ProductTitle = "asd",
+                ProductPrice = 145,
+                Quantity=1
+
+            });
+            ShippingDetails newShippingDetails = new()
+            {
+                Id=1,
+                Address="zxc",
+                City="cph",
+                Country="dk",
+                PostalCode="2200",
+                Phone="12345678"
+
+            };
+            Payment newPayment = new()
+            {
+                Id=1,
+                Status="paid",
+                Amount=255,
+                PaymentMethod="credit",
+                TimePaid=DateTime.UtcNow,
+                TransactionId="1234564321"
+            };
             int orderId = 1;
-            Order newOrder = MapOrderRequestToOrder(newOrderRequest);
-            // Creating a created category with existing values
             Order createdOrder = new Order
             {
                 Id = orderId,
@@ -252,11 +251,64 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
                 OrderDetails=orderDetails
             };
 
-            // Setting up the mock category repository to return the created category
+            // Setting up the mock order repository to return the created order
             _mockOrderRepository
                 .Setup(x => x.CreateNewOrder(It.IsAny<Order>()))
                 .ReturnsAsync(createdOrder);
+            ShippingDetailsResponse shippingDetailsResponse = new()
+            {
+                Id=1,
+                OrderId=1,
+                Address="zxc",
+                City="cph",
+                Country="dk",
+                PostalCode="2200",
+                Phone="12345678"
 
+            };
+
+
+            AccountInfoResponse accountInfoResponse = new()
+            {
+                Id = acc1id,
+                CreatedDate = DateTime.UtcNow,
+
+            };
+
+            List<OrderDetailsResponse> orderDetailsResponse = new List<OrderDetailsResponse>();
+
+            orderDetailsResponse.Add(new OrderDetailsResponse
+            {
+                ProductId =1,
+                ProductTitle = "asd",
+                ProductPrice = 145,
+                Quantity=1
+
+            });
+
+
+
+            var ClientBasketId = "a520b23c-7065-4f8f-845e-6719071e8599";
+           
+            OrderAndPaymentResponse newOrderResponse = new OrderAndPaymentResponse
+            {
+                Id=orderId,
+                OrderDate =DateTime.Now,
+                AccountInfoId =acc1id,
+
+                Status ="Success",
+                TransactionId="3254123654785",
+                PaymentMethod="card",
+                Amount=100,
+                OrderDetails=orderDetailsResponse,
+                ShippingDetails=shippingDetailsResponse,
+                Account=accountInfoResponse
+
+
+
+
+            };
+            
             // Act
             var result = await _orderService.CreateOrder(newOrderRequest);
 
@@ -264,48 +316,13 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
             Assert.NotNull(result);
             Assert.IsType<OrderAndPaymentResponse>(result);
             Assert.Equal(orderId, result.Id);
-            Assert.Equal(newOrder.AccountInfoId, result.AccountInfoId);
+            Assert.Equal(newOrderResponse.AccountInfoId, result.AccountInfoId);
         }
 
 
-        private Order MapOrderRequestToOrder(OrderAndPaymentRequest newOrder)
-        {
-            return new Order()
-            {
-                OrderDate = DateTime.Now,
-                AccountInfoId =newOrder.AccountInfoId,
+        
 
-                OrderDetails = newOrder.OrderDetails.Select(x => new OrderDetails
-                {
-                    ProductId = x.ProductId,
-                    ProductTitle = x.ProductTitle,
-                    ProductPrice = x.ProductPrice,
-                    Quantity = x.Quantity
 
-                }).ToList(),
-
-                ShippingDetails = new ShippingDetails()
-
-                {
-
-                    Address=newOrder.shippingDetails.Address,
-                    City=newOrder.shippingDetails.City,
-                    Country=newOrder.shippingDetails.Country,
-                    PostalCode=newOrder.shippingDetails.PostalCode,
-                    Phone=newOrder.shippingDetails.Phone
-
-                },
-                Payment =new Payment()
-                {
-                    Status = newOrder.Status,
-                    TransactionId = newOrder.TransactionId,
-                    Amount = newOrder.Amount,
-                    PaymentMethod = newOrder.PaymentMethod,
-                    TimePaid = newOrder.TimePaid
-                }
-
-            };
-        }
     }
 
 }
