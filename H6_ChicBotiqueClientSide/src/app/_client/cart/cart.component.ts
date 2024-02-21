@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Role } from 'src/app/_models/role';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from 'src/app/_services/product.service';
+import { CookieService } from 'ngx-cookie-service';
+import { ReserveQuantity } from 'src/app/_models/reservequantity';
 
 @Component({
   selector: 'app-cart',
@@ -19,27 +21,32 @@ export class CartComponent implements OnInit {
   public cartProducts: CartItem[] = [];  //property
   public basket = this.cartService.basket; //getting basket from the service
   public totalItem: number =0;
+  clientbasketId: string=this.cookieService.get('VisitorID').toString();
   constructor(
     private cartService: CartService, 
     private router: Router,
     private authService: AuthService,
-    private productService:ProductService) //dependency injection of different services
+    private productService:ProductService, private cookieService:CookieService) //dependency injection of different services
   { }
 
   ngOnInit(): void {
     this.cartProducts = this.cartService.getBasket(); //getting all chosen cartproducts of the customer
     this.grandTotal = this.cartService.getTotalPrice();//getting the total price of the items
   }
+
+  
   async processOrder() //method is for processing order after clicking the BUY button
   {
- 
+      
  
     if (this.authService.currentUserValue == null || this.authService.currentUserValue.id == 0) {
-    this.router.navigate(['checkout']);
+      this.router.navigate(['checkout']);
+
     }
     else
     {
-      this.router.navigate(['/shippingdetails/']);
+     alert  
+      this.router.navigate(['shippingdetails']);
       
     }
       
@@ -83,6 +90,12 @@ export class CartComponent implements OnInit {
         this.cartProducts = this.cartService.getBasket();
         this.grandTotal = this.cartService.getTotalPrice();
    
+      }
+      else 
+      {
+        alert("This product is not in stock. please choose another");
+        
+         this.router.navigate(['/']);
       }
   }
 

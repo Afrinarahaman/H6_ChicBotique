@@ -17,7 +17,7 @@ namespace H6_ChicBotique.Database.Entities
         public IEnumerable<Order> Orders { get; set; } //navigation object
         public HomeAddress? HomeAddress { get; set; } //navigation object
         [ForeignKey("UserId")]
-        public User User { get; set; } //navigation object
+        public User? User { get; set; } //navigation object
     }
 }
 

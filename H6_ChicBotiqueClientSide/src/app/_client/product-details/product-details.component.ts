@@ -54,45 +54,28 @@ export class ProductDetailsComponent implements OnInit {
     });
 
   }
-  /*addToCart(product:Product)
-  {
-
-    
-    this.cartService.addToBasket({
-      productId:product.id,
-      productTitle:product.title,
-      productPrice:product.price,
-      productImage:product.image,
-      quantity: this.quantity+1
-      
-
-    });
-    
-    window.location.reload();
-
-    
-   // this.totalItem = this.cartService.getBasket().length;
-  }*/
+  
   async addToCart(product: Product): Promise<any> {
     try {
       const availableStock = await firstValueFrom(this.productService.getAvailableStock(product.id));
       console.log("AvailableStock",availableStock);
-      if (product.stock <=availableStock) {
-        const item: CartItem = {
+      const item: CartItem = {
         
-          productId: product.id,
-          productTitle: product.title,
-          productPrice: product.price,
-          productImage: product.image,
-          quantity: this.quantity+1
-        };
-       // console.log("AvailableStock",availableStock);
+        productId: product.id,
+        productTitle: product.title,
+        productPrice: product.price,
+        productImage: product.image,
+        quantity: this.quantity+1
+      };
+      if (item.quantity <=availableStock) {
+        
+      
         this.cartService.addToBasket(item);
-        //this.productService.
-        this.cartService.saveBasket();
         
+        this.cartService.saveBasket();
+        window.location.reload();
         let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
-          clientBasketId: this.clientbasketId,
+          clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
           productId:item.productId,
           amountToReserve:item.quantity
 
@@ -110,7 +93,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
-      // Handle error as needed
+      
     }
   }
  handleAddtoWishlist(product:Product)

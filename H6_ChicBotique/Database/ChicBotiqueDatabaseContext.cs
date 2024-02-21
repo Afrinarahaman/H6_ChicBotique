@@ -36,14 +36,14 @@ namespace H6_ChicBotique.Database
             // modelBuilder.Entity<Category>().HasIndex(u => u.CategoryName).IsUnique();
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasOne(e => e.Category).WithMany(e => e.Products).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Category).WithMany(e => e.Products).HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict) ;
             });
             modelBuilder.Entity<AccountInfo>(entity =>
             {
                 entity.Property(e => e.CreatedDate).HasDefaultValueSql("getdate()");
                 //entity.HasIndex(e => e.CreatedDate);
                 //entity.HasKey(e=>e.Id);
-                entity.HasOne(e => e.User).WithOne(e => e.AccountInfo).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
+                entity.HasOne(e => e.User).WithOne(e => e.AccountInfo).HasForeignKey<AccountInfo>(e => e.UserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false).HasConstraintName("FK_AccountInfo_User_UserId"); ;
 
             });
             /* modelBuilder.Entity<User>(entity =>

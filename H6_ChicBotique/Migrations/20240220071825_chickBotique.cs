@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace H6_ChicBotique.Migrations
 {
-    public partial class ChicBoutiqueDB : Migration
+    public partial class chickBotique : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -249,8 +249,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "Id", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"), 2 },
-                    { new Guid("bca81762-61e8-4a2e-a334-468e510c915c"), 1 }
+                    { new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"), 2 },
+                    { new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"), 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -258,8 +258,8 @@ namespace H6_ChicBotique.Migrations
                 columns: new[] { "PasswordId", "LastUpdated", "Password", "Salt", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "D167DE3CE2F9DFE046A6FAA53A8E504B1428A57C71050D6B6301699F56EEA838", "0szkfsgKH8h/j4quLoy99w==", 1 },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "28955661F5437161C069A473720454D85103F49596B490088F638C7388B1668D", "0szkfsgKH8h/j4quLoy99w==", 2 }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "BCEC92B37C64CC9314E654019D0DD0EC240563976095BE6B2CC965CCEED119C2", "ffRfyhLsmkjyi00vj56y5A==", 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "748D15A99CEDD7377268C6650DE0B4C8F668ACD0D47DA5019C388B50CD8FBFDA", "ffRfyhLsmkjyi00vj56y5A==", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -279,12 +279,12 @@ namespace H6_ChicBotique.Migrations
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 1, new Guid("bca81762-61e8-4a2e-a334-468e510c915c"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
+                values: new object[] { 1, new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"), "Husum", "Copenhagen", "Danmark", "2200", "+228415799" });
 
             migrationBuilder.InsertData(
                 table: "HomeAddress",
                 columns: new[] { "Id", "AccountInfoId", "Address", "City", "Country", "PostalCode", "TelePhone" },
-                values: new object[] { 2, new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
+                values: new object[] { 2, new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"), "Gladsaxe", "Copenhagen", "Danmark", "2400", "+228515798" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountInfo_UserId",

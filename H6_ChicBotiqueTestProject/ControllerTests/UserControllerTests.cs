@@ -30,7 +30,6 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             List<UserResponse> users = new();
             users.Add(new()
             {
-
                 Id = 1,
                 FirstName = "Peter",
                 LastName = "Aksten",
@@ -44,21 +43,15 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             {
                 Id = 2,
                 FirstName = "Rizwanah",
-
                 LastName = "Mustafa",
                 Email = "riz@abc.com",
-
                 Role = Role.Member
-
-
             });
 
-            _mockuserService
-                .Setup(x => x.GetAll())
-                .ReturnsAsync(users);
+            _mockuserService.Setup(x => x.GetAll()).ReturnsAsync(users);
 
             //Act
-            var result = await _userController.GetAllUsers();
+            var result = await _userController.GetAll();
 
             //Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -76,7 +69,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 .ReturnsAsync(users);
 
             //Act
-            var result = await _userController.GetAllUsers();
+            var result = await _userController.GetAll();
 
             //Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -91,7 +84,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 .ReturnsAsync(() => null);
 
             //Act
-            var result = await _userController.GetAllUsers();
+            var result = await _userController.GetAll();
 
             //Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -107,7 +100,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 .ReturnsAsync(() => throw new System.Exception("This is an exception"));
 
             //Act
-            var result = await _userController.GetAllUsers();
+            var result = await _userController.GetAll();
 
             //Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -226,7 +219,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             Assert.Equal(200, statusCodeResult.StatusCode);
         }
         [Fact]
-        public async void login_ShouldReturnStatusCode200_WhenUserIsSuccessfullylogged()
+        public async void Login_ShouldReturnStatusCode200_WhenUserIsSuccessfullylogged()
         {
             // Arrange
             LoginRequest checkMember = new LoginRequest

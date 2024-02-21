@@ -23,9 +23,9 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             _accountInfoController = new AccountInfoController(_mockAccountInfoService.Object);
             }
 
-            /// Verifies that GetAll returns StatusCode 200 when categories exist.       
+            /// Verifies that GetAll returns StatusCode 200 when AccountInfo exist.       
        [Fact]
-       public async void GetAll_ShouldReturnStatusCode200_WhenAccountInfoExist()
+       public async void GetAllAccountInfos_ShouldReturnStatusCode200_WhenAccountInfoExist()
        {
                 // Arrange
             List<AccountInfoResponse> accountInfos = new List<AccountInfoResponse>
@@ -52,7 +52,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
        }
 
 
-        /// Verifies that GetAll returns StatusCode 204 when no categories exist.
+        /// Verifies that GetGuidByUserId returns StatusCode 204 when no AccountInfo exist.
 
         [Fact]
         public async void GetGuidByUserId_ShouldReturnStatusCode200_WhenAccountInfoExist()
