@@ -240,6 +240,77 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
 
 
         }
+        [Fact]
+        public async void CreateGuest_ShouldReturnUserResponse_WhenCreateIsSuccess()
+        {
+            //Arrange
+            int userId = 1;
+            Guid acc1id = Guid.NewGuid();
+            GuestRequest newGuest = new()
+            {
+                Email = "peter@abc.com",
+            
+                FirstName = "Peter",
+                LastName = "Aksten",
+                Address = "House no:123 , 2700",
+                City    =" Ghost street",
+                PostalCode= "2700",
+                Country="DK",
+                Telephone = "12345678",
+
+
+            };
+            HomeAddress homeaddress = new()
+            {
+                AccountInfoId = acc1id,
+                Address = "House no:123 , 2700",
+                City    =" Ghost street",
+                PostalCode= "2700",
+                Country="DK",
+
+            };
+
+
+            User user = new()
+            {
+                Id=1,
+                Email = "peter@abc.com",
+
+                FirstName = "Peter",
+                LastName = "Aksten",
+                Role=Role.Member
+
+
+            };
+            AccountInfo acc = new()
+            {
+                UserId=1,
+            };
+
+            _mockUserRepository
+               .Setup(x => x.Create(It.IsAny<User>()))
+               .ReturnsAsync(user);
+
+            _mockAccountInfoRepository
+              .Setup(x => x.Create(It.IsAny<AccountInfo>()))
+              .ReturnsAsync(acc);
+
+            _mockHomeAddressRepository
+        .Setup(x => x.Create(It.IsAny<HomeAddress>()))
+        .ReturnsAsync(homeaddress);
+            //Act
+            var result = await _userService.Register_Guest(newGuest);
+
+            //Assert         
+
+            Assert.Null(result);
+            Assert.IsType<GuestResponse>(result);
+            Assert.Equal(userId, result.Id);
+            Assert.Equal(newGuest.FirstName, result.FirstName);
+
+
+
+        }
 
     }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ShippingDetails } from 'src/app/_models/shippingdetails';
+import { User } from 'src/app/_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
 import { CartService } from 'src/app/_services/cart.service';
 import { OrderService } from 'src/app/_services/order.service';
@@ -18,6 +20,20 @@ export class ShippingdetailsComponent implements OnInit {
   
   public shippingdetails: any = {};
   id: any;
+
+  currentUser: User =
+  { id: 0,
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    address: '',
+    city: '',
+    country: '',
+    postalcode: '',
+    telephone: '',
+    role: 2 };
+
   constructor( private orderService: OrderService,
     private cartService: CartService, private router: Router,
     private productService: ProductService,
@@ -28,36 +44,50 @@ export class ShippingdetailsComponent implements OnInit {
   
 
     }
-   
-    useNewShippingDetails: boolean = false;
-
-    submitShippingDetails(): void {
-      if (this.useNewShippingDetails) {
-        // Form submitted with new shipping details
-        console.log('Form submitted with new shipping details');
-        // You can access form values via ngForm reference shippingForm
-      } else {
-        // Use home address, no need to submit form
-        console.log('Use home address');
-      }
-    }
+ 
+    forshippingDetails: boolean = false;
+    isGuest: boolean = true; 
+  
+    
   async submitShippingForm()
   {
-    if (this.useNewShippingDetails) {
-
-    console.log(this.shippingdetails);
-    const addressData=this.shippingdetails
-    this.orderService.setAddressData(addressData);
     
-   this.router.navigate(['/payment']); 
+     
+        var guestEmail=sessionStorage.getItem('guestEmail');
+        console.log("GuestEmail", guestEmail);
+        if (this.isGuest || this.forshippingDetails) {
+          // If it is guest, then it will ask for shippingdetails form
+            console.log(this.shippingdetails);
+            const addressData=this.shippingdetails
+            this.orderService.setAddressData(addressData);
+    
+            this.router.navigate(['/payment']); 
+        } 
+      else{
+
+         this.authService.currentUser.subscribe(user => {
+          if (this.currentUser) {
+            this.userService.getUserbyEmail(user.email).subscribe(userData => {
+              this.currentUser = userData;
+              console.log("CurrentUser", this.currentUser)
+               const addressData: ShippingDetails=
+              {
+                address: this.currentUser?.homeAddress?.address ?? '',
+                city: this.currentUser?.homeAddress?.city ?? '',
+                country: this.currentUser?.homeAddress?.country ?? '',
+                postalCode: this.currentUser?.homeAddress?.postalCode ?? '',
+                phone: this.currentUser?.homeAddress?.phone ?? ''
+              }
+              this.orderService.setAddressData(addressData);
+              this.router.navigate(['/payment']); 
+      });
     }
-    else
-    {
-     var email=  sessionStorage.getItem('guestEmail');
+      })
+     
+      //
+      //this.orderService.setAddressData(addressData);
       
-      const addressData= this.userService.getUserbyEmail(email);
-      this.orderService.setAddressData(addressData);
-      this.router.navigate(['/payment']); */
+      
     }
    
 

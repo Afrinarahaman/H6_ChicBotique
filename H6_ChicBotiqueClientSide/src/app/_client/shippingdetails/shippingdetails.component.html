@@ -6,23 +6,23 @@
 
             <form #shippingForm="ngForm" >
                 <!-- Use ngIf to conditionally render based on useNewShippingDetails -->
-                <div *ngIf="!useNewShippingDetails">
+                <div *ngIf="!isGuest">
                     <div class="form-group col-md-6">
                   <label>
-                    <input type="radio" name="shippingOption" [(ngModel)]="useNewShippingDetails" [value]="false">
+                    <input type="radio" name="shippingaddressoption" [(ngModel)]="forshippingDetails" [value]="false">
                     Use Home Address
                   </label>
                 </div>
                 <div class="form-group col-md-6">
                   <label>
-                    <input type="radio" name="shippingOption" [(ngModel)]="useNewShippingDetails" [value]="true">
+                    <input type="radio" name="shippingaddressoption" [(ngModel)]="forshippingDetails" [value]="true">
                     Enter New Shipping Details
                   </label>
                 </div>
                 </div>
               
                 <!-- Shipping details form fields -->
-                <div *ngIf="useNewShippingDetails">
+                <div  *ngIf="isGuest || forshippingDetails">
                   
 
                     <div class="form-row">
@@ -61,19 +61,20 @@
                     </div>
     
     
-                    <div class="form-row">
-                        <div class="col-md-6 mt-2">
-                            <button type="button" class="btn btn-success px-5" (click)="submitShippingForm()">Submit</button>&nbsp;&nbsp;
-                            <button type="button" class="btn btn-secondary  px-5" routerLink="/cart">Cancel</button>
-                        </div>
-    
-                    </div>
+                    
 
                   <!-- Other shipping details fields -->
                 </div>
               
                 <!-- Submit button -->
-                <button type="submit" (click)="submitShippingForm()">Submit</button>
+                <div class="form-row">
+                    <div class="col-md-6 mt-2">
+                        <button type="button" class="btn btn-success px-5" (click)="submitShippingForm()">Submit</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary  px-5" routerLink="/cart">Cancel</button>
+                    </div>
+
+                </div>
+                <!--<button type="submit" (click)="submitShippingForm()">Submit</button>-->
               </form>
         </div>
     </div>
