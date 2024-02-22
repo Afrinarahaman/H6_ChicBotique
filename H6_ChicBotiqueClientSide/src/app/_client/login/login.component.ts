@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { CartService } from 'src/app/_services/cart.service';
 import { FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  LoginForm!: FormGroup; //declare the login form
+  LoginForm!: FormGroup; //declare the login form with validation
   id:number=0;
   email: string = '';
   password: string = '';
@@ -26,17 +26,14 @@ export class LoginComponent implements OnInit {
     private cartService:CartService) {
       if (this.authService.currentUserValue != null && this.authService.currentUserValue.id > 0) {
         this.router.navigate(['login']);
-
-
   }}
 
   ngOnInit(): void {
     // initialization of  LoginForm
+    // An array of validators for the "required" and "email" validators to the email field.
     this.LoginForm = this.fb.group({
-      email: ['',[Validators.required,Validators.email]], // an array of validators for the "required" and "email" validators to the email field.
+      email: ['',[Validators.required,Validators.email]],
       password: ['', Validators.required],
-      //Validators.minLength(6),Validators.maxLength(20)],
-
     })
 
   }
@@ -44,14 +41,13 @@ export class LoginComponent implements OnInit {
   login(): void {
     console.log('Login function called');
     console.log('Email Control:', this.LoginForm.get('email'));
-      console.log('Password Control:', this.LoginForm.get('password'));
+    console.log('Password Control:', this.LoginForm.get('password'));
 
   this.submitted= true;
   this.error = '';
 
 
     if (this.LoginForm.valid) {
-
       this.email= this.LoginForm.get('email')?.value;
       this.password = this.LoginForm.get('password')?.value;
 
@@ -69,8 +65,7 @@ export class LoginComponent implements OnInit {
              this.router.navigate(['/']);
              if(this.authService.currentUserValue.role==0){
               this.router.navigate(['/admin-panel']);
-             }
-        },
+             } },
 
         error: obj => {
           console.log('login error ', obj.error);
