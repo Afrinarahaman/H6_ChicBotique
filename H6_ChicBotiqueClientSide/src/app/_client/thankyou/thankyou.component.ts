@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartItem } from 'src/app/_models/cartItem';
 import { Order } from 'src/app/_models/order';
+import { OrderResponse } from 'src/app/_models/orderResponse';
 import { ShippingDetails } from 'src/app/_models/shippingdetails';
 import { AuthService } from 'src/app/_services/auth.service';
 import { OrderService } from 'src/app/_services/order.service';
+
 
 @Component({
   selector: 'app-thankyou',
@@ -17,10 +19,18 @@ export class ThankyouComponent implements OnInit {
   
   constructor(private orderService:OrderService, private authService:AuthService, private route:ActivatedRoute) { }
   isShown: boolean = false ;
-  public order: Order = {
+  public orderResponse: OrderResponse = {
     id: 0,
     accountInfoId: " ",
-    clientBasketId:'',
+    amount: 0,
+    transactionId: '',
+    status: '',
+    paymentMethod:'',
+    accountInfo:{
+      id: "",
+      createdDate: '',
+      userId: 0
+    },
     orderDetails: [],
     shippingDetails: {
       address: '',
@@ -29,11 +39,8 @@ export class ThankyouComponent implements OnInit {
       postalCode: '',
       country: '',
       phone: ''
-    },
-    amount: 0,
-    transactionId: '',
-    status: '',
-    paymentMethod:''
+    }
+    
   } ;
   public orderDetails: Array<CartItem> = [];
   public shippingdetails: ShippingDetails = {address: '',
@@ -45,21 +52,32 @@ export class ThankyouComponent implements OnInit {
 
   orderId:number=0; 
   localAccountId:string ="";
-  ngOnInit(): void {
+  ngOnInit(){
+   
+   /* this.orderId = parseInt(this.route.snapshot.paramMap.get('id')||'0');
+   console.log("OrderId",this.orderId);
+    this.orderService.getOrderDetailsByOrderId(this.orderId).subscribe(res => {
+      this.orderResponse = res;
+      console.log("response", this.orderResponse)
+    });
+    
+  */
     
   }
   
    detail(){
 
     this.orderId = parseInt(this.route.snapshot.paramMap.get('orderId')||'0');
+   console.log("OrderId",this.orderId)
    
     this.orderService.getOrderDetailsByOrderId(this.orderId).subscribe(res => {
-      this.order = res;
-
+      this.orderResponse = res;
+      console.log("response", this.orderResponse)
      
-     if(res.id!=0)
+     if(this.orderResponse.id===this.orderId)
      {
-      this.isShown = ! this.isShown;
+      console.log("responseID", this.orderResponse.id)
+      this.isShown = true;
      }
 
     

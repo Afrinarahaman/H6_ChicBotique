@@ -47,13 +47,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bca81762-61e8-4a2e-a334-468e510c915c"),
+                            Id = new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"),
+                            Id = new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -134,7 +134,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("bca81762-61e8-4a2e-a334-468e510c915c"),
+                            AccountInfoId = new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -144,7 +144,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("3701b1cc-b6f1-4b9e-9c02-78c8780933a8"),
+                            AccountInfoId = new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -249,16 +249,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "D167DE3CE2F9DFE046A6FAA53A8E504B1428A57C71050D6B6301699F56EEA838",
-                            Salt = "0szkfsgKH8h/j4quLoy99w==",
+                            Password = "BCEC92B37C64CC9314E654019D0DD0EC240563976095BE6B2CC965CCEED119C2",
+                            Salt = "ffRfyhLsmkjyi00vj56y5A==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "28955661F5437161C069A473720454D85103F49596B490088F638C7388B1668D",
-                            Salt = "0szkfsgKH8h/j4quLoy99w==",
+                            Password = "748D15A99CEDD7377268C6650DE0B4C8F668ACD0D47DA5019C388B50CD8FBFDA",
+                            Salt = "ffRfyhLsmkjyi00vj56y5A==",
                             UserId = 2
                         });
                 });
@@ -501,7 +501,8 @@ namespace H6_ChicBotique.Migrations
                     b.HasOne("H6_ChicBotique.Database.Entities.User", "User")
                         .WithOne("AccountInfo")
                         .HasForeignKey("H6_ChicBotique.Database.Entities.AccountInfo", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_AccountInfo_User_UserId");
 
                     b.Navigation("User");
                 });

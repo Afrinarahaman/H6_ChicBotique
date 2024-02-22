@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Order } from '../_models/order';
 import { PaymentService } from './payment.service';
+import { OrderResponse } from '../_models/orderResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,7 @@ export class OrderService {
   constructor(private http: HttpClient, private paymentService:PaymentService) { }
 
   //Method for getting all orders
-  getAllOrders():Observable <Order[]>{
-  return this.http.get<Order[]> (this.apiUrl_Order);
-}
-
-getOrderDetailsByOrderId(orderId:number):Observable<any>{
-  return this.http.get<Order>(`${this.apiUrl_Order}/${orderId}`, this.httpOptions);
-  }
-
+ 
 
   setAddressData(data: any) {
     this.shippingdetails.next(data);
@@ -68,6 +62,17 @@ getPaymentMethod() {
   return this.paymentMethod.asObservable();
 }
 
+//Method for getting all orders
+getAllOrders():Observable <Order[]>{
+  return this.http.get<Order[]> (this.apiUrl_Order);
+}
+
+//Mthod for getting ordeDetailsByOrderId
+ getOrderDetailsByOrderId(orderId:number):Observable<any>{
+  return this.http.get<OrderResponse>(`${this.apiUrl_Order}/${orderId}`, this.httpOptions);
+  }
+
+  //Storing the order in the database
 
   storeOrder(newOrder: Order): Observable<Order> {
     // console.log("mandag");

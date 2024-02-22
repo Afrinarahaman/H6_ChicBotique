@@ -25,10 +25,9 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case: GetAll should return StatusCode 200 when products exist
         [Fact]
-        public async void GetAll_ShouldReturnStatusCode200_WhenProductsExist()
-        {
+        public async void GetAllProducts_ShouldReturnStatusCode200_WhenProductsExist()
+        {            
             // Arrange
-
             List<ProductResponse> products = new();
             products.Add(new()
             {
@@ -40,7 +39,6 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 Stock = 10,
                 CategoryId = 1
             });
-            // Another product...
             products.Add(new()
             {
                 Id = 2,
@@ -52,7 +50,6 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 CategoryId = 2
 
             });
-
             products.Add(new()
             {
                 Id = 3,
@@ -63,50 +60,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
                 Stock = 10,
                 CategoryId = 1
 
-            });
-            products.Add(new()
-            {
-                    Id = 4,
-                    Title = "Jumpersuit",
-                    Price = 279.99M,
-                    Description = "kids jumpersuit",
-                    Image = "jumpersuit1.jpg",
-                    Stock = 10,
-                    CategoryId = 1
-
-            });
-            products.Add(new()
-                  {
-                    Id = 5,
-                    Title = "Red T-Shirt",
-                    Price = 199.99M,
-                    Description = "T-Shirt for men",
-                    Image = "RedT-Shirt.jpg",
-                    Stock = 10,
-                    CategoryId = 2
-            });
-            products.Add(new()
-                    {
-                     Id = 6,
-                     Title = "Long dress",
-                     Price = 299.99M,
-                     Description = "Summer clothing",
-                     Image = "floral-dress.jpg",
-                     Stock = 10,
-                     CategoryId = 3
-            });
-            products.Add(new()
-                  {
-                    Id = 7,
-                    Title = "Red dress",
-                    Price = 299.99M,
-                    Description = "Party dress for women",
-                    Image = "Red-dress.jpg",
-                    Stock = 10,
-                    CategoryId = 3
-            });
-
-
+            });       
             // Setup the mock ProductService to return the list of products
             _mockProductService.Setup(x => x.GetAllProducts()).ReturnsAsync(products);
 
@@ -172,7 +126,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case: GetById should return StatusCode 200 when data exists
         [Fact]
-        public async void GetById_ShouldReturnStatusCode200_WhenDataExists()
+        public async void GetProductById_ShouldReturnStatusCode200_WhenDataExists()
         {
             // Arrange
             int productId = 1;
@@ -203,7 +157,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case: GetById should return StatusCode 404 when product does not exist
         [Fact]
-        public async void GetById_ShouldReturnStatusCode404_WhenProductDoesNotExist()
+        public async void GetProductById_ShouldReturnStatusCode404_WhenProductDoesNotExist()
         {
             // Arrange
             int productId = 1;
@@ -221,7 +175,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case: GetById should return StatusCode 500 when an exception is raised
         [Fact]
-        public async void GetById_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        public async void GetProductById_ShouldReturnStatusCode500_WhenExceptionIsRaised()
         {
             // Arrange
 
@@ -238,7 +192,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case: Create should return StatusCode 200 when product is successfully created
         [Fact]
-        public async void Create_ShouldReturnStatusCode200_WhenProductIsSuccessfullyCreated()
+        public async void CreateProduct_ShouldReturnStatusCode200_WhenProductIsSuccessfullyCreated()
         {
             // Arrange
             ProductRequest newProduct = new ProductRequest
@@ -275,7 +229,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
         }
         // Test case: Create should return StatusCode 500 when exception is raised
         [Fact]
-        public async void Create_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        public async void CreateProduct_ShouldReturnStatusCode500_WhenExceptionIsRaised()
         {
             // Arrange
             // Creating a new product request for testing
@@ -305,7 +259,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
         }
         // Test case: Update should return StatusCode 200 when product is successfully updated
         [Fact]
-        public async void Update_ShouldReturnStatusCode200_WhenProductIsSuccessfullyUpdated()
+        public async void UpdateProduct_ShouldReturnStatusCode200_WhenProductIsSuccessfullyUpdated()
         {
             // Arrange
             ProductRequest updateProduct = new ProductRequest
@@ -335,7 +289,6 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             // Setup the mock ProductService to return the sample product response
             _mockProductService.Setup(x => x.UpdateProduct(It.IsAny<int>(), It.IsAny<ProductRequest>()))
                 .ReturnsAsync(productResponse);
-
             // Act
             var result = await _productController.Update(productId, updateProduct);
 
@@ -346,7 +299,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case to verify that Update returns StatusCode 404 when trying to update a product that does not exist
         [Fact]
-        public async void Update_ShouldReturnStatusCode404_WhenTryingToUpdateProductWhichDoesNotExist()
+        public async void UpdateProduct_ShouldReturnStatusCode404_WhenTryingToUpdateProductWhichDoesNotExist()
         {
             // Arrange
             ProductRequest updateProduct = new ProductRequest
@@ -375,7 +328,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case to verify that Update returns StatusCode 500 when an exception is raised during the update process
         [Fact]
-        public async void Update_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        public async void UpdateProduct_ShouldReturnStatusCode500_WhenExceptionIsRaised()
         {
             // Arrange
             ProductRequest updateProduct = new ProductRequest
@@ -405,7 +358,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case to verify that Delete returns StatusCode 200 when the product is successfully deleted
         [Fact]
-        public async void Delete_ShouldReturnStatusCode200_WhenProductIsDeleted()
+        public async void DeleteProduct_ShouldReturnStatusCode200_WhenProductIsDeleted()
         {
             // Arrange
             int productId = 1;
@@ -435,7 +388,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case to verify that Delete returns StatusCode 404 when trying to delete a product that does not exist
         [Fact]
-        public async void Delete_ShouldReturnStatusCode404_WhenTryingToDeleteProductWhichDoesNotExist()
+        public async void DeleteProduct_ShouldReturnStatusCode404_WhenTryingToDeleteProductWhichDoesNotExist()
         {
             // Arrange
             int productId = 1;
@@ -455,7 +408,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Test case to verify that Delete returns StatusCode 500 when an exception is raised during the deletion process
         [Fact]
-        public async void Delete_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        public async void DeleteProduct_ShouldReturnStatusCode500_WhenExceptionIsRaised()
         {
             // Arrange
             int productId = 1;

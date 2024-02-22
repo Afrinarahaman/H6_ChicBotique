@@ -74,8 +74,6 @@ export class PaymentComponent implements OnInit {
 
         createOrderOnClient: (data) =>
 
-        //const addressData=this.shippingdetails;
-
           <ICreateOrderRequest>{
 
 
@@ -85,17 +83,10 @@ export class PaymentComponent implements OnInit {
                 amount: {
                   currency_code: 'DKK',
                   value: `${this.cartTotal}`,
-
                 }
-
               },
-              //this.paymentService.GetAccessToken(),
-              //console.log("AccessToken", this.paymentService.GetAccessToken())
             ],
-
           },
-
-
         onApprove: (data, actions) => {
           var test:any = data;
           console.log(
@@ -110,37 +101,19 @@ export class PaymentComponent implements OnInit {
             this.orderService.getAddressData();
             console.log(details);
             this.paymentStatus=this.orderService.setPaymentStatus(details.status);
-           
-          
-           this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
-          
-            var result = await this.cartService.addOrder();
-          
-          
-            
-          
-             // var result = await this.cartService.addOrder();n
+            this.paymentMethod = this.orderService.setPaymentMethod(test.paymentSource);
+            var result = await this.cartService.addOrder();  //this is creating order in our system
               this.id =result.id;
               console.log('result', result);
               this.cartService.clearBasket();
-              this.router.navigate(['/thankyou/', {orderId: this.id}]);
+              this.router.navigate(['thankyou', {id: this.id}]);
+              
               //window.location.reload;
               this.cartService.saveBasket();
-              /*console.log(
-              'onApprove - you can get full order details inside onApprove: ',
-
-              );            details=result
-              // console.log('Details of ORDERS:', details);*/
-
           });
         },
 
-
-
-
         onClientAuthorization: (data) => {
-
-
 
         },
         onCancel: (data, actions) => {
