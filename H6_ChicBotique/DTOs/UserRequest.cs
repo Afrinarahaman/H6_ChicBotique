@@ -39,23 +39,6 @@ namespace H6_ChicBotique.DTOs
         [StringLength(32, ErrorMessage = "LastName must be less than 50 chars")]
         public string Telephone { get; set; }
     }
-    public class UserUpdateRequest : UserRequest
-    {
-        [Required]
-        [StringLength(32, ErrorMessage = "LastName must be less than 100 chars")]
-        public string Address { get; set; }
-        [Required]
-        [StringLength(32, ErrorMessage = "LastName must be less than 100 chars")]
-        public string City { get; set; }
-        [Required]
-        [StringLength(32, ErrorMessage = "LastName must be less than 100 chars")]
-        public string PostalCode { get; set; }
-        [Required]
-        [StringLength(32, ErrorMessage = "LastName must be less than 100 chars")]
-        public string Country { get; set; }
-        [Required]
-        [StringLength(32, ErrorMessage = "LastName must be less than 50 chars")]
-        public string Telephone { get; set; }
-    }
+    
 
 }

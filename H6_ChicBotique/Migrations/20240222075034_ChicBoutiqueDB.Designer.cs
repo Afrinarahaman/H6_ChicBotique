@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H6_ChicBotique.Migrations
 {
     [DbContext(typeof(ChicBotiqueDatabaseContext))]
-    [Migration("20240220071825_chickBotique")]
-    partial class chickBotique
+    [Migration("20240222075034_ChicBoutiqueDB")]
+    partial class ChicBoutiqueDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,13 +49,13 @@ namespace H6_ChicBotique.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"),
+                            Id = new Guid("ca635ab3-d525-4e4f-ad94-69b7c6441427"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
                         new
                         {
-                            Id = new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"),
+                            Id = new Guid("4bb0b59f-30d3-4413-8ad3-36b4e61393cc"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         });
@@ -136,7 +136,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 1,
-                            AccountInfoId = new Guid("a1946ba4-646e-4264-8ebe-b3c0999af729"),
+                            AccountInfoId = new Guid("ca635ab3-d525-4e4f-ad94-69b7c6441427"),
                             Address = "Husum",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -146,7 +146,7 @@ namespace H6_ChicBotique.Migrations
                         new
                         {
                             Id = 2,
-                            AccountInfoId = new Guid("803ff124-dcfe-4b5d-a484-1b056440ab2a"),
+                            AccountInfoId = new Guid("4bb0b59f-30d3-4413-8ad3-36b4e61393cc"),
                             Address = "Gladsaxe",
                             City = "Copenhagen",
                             Country = "Danmark",
@@ -251,16 +251,16 @@ namespace H6_ChicBotique.Migrations
                         {
                             PasswordId = 1,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "BCEC92B37C64CC9314E654019D0DD0EC240563976095BE6B2CC965CCEED119C2",
-                            Salt = "ffRfyhLsmkjyi00vj56y5A==",
+                            Password = "03BDA8F017C7923B398D7725A9920916FD93001644986F4C933DDD4481742515",
+                            Salt = "ZgSjAvpjYdJFZMMfWzXrNA==",
                             UserId = 1
                         },
                         new
                         {
                             PasswordId = 2,
                             LastUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Password = "748D15A99CEDD7377268C6650DE0B4C8F668ACD0D47DA5019C388B50CD8FBFDA",
-                            Salt = "ffRfyhLsmkjyi00vj56y5A==",
+                            Password = "BD0D84736D24484943A9775935991734D43DCAF53293F3B26DE558FCD358B3B4",
+                            Salt = "ZgSjAvpjYdJFZMMfWzXrNA==",
                             UserId = 2
                         });
                 });
