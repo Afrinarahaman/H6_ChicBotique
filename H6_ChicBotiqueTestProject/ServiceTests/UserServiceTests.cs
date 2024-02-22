@@ -215,6 +215,8 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
             {
                 UserId=1,
             };
+            var salt = PasswordHelpers.GenerateSalt();
+          
 
             _mockUserRepository
                .Setup(x => x.Create(It.IsAny<User>()))
@@ -303,7 +305,7 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
 
             //Assert         
 
-            Assert.Null(result);
+            //Assert.Null(result);
             Assert.IsType<GuestResponse>(result);
             Assert.Equal(userId, result.Id);
             Assert.Equal(newGuest.FirstName, result.FirstName);
@@ -311,6 +313,66 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
 
 
         }
+        [Fact]
+        public async void UpdateUser_ShouldReturnUserResponse_WhenUpdateIsSuccess()
+        {
+            // We do not test if anything actually changed on the DB,
+            // we only test that the returned values match the submitted values
 
+            // Arrange
+            // Creating a mock AccountInfo for the user
+            AccountInfo acc = new()
+            {
+                UserId=1,
+            };
+
+            // Creating a user request with updated values
+            UserRequest userRequest = new()
+            {
+                
+                Email = "peter@abc.com",
+                Password="test",
+                FirstName = "Peter",
+                LastName = "Aksten",
+                
+
+            };
+
+            // Creating a product with existing values
+            int userId = 1;
+            User user = new()
+            {
+                Id=1,
+                Email = "peter@abc.com",
+                AccountInfo = acc,
+                FirstName = "Peter",
+                LastName = "Aksten",
+                Role=Role.Member
+
+
+            };
+
+            // Setting up the mock user repository to return the updated user
+            _mockUserRepository
+                .Setup(x => x.Update(It.IsAny<int>(), It.IsAny<User>()))
+                .ReturnsAsync(user);
+
+            // Setting up the mock AccountInfo repository to return the mock AccountInfo
+            _mockAccountInfoRepository
+                .Setup(x => x.SelectById(It.IsAny<Guid>()))
+                .ReturnsAsync(acc);
+            
+            // Act
+            var result = await _userService.Update(userId, userRequest);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<UserResponse>(result);
+            Assert.Equal(userId, result.Id);
+            Assert.Equal(userRequest.FirstName, result.FirstName);
+            Assert.Equal(userRequest.LastName, result.LastName);
+            Assert.Equal(userRequest.Email, result.Email);
+          
+        }
     }
 }
