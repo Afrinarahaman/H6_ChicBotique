@@ -8,17 +8,17 @@
                 <!-- Use ngIf to conditionally render based on useNewShippingDetails -->
                 <div *ngIf="!isGuest">
                     <div class="form-group col-md-6">
-                  <label>
-                    <input type="radio" name="shippingaddressoption" [(ngModel)]="forshippingDetails" [value]="false">
-                    Use Home Address
-                  </label>
-                </div>
-                <div class="form-group col-md-6">
-                  <label>
+                        <label>
+                        <input type="radio" name="shippingaddressoption" [(ngModel)]="forshippingDetails" [value]="false">
+                        Use Home Address
+                        </label>
+                    </div>
+                    <div class="form-group col-md-6">
+                     <label>
                     <input type="radio" name="shippingaddressoption" [(ngModel)]="forshippingDetails" [value]="true">
                     Enter New Shipping Details
-                  </label>
-                </div>
+                     </label>
+                    </div>
                 </div>
               
                 <!-- Shipping details form fields -->

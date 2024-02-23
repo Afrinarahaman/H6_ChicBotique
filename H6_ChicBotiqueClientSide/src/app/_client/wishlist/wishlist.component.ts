@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { CartService } from 'src/app/_services/cart.service';
 
 
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -15,7 +16,8 @@ export class WishlistComponent implements OnInit {
   public wishlistItems: WishlistItem[] = [];  //property
 
   constructor(private wishlistService: WishlistService,
-    private cartService: CartService, private router: Router,private authService: AuthService)
+    private cartService: CartService, private router: Router,private authService: AuthService,
+    )
   { }
 
   ngOnInit(): void {

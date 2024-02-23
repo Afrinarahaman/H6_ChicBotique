@@ -15,6 +15,8 @@ import { ProductService } from 'src/app/_services/product.service';
 
 
 
+
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -41,6 +43,7 @@ export class NavbarComponent implements OnInit {
   products: Product[]=[];
 
   public totalItem: number = this.cartService.getBasket().length;
+  //public totalItem: number = 0;
   public WL_totalItem: number = this.wishlistService.getWishlist().length;
 
     showSearchResults: boolean = false;
@@ -56,7 +59,8 @@ export class NavbarComponent implements OnInit {
     private cartService: CartService,
     private userService: UserService,
     private wishlistService: WishlistService,
-    private searchService: SearchService
+    private searchService: SearchService,
+   
   ) {
     this.searchService.search.subscribe((term) => {
       this.searchTerm = term;
@@ -66,7 +70,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
+    /*this.cartService.getBasket()
+    .pipe(
+      map(basket => basket.length) // Transform array of cart items into count of items
+    )
+    .subscribe(totalItems => {
+      this.totalItem = totalItems;
+    });*/
     this.categoryService.getCategoriesWithoutProducts().subscribe(x => this.categories = x);
     console.log('value received ');
     this.authService.currentUser.subscribe(x => {
