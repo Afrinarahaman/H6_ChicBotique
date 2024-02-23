@@ -108,7 +108,7 @@ export class PaymentComponent implements OnInit {
               this.id =result.id;
               console.log('result', result);
               this.cartService.clearBasket();
-              this.router.navigate(['thankyou', {id: this.id}]);
+              this.router.navigate(['thankyou'], { queryParams: { id: this.id } });
               
               //window.location.reload;
               

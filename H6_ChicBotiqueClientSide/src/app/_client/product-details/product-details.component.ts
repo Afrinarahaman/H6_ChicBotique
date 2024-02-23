@@ -75,10 +75,6 @@ export class ProductDetailsComponent implements OnInit {
       };
       if (item.quantity <=availableStock) {
         
-        this.cartService.addToBasket(item);
-        
-        this.cartService.saveBasket();
-        window.location.reload();
         let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
           clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
           productId:item.productId,
@@ -86,8 +82,13 @@ export class ProductDetailsComponent implements OnInit {
 
         }
         var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+       
+        
         if(reserve==true)
         {
+          this.cartService.addToBasket(item);
+          this.cartService.saveBasket();
+          window.location.reload();
         console.log("reserved stock")
         }
 
