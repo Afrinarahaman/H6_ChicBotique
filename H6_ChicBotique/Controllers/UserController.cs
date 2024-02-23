@@ -151,15 +151,14 @@ namespace H6_ChicBotique.Controllers
             }
         }
 
-        // Update User Information
-     
+        // Update User Information     
         [AllowAnonymous]
         [HttpPut("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserRequest updateUser)
+            public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserUpdateRequest updateUser)
             {
                 try
                 {
@@ -178,6 +177,7 @@ namespace H6_ChicBotique.Controllers
                     return Problem(ex.Message); // Return 500 if an unexpected error occurs
                 }
             }
+
 
             // Change User Password
             [AllowAnonymous]

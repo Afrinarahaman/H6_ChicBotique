@@ -2,7 +2,7 @@
 
 namespace H6_ChicBotique.DTOs
 {
-    public class UserResponse
+    public class UserResponse 
     { //It is a output for the corresponding request
         public int Id { get; set; }
         public string Email { get; set; }

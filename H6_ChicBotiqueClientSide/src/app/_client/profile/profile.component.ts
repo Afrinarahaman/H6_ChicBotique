@@ -107,11 +107,12 @@ export class ProfileComponent implements OnInit {
     }
          this.userService.updateUser(this.user.id ,this. user)
            .subscribe({
+
              error: (err) => {
-            console.log(err.error);
+            console.log("Update error is: ", err.error);
           },
           complete: () => {
-       //     this.homeAddress={ accountId:'',id: 0, address: '', city: '', postalCode: '', country:'', phone:''}
+
        this.user={ id: 0, email: '', firstName: '', lastName: '', password: '', address: '', city: '', country: '', postalcode: '', telephone: '', role: 2 };
             Swal.fire({
               title: 'Success!',

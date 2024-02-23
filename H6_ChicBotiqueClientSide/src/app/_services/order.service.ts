@@ -30,7 +30,7 @@ export class OrderService {
   constructor(private http: HttpClient, private paymentService:PaymentService) { }
 
   //Method for getting all orders
- 
+
 
   setAddressData(data: any) {
     this.shippingdetails.next(data);
