@@ -14,7 +14,9 @@ namespace H6_ChicBotique.Repositories
         Task<User> SelectById(int userId); //For getting User by specific Id
         Task<User> Create(User user);//Creating a new user entity
         Task<User> Update(int userId, User user); //For Updating the User entity
+        Task<User> UpdateWithHomeAddress(User user); //For Updating the User entity with homeaddress
         Task<User> Delete(int userId); //For Deleting the User Entity from the table
+        Task<User> SelectUserWithHomeAddress(int userId);
 
 
 
@@ -56,42 +58,57 @@ namespace H6_ChicBotique.Repositories
         //Implementation of Create method for creating a new entity in the user table
         public async Task<User> Create(User user)
         {
-
-
             _context.User.Add(user);
-
-
             await _context.SaveChangesAsync();
             return user;
         }
 
-        //Using this method existing user info can be updated by giving specific userId
-        public async Task<User> Update(int user_Id, User user)
+        //Get user with homeaddress
+        public async Task<User> SelectUserWithHomeAddress(int userId)
         {
-            User updateUser = await _context.User
-                .FirstOrDefaultAsync(a => a.Id == user_Id);
-
-            if (updateUser != null)
-            {
-                updateUser.Email = user.Email;
-                updateUser.FirstName = user.FirstName;
-                updateUser.LastName = user.LastName;
-                updateUser.Role = user.Role;
-                // Update AccountInfo if it exists
-                if (updateUser.AccountInfo != null)
-                {
-                    updateUser.AccountInfo.HomeAddress.Address = user.AccountInfo.HomeAddress.Address;
-                    updateUser.AccountInfo.HomeAddress.City = user.AccountInfo.HomeAddress.City;
-                    updateUser.AccountInfo.HomeAddress.PostalCode = user.AccountInfo.HomeAddress.PostalCode;
-                    updateUser.AccountInfo.HomeAddress.Country = user.AccountInfo.HomeAddress.Country;
-                    updateUser.AccountInfo.HomeAddress.TelePhone = user.AccountInfo.HomeAddress.TelePhone;
-                }
-
-                // _context.Entry(updateUser).CurrentValues.SetValues(user);
-                await _context.SaveChangesAsync();
-            }
-            return updateUser;
+            return await _context.User
+                .Include(u => u.AccountInfo)
+                .ThenInclude(ai => ai.HomeAddress)
+                .FirstOrDefaultAsync(u => u.Id == userId);
         }
+
+
+        //Using this method existing user info can be updated by giving specific userId
+        public async Task<User> UpdateWithHomeAddress(User user)
+        {
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+
+
+         public async Task<User> Update(int user_Id, User user)
+               {
+                   User updateUser = await _context.User
+                       .FirstOrDefaultAsync(a => a.Id == user_Id);
+
+                   if (updateUser != null)
+                   {
+                       updateUser.Email = user.Email;
+                       updateUser.FirstName = user.FirstName;
+                       updateUser.LastName = user.LastName;
+                       updateUser.Role = user.Role;
+                       // Update AccountInfo if it exists
+                       if (updateUser.AccountInfo != null)
+                       {
+                           updateUser.AccountInfo.HomeAddress.Address = user.AccountInfo.HomeAddress.Address;
+                           updateUser.AccountInfo.HomeAddress.City = user.AccountInfo.HomeAddress.City;
+                           updateUser.AccountInfo.HomeAddress.PostalCode = user.AccountInfo.HomeAddress.PostalCode;
+                           updateUser.AccountInfo.HomeAddress.Country = user.AccountInfo.HomeAddress.Country;
+                           updateUser.AccountInfo.HomeAddress.TelePhone = user.AccountInfo.HomeAddress.TelePhone;
+                       }
+
+                       // _context.Entry(updateUser).CurrentValues.SetValues(user);
+                       await _context.SaveChangesAsync();
+                   }
+                   return updateUser;
+               }
         public async Task<User> Delete(int user_id)
         {
             /* User obj = new User()

@@ -19,6 +19,7 @@ export class UserService {
   apiUrl_changepassword= environment.apiUrl+ '/User/changepassword';
 
 
+
   httpOptions = {
     headers: new HttpHeaders({  'Content-Type': 'application/json' }),
   };
@@ -80,13 +81,15 @@ export class UserService {
   getUserbyEmail(email:string):Observable<User> {
     return this.http.get<User>(`${this.apiUrl_user}/${email}`);;
   }
-  
+
   registerUser(user: User): Observable<User>{
     return this.http.post<User>(this.apiUrl_register, user, this.httpOptions);
   }
 
 
   updateUser(userId: number, user:User): Observable<User> {
+    console.log('Updating user with ID:', userId);
+    console.log('User data:', user);
     return this.http.put<User>(`${this.apiUrl_register}/${userId}`, user, this.httpOptions);
   }
 

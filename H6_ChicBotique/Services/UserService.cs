@@ -4,13 +4,14 @@ using H6_ChicBotique.Database.Entities;
 using H6_ChicBotique.DTOs;
 using H6_ChicBotique.Repositories;
 using H6_ChicBotique.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace H6_ChicBotique.Services
 {
     // Interface definition for user service
     public interface IUserService
     {
-       // Task<List<UserResponse>> GetAllAsync(); // Method to retrieve all users as UserResponse objects
+        // Task<List<UserResponse>> GetAllAsync(); // Method to retrieve all users as UserResponse objects
         Task<List<UserResponse>> GetAll(); // Method to retrieve all users as UserResponse objects
         Task<UserResponse> GetById(int UserId); // Method to retrieve a user by ID as a UserResponse object
         Task<PasswordEntityResponse> GetPasswordByUserId(int UserId);
@@ -18,7 +19,7 @@ namespace H6_ChicBotique.Services
         Task<LoginResponse> Authenticate(LoginRequest login); // Method to authenticate a user based on the provided login credentials.
         Task<UserResponse> Register(UserRegisterRequest newUser);//To register a user
         Task<GuestResponse> Register_Guest(GuestRequest newGuest);//To create a user as Guest withour having password
-        Task<UserResponse> Update(int UserId, UserRequest updateUser);//To update userprofile        
+        Task<UserResponse> Update(int UserId, UserUpdateRequest updateUser);//To update userprofile        
         Task<bool> UpdatePassword(PasswordEntityRequest passwordEntityRequest);//To change the password
     }
 
@@ -39,32 +40,13 @@ namespace H6_ChicBotique.Services
             _userRepository = userRepository;
             _accountInfoRepository = accountInfoRepository;
             _jwtUtils = jwtUtils;
-            _passwordEntityRepository=PasswordEntityRepository;
-            _homeAddressRepository= homeAddressRepository;
+            _passwordEntityRepository = PasswordEntityRepository;
+            _homeAddressRepository = homeAddressRepository;
         }
 
-       
-
-        /*  // Implementation of GetAll method
-           public async Task<List<UserResponse>> GetAll()
-           {
-               // Retrieve all users from the repository
-              List<User> users = await _userRepository.SelectAll();
-
-                     // If users are not null, map each user to a UserResponse object
-                         return users == null ? null : users.Select(u => new UserResponse
-                           {
-                               Id = u.Id,
-                               FirstName = u.FirstName,
-                               LastName = u.LastName,
-                               Email = u.Email,
-                               Role = u.Role,
-
-                            }).ToList();
-
-            } */
 
 
+        // Implementation of GetAll method
         public async Task<List<UserResponse>> GetAll()
         {
             try
@@ -83,8 +65,6 @@ namespace H6_ChicBotique.Services
                 return new List<UserResponse>();
             }
         }
-
-
 
 
 
@@ -119,7 +99,7 @@ namespace H6_ChicBotique.Services
             return null; // Return null if the user is not found
         }
 
-        //Register method
+        //Implementation og Register method
         public async Task<UserResponse> Register(UserRegisterRequest newuser)
         {
             User user = await _userRepository.SelectByEmail(newuser.Email);
@@ -131,7 +111,7 @@ namespace H6_ChicBotique.Services
                 {
 
                     FirstName = newuser.FirstName,
-                    LastName = newuser.LastName,                   
+                    LastName = newuser.LastName,
                     Email = newuser.Email,
                     //Password = HashedPW,
                     //Salt = salt,
@@ -142,7 +122,7 @@ namespace H6_ChicBotique.Services
                 acc = new()
                 {
                     UserId = user.Id
-                    
+
                 };
                 acc = await _accountInfoRepository.Create(acc);
 
@@ -156,24 +136,20 @@ namespace H6_ChicBotique.Services
                 user.Email = newuser.Email;
                 //Password = "No Need",
                 user.Role = Helpers.Role.Member;// force all users created through Register, to Role.AccountInfo
-
-
                 user = await _userRepository.Update(user.Id, user);
 
             }
-           HomeAddress homeaddress = new HomeAddress()
+            HomeAddress homeaddress = new HomeAddress()
             {
                 AccountInfoId = acc.Id,
                 Address = newuser.Address,
-                City=newuser.City,
-                PostalCode=newuser.PostalCode,
-                Country =newuser.Country,
+                City = newuser.City,
+                PostalCode = newuser.PostalCode,
+                Country = newuser.Country,
                 TelePhone = newuser.Telephone
-
-
                 //etc
             };
-            homeaddress = await _homeAddressRepository.Create(homeaddress); 
+            homeaddress = await _homeAddressRepository.Create(homeaddress);
             var salt = PasswordHelpers.GenerateSalt();
             var HashedPW = Helpers.PasswordHelpers.HashPassword($"{newuser.Password}{salt}");
             PasswordEntity pwd = new()
@@ -184,32 +160,28 @@ namespace H6_ChicBotique.Services
                 LastUpdated = DateTime.Now
             };
             pwd = await _passwordEntityRepository.CreatePassword(pwd);
-
             return MapUserToUserResponse(user);
         }
+
+        //Implementation og Register_Guest method
         public async Task<GuestResponse> Register_Guest(GuestRequest newguest)
         {
 
             User user = new User();
             user.FirstName = newguest.FirstName;
-
             user.LastName = newguest.LastName;
-
             user.Email = newguest.Email;
-           
             user.Role = Helpers.Role.Guest;
-
             user = await _userRepository.Create(user);
             AccountInfo acc = new()
             {
                 UserId = user.Id
             };
             acc = await _accountInfoRepository.Create(acc);
-            
             return MapGuestToGuestResponse(user);
         }
 
-
+        //Implementation of Login method
         public async Task<LoginResponse> Authenticate(LoginRequest login)
         {
             // Retrieve user information from the UserRepository based on the provided email.
@@ -242,6 +214,7 @@ namespace H6_ChicBotique.Services
             return null; // Return null if the provided password doesn't match the stored hashed password.
         }
 
+
         //Get Password by userid method
         public async Task<PasswordEntityResponse> GetPasswordByUserId(int UserId)
         {
@@ -251,7 +224,6 @@ namespace H6_ChicBotique.Services
 
                 PasswordEntityResponse pwdresponse = new PasswordEntityResponse
                 {
-
                     Password = pwd.Password,
                     Salt = pwd.Salt,
                     LastUpdatedDate = DateTime.Now
@@ -274,35 +246,69 @@ namespace H6_ChicBotique.Services
             pwd.LastUpdated = DateTime.UtcNow;
             // updating the password in the database
             await _passwordEntityRepository.UpdatePassword(pwd);
-
             return true;
         }
 
 
         // Updates user information for the specified UserId.
-        public async Task<UserResponse> Update(int UserId, UserRequest updateUser)
+        public async Task<UserResponse> Update(int userId, UserUpdateRequest updatedUser)
         {
-            // Create a new User object with updated information from UserRequest.
-            User user = new User
-            {
-                FirstName = updateUser.FirstName,
-                LastName = updateUser.LastName,
-                Email = updateUser.Email
-            };
+            // Retrieve the existing user from the repository
+            User existingUser = await _userRepository.SelectUserWithHomeAddress(userId);
 
-            // Perform the update operation in the UserRepository.
-            user = await _userRepository.Update(UserId, user);
-
-            // Return a UserResponse with the updated user information, or null if the update was unsuccessful.
-            return user == null ? null : new UserResponse
+            if (existingUser == null)
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Role = user.Role
-            };
+                return null; // Handle the case where the user doesn't exist
+            }
+
+            // Update User information
+            existingUser.FirstName = updatedUser.FirstName;
+            existingUser.LastName = updatedUser.LastName;
+            existingUser.Email = updatedUser.Email;
+
+            // Update HomeAddress information
+            if (existingUser.AccountInfo != null && existingUser.AccountInfo.HomeAddress != null)
+            {
+                existingUser.AccountInfo.HomeAddress.Address = updatedUser.Address;
+                existingUser.AccountInfo.HomeAddress.City = updatedUser.City;
+                existingUser.AccountInfo.HomeAddress.PostalCode = updatedUser.PostalCode;
+                existingUser.AccountInfo.HomeAddress.Country = updatedUser.Country;
+                existingUser.AccountInfo.HomeAddress.TelePhone = updatedUser.Telephone;
+            }
+
+            // Call the repository to update the user
+            User updatedUserData = await _userRepository.UpdateWithHomeAddress(existingUser);
+
+            // Return the updated user information
+            return MapUserToUserResponse(updatedUserData);
         }
+
+
+
+        /*  public async Task<UserResponse> Update(int UserId, UserRequest updateUser)
+      {
+          // Create a new User object with updated information from UserRequest.
+          User user = new User
+          {
+              FirstName = updateUser.FirstName,
+              LastName = updateUser.LastName,
+              Email = updateUser.Email
+          };
+
+          // Perform the update operation in the UserRepository.
+          user = await _userRepository.Update(UserId, user);
+
+          // Return a UserResponse with the updated user information, or null if the update was unsuccessful.
+          return user == null ? null : new UserResponse
+          {
+              Id = user.Id,
+              FirstName = user.FirstName,
+              LastName = user.LastName,
+              Email = user.Email,
+              Role = user.Role
+          };
+      }*/
+
 
         // Private method to map a User object to a UserResponse object
         private static UserResponse MapUserToUserResponse(User user)
@@ -362,13 +368,8 @@ namespace H6_ChicBotique.Services
                 Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
-
                 LastName = user.LastName,
-
-
                 Role = user.Role,
-
-
             };
 
         }
@@ -376,6 +377,7 @@ namespace H6_ChicBotique.Services
 
     }
 }
+
 
 
 

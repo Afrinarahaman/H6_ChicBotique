@@ -42,10 +42,6 @@
                     </div>
                 </li>
 
-
-
-
-
                 <li class="nav-item">
                     <button class="nav-link" class="btn btn-outline--success" style="display:inline-block" *ngIf="checkIfUserAdmin(currentUser)" routerLink="/admin-panel">
                       <i class="fas fa-dashboard" style="font-size:25px" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Admin Dashboard" ></i></button>
@@ -58,7 +54,7 @@
                           <span>{{currentUser.firstName}}</span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" routerLink="/profile">
+                            <a class="dropdown-item" *ngIf="checkIfUserMember(currentUser)" routerLink="/profile">
                                 <i class="fas fa-user-cog me-2"></i>Profile
                             </a>
                             <span class="dropdown-item custom-spacing" (click)="logout()">

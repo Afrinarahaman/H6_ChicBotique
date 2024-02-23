@@ -23,7 +23,7 @@ export class CartComponent implements OnInit {
   public totalItem: number =0;
   clientbasketId: string=this.cookieService.get('VisitorID').toString();
   constructor(
-    private cartService: CartService, 
+    private cartService: CartService,
     private router: Router,
     private authService: AuthService,
     private productService:ProductService, private cookieService:CookieService) //dependency injection of different services
@@ -34,22 +34,22 @@ export class CartComponent implements OnInit {
     this.grandTotal = this.cartService.getTotalPrice();//getting the total price of the items
   }
 
-  
+
   async processOrder() //method is for processing order after clicking the BUY button
   {
-      
- 
+
+
     if (this.authService.currentUserValue == null || this.authService.currentUserValue.id == 0) {
       this.router.navigate(['checkout']);
 
     }
     else
     {
-     alert  
+     alert
       this.router.navigate(['shippingdetails']);
-      
+
     }
-      
+
   }
   removeItem(productId: number) {
     console.log(productId);
@@ -58,14 +58,14 @@ export class CartComponent implements OnInit {
       this.cartProducts = this.cartService.getBasket();
 
     }
-   
-   
+
+
   }
 
   emptycart() {
     if (confirm("are u sure to remove?"))
       this.cartService.clearBasket();
-   
+
       this.cartProducts=[];
       window.location.reload;
 
@@ -73,7 +73,7 @@ export class CartComponent implements OnInit {
 
   // Method to increase the quantity
   async increaseQuantity(item: any): Promise<void> {
- 
+
    let itemId;
    itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
 
@@ -81,7 +81,7 @@ export class CartComponent implements OnInit {
     const availableStock = await firstValueFrom(this.productService.getAvailableStock(item.productId));
     console.log("AvailableStock",availableStock);
       if(item.quantity<availableStock)
-      {   
+      {
         item.quantity = item.quantity + 1;
         this.basket[itemId].quantity = item.quantity;
 
@@ -89,23 +89,19 @@ export class CartComponent implements OnInit {
         this.cartService.saveBasket4(this.basket);
         this.cartProducts = this.cartService.getBasket();
         this.grandTotal = this.cartService.getTotalPrice();
-   
+
       }
-      else 
+      else
       {
         alert("This product is not in stock. please choose another");
-        
+
          this.router.navigate(['/']);
       }
   }
 
   // Method to decrease the quantity, ensuring it doesn't go below 1
   decreaseQuantity(item: any): void {
-    /*if (item.quantity > 1) {
-      item.quantity--;
-      this.quantity= item.quantity;
-    }*/
-    if (item.quantity > 1) {
+      if (item.quantity > 1) {
 
       let itemId;
       itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
@@ -127,6 +123,6 @@ export class CartComponent implements OnInit {
     this.cartService.saveBasket();
   }
 
-  
+
 
 }

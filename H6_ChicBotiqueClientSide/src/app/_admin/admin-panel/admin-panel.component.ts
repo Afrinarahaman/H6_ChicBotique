@@ -89,17 +89,25 @@ export class AdminPanelComponent implements OnInit {
       this.orders = orders;
       console.log("List of orders",orders);
     })
-}
 
+}
+//total amount of each order
+calculateTotalAmount(orderDetails: any[]): number {
+  let totalAmount = 0;
+
+  for (let orderDetail of orderDetails) {
+      totalAmount += orderDetail.quantity * orderDetail.productPrice;
+  }
+
+  return totalAmount;
+}
 
   navigateToAdminPage() {
     console.log('Clicked!');
     this.router.navigate(['/adminpanel']);
   }
 
-  performSearch() {
-    // Add your search logic here
-  }
+
   openOrderDetailsModal(): void {
 
   }
