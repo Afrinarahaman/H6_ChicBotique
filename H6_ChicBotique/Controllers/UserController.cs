@@ -152,7 +152,8 @@ namespace H6_ChicBotique.Controllers
         }
 
         // Update User Information
-        //[Authorize(Roles = "Member,Administrator")]        
+        //[Authorize(Roles = "Member,Administrator")]
+        [AllowAnonymous]
         [HttpPut("{userId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
