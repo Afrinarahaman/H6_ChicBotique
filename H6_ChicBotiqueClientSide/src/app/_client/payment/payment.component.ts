@@ -9,6 +9,7 @@ import { CartService } from 'src/app/_services/cart.service';
 import { OrderService } from 'src/app/_services/order.service';
 import { PaymentService } from 'src/app/_services/payment.service';
 import { ProductService } from 'src/app/_services/product.service';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -51,7 +52,8 @@ export class PaymentComponent implements OnInit {
  paymentMethod:any;
   constructor(private router: Router, private cartService:CartService, 
     private orderService:OrderService, private paymentService: PaymentService,
-    private productService:ProductService, private cookieService:CookieService) { }
+    private productService:ProductService, private cookieService:CookieService,
+    ) { }
 
   ngOnInit(): void {
     this.cartTotal= this.cartService.getTotalPrice();
@@ -106,10 +108,10 @@ export class PaymentComponent implements OnInit {
               this.id =result.id;
               console.log('result', result);
               this.cartService.clearBasket();
-              this.router.navigate(['thankyou', {id: this.id}]);
+              this.router.navigate(['thankyou'], { queryParams: { id: this.id } });
               
               //window.location.reload;
-              this.cartService.saveBasket();
+              
           });
         },
 

@@ -69,16 +69,16 @@ namespace H6_ChicBotique.Controllers
         }
         // https://localhost:5001/api/Product/derp
 
-        [HttpGet("User/{accountId}")]
+        [HttpGet("User/{accountInfoId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetOrdersByCustomerId([FromRoute] Guid accountId)
+        public async Task<IActionResult> GetOrdersByAccountInfoId([FromRoute] Guid accountInfoId)
         {
             try
             {
-                List<OrderAndPaymentResponse> orderResponse = await _orderService.GetOrdersByAccountId(accountId);
+                List<OrderAndPaymentResponse> orderResponse = await _orderService.GetOrdersByAccountId(accountInfoId);
                 if (orderResponse == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");

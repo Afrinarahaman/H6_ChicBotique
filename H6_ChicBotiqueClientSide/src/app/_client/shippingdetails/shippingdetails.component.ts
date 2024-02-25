@@ -46,13 +46,12 @@ export class ShippingdetailsComponent implements OnInit {
     }
  
     forshippingDetails: boolean = false;
-    isGuest: boolean = true; 
+    isGuest: boolean = false; 
   
     
   async submitShippingForm()
   {
     
-     
         var guestEmail=sessionStorage.getItem('guestEmail');
         console.log("GuestEmail", guestEmail);
         if (this.isGuest || this.forshippingDetails) {
@@ -64,7 +63,7 @@ export class ShippingdetailsComponent implements OnInit {
             this.router.navigate(['/payment']); 
         } 
       else{
-
+            console.log("this is for users")
          this.authService.currentUser.subscribe(user => {
           if (this.currentUser) {
             this.userService.getUserbyEmail(user.email).subscribe(userData => {
@@ -75,14 +74,14 @@ export class ShippingdetailsComponent implements OnInit {
                 address: this.currentUser?.homeAddress?.address ?? '',
                 city: this.currentUser?.homeAddress?.city ?? '',
                 country: this.currentUser?.homeAddress?.country ?? '',
-                postalCode: this.currentUser?.homeAddress?.postalCode ?? '',
+                postalCode: this.currentUser?.homeAddress?.postalCode?? '',
                 phone: this.currentUser?.homeAddress?.phone ?? ''
               }
               this.orderService.setAddressData(addressData);
               this.router.navigate(['/payment']); 
       });
     }
-      })
+    })
      
       //
       //this.orderService.setAddressData(addressData);

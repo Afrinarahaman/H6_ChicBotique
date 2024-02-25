@@ -55,7 +55,7 @@ export class ProductService {
     return this.http.get<number>(`${this.apiUrl_stock}/${productId}`, this.httpOptions);
   }
   reserveStock(reserveProductQuantity: ReserveQuantity):Observable<any> {
-    return this.http.post<any> (this.apiUrl_reserveStock,reserveProductQuantity , this.httpOptions);
+    return this.http.post<any> (this.apiUrl_reserveStock, reserveProductQuantity , this.httpOptions);
 
   }
   reservationSuccess(clientBasketId:string):Observable<any>{

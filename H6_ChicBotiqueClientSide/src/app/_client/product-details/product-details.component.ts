@@ -6,10 +6,12 @@ import { ProductService } from 'src/app/_services/product.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
 import { WishlistItem } from 'src/app/_models/wishlistItem';
 import { Observable, firstValueFrom, of, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { CartItem } from 'src/app/_models/cartItem';
 import { ReserveQuantity } from 'src/app/_models/reservequantity';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'src/app/_services/auth.service';
+
 
 
 
@@ -35,7 +37,9 @@ export class ProductDetailsComponent implements OnInit {
     private route:ActivatedRoute,
      private wishlistService: WishlistService,
      private router:Router,
-     private cookieService:CookieService)
+     private cookieService:CookieService,
+     private authService:AuthService,
+    )
      {
      
       }
@@ -57,6 +61,8 @@ export class ProductDetailsComponent implements OnInit {
   
   async addToCart(product: Product): Promise<any> {
     try {
+     
+
       const availableStock = await firstValueFrom(this.productService.getAvailableStock(product.id));
       console.log("AvailableStock",availableStock);
       const item: CartItem = {
@@ -69,11 +75,6 @@ export class ProductDetailsComponent implements OnInit {
       };
       if (item.quantity <=availableStock) {
         
-      
-        this.cartService.addToBasket(item);
-        
-        this.cartService.saveBasket();
-        window.location.reload();
         let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
           clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
           productId:item.productId,
@@ -81,20 +82,29 @@ export class ProductDetailsComponent implements OnInit {
 
         }
         var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+       
+        
         if(reserve==true)
         {
+          this.cartService.addToBasket(item);
+          this.cartService.saveBasket();
+          window.location.reload();
         console.log("reserved stock")
         }
-        else console.log("cannot reserved stock")
+
+        else {console.log("cannot reserved stock")}
       } 
       else {
          alert('Not enough stock,choose another');
          this.router.navigate(['/']);
       }
-    } catch (error) {
+    
+  }
+  catch (error) {
       console.error('Error adding to cart:', error);
       
     }
+    
   }
  handleAddtoWishlist(product:Product)
  {

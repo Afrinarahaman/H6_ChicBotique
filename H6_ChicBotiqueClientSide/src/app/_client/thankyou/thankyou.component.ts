@@ -67,7 +67,10 @@ export class ThankyouComponent implements OnInit {
   
    detail(){
 
-    this.orderId = parseInt(this.route.snapshot.paramMap.get('orderId')||'0');
+    //this.orderId = parseInt(this.route.snapshot.paramMap.get('id')||'0');
+    this.route.queryParams.subscribe(params => {
+      this.orderId = parseInt(params['id']) || 0;
+    });
    console.log("OrderId",this.orderId)
    
     this.orderService.getOrderDetailsByOrderId(this.orderId).subscribe(res => {
@@ -76,9 +79,10 @@ export class ThankyouComponent implements OnInit {
      
      if(this.orderResponse.id===this.orderId)
      {
+      console.log(this.orderResponse.orderDetails)
       console.log("responseID", this.orderResponse.id)
       this.isShown = true;
-     }
+    }
 
     
   });

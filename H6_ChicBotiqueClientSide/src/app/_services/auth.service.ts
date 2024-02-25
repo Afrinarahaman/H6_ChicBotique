@@ -4,6 +4,7 @@ import { User } from '../_models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Role } from '../_models/role';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AuthService {
   public currentUser: Observable<User>;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, ) {
+    
     // fake login durring testing
     // if (sessionStorage.getItem('currentUser') == null) {
     //   sessionStorage.setItem('currentUser', JSON.stringify({ id: 0, email: '', customername: '', role: null }));
@@ -35,25 +37,19 @@ export class AuthService {
 
         this.currentMemberSubject.next(user);
         // console.log('login customer',customer);
+        //this.cartService.loadBasketForUser((user.id).toString());
         return user;
       }));
   }
 
-  /*logout() {
-    // remove customer from local storage to log customer out
-    sessionStorage.removeItem('currentMember');
-    // reset CurrentUserSubject, by fetching the value in sessionStorage, which is null at this point
-    //this.currentMemberSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentMember') as string));
-    // reset CurrentUser to the resat UserSubject, as an obserable
-    //this.currentUser = this.currentMemberSubject.asObservable();
-    this.currentMemberSubject.next(null);
-  }*/
+  
   logout() {
     // remove user from local storage to log user out
     sessionStorage.removeItem('currentMember');
     // reset CurrentUserSubject, by fetching the value in sessionStorage, which is null at this point
     this.currentMemberSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentMember') as string));
     // reset CurrentUser to the resat UserSubject, as an obserable
+    //this.cartService.clearBasket();
     this.currentUser = this.currentMemberSubject.asObservable();
 
   }
