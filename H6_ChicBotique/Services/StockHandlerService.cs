@@ -94,6 +94,7 @@ namespace H6_ChicBotique.Services
                 {
                     var productId = entry.Item1;
                     var product = await transientService.SelectProductById(productId);
+
                     product.Stock -= entry.Item2;
                     await transientService.UpdateExistingProduct(productId, product);
                 }

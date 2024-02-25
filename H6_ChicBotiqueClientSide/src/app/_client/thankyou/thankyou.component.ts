@@ -81,6 +81,7 @@ export class ThankyouComponent implements OnInit {
      {
       console.log(this.orderResponse.orderDetails)
       console.log("responseID", this.orderResponse.id)
+      console.log("orderID", this.orderId)
       this.isShown = true;
     }
 

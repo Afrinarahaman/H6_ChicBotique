@@ -73,26 +73,30 @@ export class ProductDetailsComponent implements OnInit {
         productImage: product.image,
         quantity: this.quantity+1
       };
-      if (item.quantity <=availableStock) {
+      
+        if ( product.stock>0 && item.quantity <=availableStock) {
         
-        let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
-          clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
-          productId:item.productId,
-          amountToReserve:item.quantity
+          let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
+            clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
+            productId:item.productId,
+            amountToReserve:item.quantity
 
-        }
-        var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+          }
+          var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
        
         
         if(reserve==true)
         {
           this.cartService.addToBasket(item);
           this.cartService.saveBasket();
-          window.location.reload();
+          
         console.log("reserved stock")
+        window.location.reload();
         }
 
         else {console.log("cannot reserved stock")}
+        
+    
       } 
       else {
          alert('Not enough stock,choose another');
