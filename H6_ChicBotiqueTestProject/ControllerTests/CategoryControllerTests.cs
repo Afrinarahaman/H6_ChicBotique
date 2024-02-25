@@ -22,7 +22,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
             /// Verifies that GetAll returns StatusCode 200 when categories exist.       
             [Fact]
-            public async void GetAll_ShouldReturnStatusCode200_WhenCategoriesExist()
+            public async void GetAllCategories_ShouldReturnStatusCode200_WhenCategoriesExist()
             {
                 // Arrange
                 List<CategoryResponse> categories = new List<CategoryResponse>
@@ -92,7 +92,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Verifies that GetById returns StatusCode 200 when category data exists.
         [Fact]
-        public async void GetById_ShouldReturnStatusCode200_WhenDataExists()
+        public async void GetCategoryById_ShouldReturnStatusCode200_WhenDataExists()
         {
             // Arrange
             int categoryId = 1;
@@ -141,7 +141,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
         }
         // Verifies that Create returns StatusCode 200 when a category is successfully created.
         [Fact]
-        public async void Create_ShouldReturnStatusCode200_WhenCategoryIsSuccessfullyCreated()
+        public async void CreateCategory_ShouldReturnStatusCode200_WhenCategoryIsSuccessfullyCreated()
         {
             // Arrange
             CategoryRequest newCategory = new CategoryRequest { CategoryName = "Kids" };
@@ -180,7 +180,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Verifies that Update returns StatusCode 200 when a category is successfully updated.
         [Fact]
-        public async void Update_ShouldReturnStatusCode200_WhenCategoryIsSuccessfullyUpdated()
+        public async void UpdateCategory_ShouldReturnStatusCode200_WhenCategoryIsSuccessfullyUpdated()
         {
             // Arrange
             CategoryRequest updateCategory = new CategoryRequest { CategoryName = "Kids" };
@@ -237,7 +237,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
 
         // Verifies that Delete returns StatusCode 200 when a category is successfully deleted.
         [Fact]
-        public async void Delete_ShouldReturnStatusCode200_WhenCategoryIsDeleted()
+        public async void DeleteCategory_ShouldReturnStatusCode200_WhenCategoryIsDeleted()
         {
             // Arrange
             int categoryId = 1;

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Category, Product } from 'src/app/_models/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/_services/cart.service';
 import { ProductService } from 'src/app/_services/product.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
 import { WishlistItem } from 'src/app/_models/wishlistItem';
+import { Observable, firstValueFrom, of, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { CartItem } from 'src/app/_models/cartItem';
+import { ReserveQuantity } from 'src/app/_models/reservequantity';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -22,42 +27,75 @@ export class ProductDetailsComponent implements OnInit {
   public totalItem:number=0;
   product:Product={id: 0, title:"", price:0, description:"",image:"", stock:0,categoryId:0, category:this.category }
   wishlistItem : WishlistItem= {productId: 0, productTitle:"",productImage:"",productDescription:"",productPrice:0}
+  reserveQuantity:ReserveQuantity ={clientBasketId:"", productId:0, amountToReserve:0}
+  clientbasketId: string=this.cookieService.get('VisitorID').toString();
   constructor(
     private productService:ProductService,
     private cartService:CartService,
     private route:ActivatedRoute,
-     private wishlistService: WishlistService)
-     { }
+     private wishlistService: WishlistService,
+     private router:Router,
+     private cookieService:CookieService)
+     {
+     
+      }
 
      addedToWishlist: boolean = false;
-
+     
   ngOnInit(): void {
-
+    
     this.route.params.subscribe(params => {
       this.productId = +params['id'];
     });
     this.productService.getProductById(this.productId).subscribe(x=>
       { this.product=x,
 
-      console.log(this.product.stock);
+      console.log("product stock: ",this.product.stock);
     });
 
   }
-  addToCart(product:Product)
-  {
+  
+  async addToCart(product: Product): Promise<any> {
+    try {
+      const availableStock = await firstValueFrom(this.productService.getAvailableStock(product.id));
+      console.log("AvailableStock",availableStock);
+      const item: CartItem = {
+        
+        productId: product.id,
+        productTitle: product.title,
+        productPrice: product.price,
+        productImage: product.image,
+        quantity: this.quantity+1
+      };
+      if (item.quantity <=availableStock) {
+        
+      
+        this.cartService.addToBasket(item);
+        
+        this.cartService.saveBasket();
+        window.location.reload();
+        let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
+          clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
+          productId:item.productId,
+          amountToReserve:item.quantity
 
-    this.cartService.addToBasket({
-      productId:product.id,
-      productTitle:product.title,
-      productPrice:product.price,
-      productImage:product.image,
-      quantity:this.quantity + 1,
-
-    });
-    window.location.reload();
-   // this.totalItem = this.cartService.getBasket().length;
+        }
+        var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+        if(reserve==true)
+        {
+        console.log("reserved stock")
+        }
+        else console.log("cannot reserved stock")
+      } 
+      else {
+         alert('Not enough stock,choose another');
+         this.router.navigate(['/']);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      
+    }
   }
-
  handleAddtoWishlist(product:Product)
  {
     this.wishlistService.addToWishlist({
@@ -82,7 +120,9 @@ export class ProductDetailsComponent implements OnInit {
     this.addedToWishlist= false;
 
   }
-
+ 
 
 }
+
+
 

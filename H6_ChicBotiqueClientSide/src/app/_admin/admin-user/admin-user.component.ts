@@ -40,16 +40,16 @@ export class AdminUserComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-    private http: HttpClient,
-    private formBuilder: FormBuilder,
 
     private searchService: SearchService,
     private orderService:OrderService) {
        // Fetch All Users list by default when the component is initialized
     this.users$ = this.userService.getUsers();
 
-
     }
+
+
+
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(
@@ -60,15 +60,12 @@ export class AdminUserComponent implements OnInit {
     this.orderService.getAllOrders().subscribe(orders => {
     this.orders = orders;
     console.log("List of orders",orders);
+
    })
 
-    // Associate orders with users based on userId
-    this.users.forEach(user => {
-      user.accountInfo = this.orders.filter(order => order.userId === user.id);
-    });
+
 
     console.log(this.users);
-
 
     // Subscribe to changes in the search term
     this.searchService.search$.subscribe((term) => {
@@ -87,6 +84,7 @@ onSearchInputChange() {
    // method ot fetch all users
 fetchUsers() {
   this.userService.getUsers().subscribe((u) => (this.users = u));
+
 }
 
 // Method to search specific user
@@ -174,7 +172,6 @@ searchUser(): void {
 
   // Assuming that the user has a property named 'userId' that corresponds to the 'id' in HomeAddress
   this.users$.subscribe((users) => {
-    const userIds = users.map(user => user.id);
 
     });
 
@@ -208,6 +205,5 @@ searchUser(): void {
 
 
 }
-
 
 

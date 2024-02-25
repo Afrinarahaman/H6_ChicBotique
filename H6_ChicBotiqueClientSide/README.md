@@ -24,6 +24,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ##Installation
 npm i ngx-paypal --force   ->For paypal integration
+ npm i ngx-cookie-service --force  -->For Getting Cookie Service from angular
+ npm i guid-typescript --force   ---->For getting Guid value
 
 ## Further help
 

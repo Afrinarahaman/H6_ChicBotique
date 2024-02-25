@@ -88,6 +88,16 @@ export class NavbarComponent implements OnInit {
     else
       return false;
   }
+
+  public checkIfUserMember(user: User | null) {
+    //check role type and return true or false
+    if (user != null) {
+      return user.role == Role.Member;
+    }
+
+    else
+      return false;
+  }
   /// Seach Funtionlity //
   onSearch(event: any) {
     this.searchTerm = (event.target as HTMLInputElement).value;

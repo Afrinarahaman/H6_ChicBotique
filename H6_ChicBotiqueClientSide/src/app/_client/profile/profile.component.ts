@@ -1,8 +1,9 @@
+import { User } from './../../_models/user';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
-import { User } from 'src/app/_models/user';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -73,6 +74,14 @@ export class ProfileComponent implements OnInit {
     this.user = this.newUser();// Reset the form
   }
 
+  editProfile(user: User): void {
+
+    this.user = user;
+    this.user.id = user.id || 0;
+    console.log(this.user);
+    this.save();
+  }
+
   public save(): void {
     console.log("updated user: ",this.user);
     if(this.user.id == 0) {
@@ -98,11 +107,12 @@ export class ProfileComponent implements OnInit {
     }
          this.userService.updateUser(this.user.id ,this. user)
            .subscribe({
+
              error: (err) => {
-            console.log(err.error);
+            console.log("Update error is: ", err.error);
           },
           complete: () => {
-       //     this.homeAddress={ accountId:'',id: 0, address: '', city: '', postalCode: '', country:'', phone:''}
+
        this.user={ id: 0, email: '', firstName: '', lastName: '', password: '', address: '', city: '', country: '', postalcode: '', telephone: '', role: 2 };
             Swal.fire({
               title: 'Success!',

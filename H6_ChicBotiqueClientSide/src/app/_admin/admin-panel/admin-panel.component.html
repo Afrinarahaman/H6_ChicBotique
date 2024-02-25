@@ -25,7 +25,7 @@
     <!--Card for Products--->
     <div class="col-md-2 ">
         <div class="card card text-black bg-light custom-card card-hover ">
-            <div class="card-body " routerLink="/admin/product ">
+            <div class="card-body " routerLink="/admin/product">
                 <i class=" fas fa-cube fa-3x p-4 bg-warning "></i>
                 <div class="mt-2 lead ">Products</div>
                 <h2 class="card-title " style="font-size:1.8em; ">{{ productCount }}</h2>
@@ -58,41 +58,9 @@
         </div>
     </div>
 
-    <!-- 2nd Row
-    <div class="row justify-content-center ">
-        <div class="col-md-2 ">
-            <div class="card card text-black bg-light custom-card card-hover ">
-                <div class="card-body ">
-                    <i class="fas fa-check-circle fa-3x p-4 bg-success "></i>
-                    <div class="mt-2 lead ">Order Status</div>
-
-                    <p>Total Orders: 100</p>
-                    <p>Shipped: 50</p>
-                    <p>Delivered: 20</p>
-                    <p>Total Orders: {{ totalOrders }}</p>
-                   <p>Shipped: {{ shippedOrders }}</p>
-                  <p>Delivered: {{ deliveredOrders }}</p>-->
-    <!--   </div>
-            </div>
-        </div>
-    <div class="col-md-2 ">
-        <div class="card card text-black bg-light custom-card card-hover ">
-            <div class="card-body " [routerLink]="[ '/admin/user'] ">
-                <i class="fas fa-user-friends fa-2x "></i>
-                <div class="lead ">Total Members</div>
-                <h2 class="card-title ">{{ memberCount }}</h2>
-                <hr>
-                <i class="fas fa-mask fa-2x "></i>
-                <div class="lead ">Total Guests</div>
-                <h2 class="card-title ">{{ guestCount }}</h2>
-
-            </div>
-        </div>
-    </div>
-</div>-->
 
     <!-- Offcanvas for sidebar -->
-    <div class="offcanvas offcanvas-start " tabindex="-1 " id="offcanvasNavbar " aria-labelledby="offcanvasNavbarLabel ">
+    <div class="offcanvas offcanvas-start" tabindex="-1 " id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel ">
         <div class="offcanvas-header ">
             <h5 class="offcanvas-title " id="offcanvasNavbarLabel ">
                 <!-- Logo of Chicbotique -->
@@ -102,23 +70,19 @@
         </div>
         <div class="offcanvas-body custom-offcanvas-body ">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ">
+
                 <li class="nav-item ">
-                    <p class="nav-link active ">
-                        <i class="fas fa-tachometer-alt-average me-4 fs-1 "></i><b>My Dashboard</b>
-                    </p>
-                </li>
-                <li class="nav-item ">
-                    <p class="nav-link " routerLink="/admin/user ">
+                    <p class="nav-link " routerLink="/admin/user">
                         <i class="fas fa-user r me-4 fs-1 "></i>Users
                     </p>
                 </li>
                 <li class="nav-item ">
-                    <p class="nav-link " routerLink="/admin/product ">
+                    <p class="nav-link " routerLink="/admin/product">
                         <i class="fa fa-product-hunt r me-4 fs-1 "></i>Products
                     </p>
                 </li>
                 <li class="nav-item ">
-                    <p class="nav-link " routerLink="/admin/category ">
+                    <p class="nav-link " routerLink="/admin/category">
                         <i class="fa-solid fa-rectangle-list r me-4 fs-1 "></i>Categories
                     </p>
                 </li>
@@ -129,7 +93,7 @@
 
     <!-- Modal for checking order details -->
     <div class="modal" id="orderDetailsModal" tabindex="-1" aria-labelledby="Order details" role="dialog" aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog  modal-lg ">
             <div class="modal-content ">
                 <div class="modal-header ">
                     <h4 class="modal-title " id="exampleModalLabel ">Order Details</h4>
@@ -146,6 +110,7 @@
                                 <th>Order Date</th>
                                 <th>Product Title</th>
                                 <th>Product Quantity</th>
+                                <th>Total amount</th>
                                 <th>Payment Method</th>
                                 <th>Payment Status</th>
                             </tr>
@@ -155,7 +120,7 @@
 
                             <tr *ngFor="let order of orders">
                                 <td>{{ order.id }}</td>
-                                <td>{{ order.orderDate | date: 'dd-MM-yy' }}</td>
+                                <td>{{ order.orderDate | date: 'dd-MM-yy ' }}</td>
                                 <td>
                                     <div *ngFor="let orderDetail of order.orderDetails">
                                         {{ orderDetail.productTitle}}
@@ -166,6 +131,9 @@
                                         {{ orderDetail.quantity }}
                                     </div>
                                 </td>
+                                <td>
+                                    <!---currency pipe: currency is DK and symbol is set to currency symbol(DK)---->
+                                    {{ calculateTotalAmount(order.orderDetails) | currency: 'DK': 'symbol': '1.2-2'}} </td>
                                 <td>{{ order.paymentMethod}}</td>
                                 <td>{{ order.status}}</td>
                             </tr>
@@ -175,6 +143,7 @@
                 <div class="modal-footer ">
                     <button type="button " class="btn btn-primary " data-bs-dismiss="modal">OK</button>
                 </div>
+
             </div>
         </div>
     </div>

@@ -64,7 +64,6 @@ navigateToAdminPage() {
         this.scrollToSearchResultsSection();
       }
       });
-
     }}
 
   // Fetch a list of products from the ProductService
