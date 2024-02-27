@@ -18,14 +18,15 @@ NuGet Packages
   •	Swashbuckle.AspNetCore.Swagger {6.5.0}
   •	Swashbuckle.AspNetCore.SwaggerGen {6.5.0}
   •	Moq {4.20.70}SQL Server
-   •	Moq {6.0.1.4}SQL Server
+  •	Moq {6.0.1.4}SQL Server-Afrina has installed this in her branch
+
+
 Getting Started
 To run ChicBotique locally, follow these steps:
 Prerequisites
   •	.NET Core SDK (version 7.0.101)
-  •	Node.js (version 16.17.0)
-  •	 Angular CLI: 14.2.13
-  • Package Manager: npm 10.4.0
+  •	Node.js (version x.x)
+  •	Angular CLI (version x.x )
 
 Installation
   1.	Clone the repository.
@@ -45,9 +46,4 @@ Installation
      •	Start the application in Visual Studio Enterprise.
   5.	View the Application.
      •	Open a web browser and navigate to https://localhost:4200 (or the specified port).
-  6. Insatll in Angular
- •	npm i ngx-paypal --force   ->For paypal integration
- •	 npm i ngx-cookie-service --force  -->For Getting Cookie Service from angular
- •	 npm i guid-typescript --force   ---->For getting Guid value
- •	npm i ngx-cookie-service --force    ------>For having cookie service in angular
 

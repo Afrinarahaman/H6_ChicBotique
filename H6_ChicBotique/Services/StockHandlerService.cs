@@ -70,6 +70,7 @@ namespace H6_ChicBotique.Services
                             var existingTuple = tuples.FirstOrDefault(tuple => tuple.Item1 ==   reserveStock.productId);
                             tuples.Remove(existingTuple);
                             tuples.Add(new(reserveStock.productId, reserveStock.amountToReserve));
+                            //ClientStockEntries[reserveStock.clientBasketId]= tuples;
                         }
                         return true;
                     }

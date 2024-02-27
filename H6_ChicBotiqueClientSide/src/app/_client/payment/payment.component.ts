@@ -115,9 +115,7 @@ export class PaymentComponent implements OnInit {
           });
         },
 
-        onClientAuthorization: (data) => {
-
-        },
+        
         onCancel: (data, actions) => {
           console.log('OnCancel', data, actions);
           this.router.navigate(['cart'])

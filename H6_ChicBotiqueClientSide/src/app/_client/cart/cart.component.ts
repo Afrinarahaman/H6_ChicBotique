@@ -86,9 +86,33 @@ export class CartComponent implements OnInit {
         this.basket[itemId].quantity = item.quantity;
 
 
-        this.cartService.saveBasket4(this.basket);
+       
+       
+        
+          let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
+            clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
+            productId:item.productId,
+            amountToReserve:item.quantity
+
+          }          
+          var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+       
+        
+        if(reserve==true)
+        {
+          this.cartService.saveBasket4(this.basket);
         this.cartProducts = this.cartService.getBasket();
         this.grandTotal = this.cartService.getTotalPrice();
+          
+        
+        window.location.reload();
+        console.log("reserved stock")
+        }
+
+        else {console.log("cannot reserved stock")}
+        
+    
+       
 
       }
       else
@@ -100,23 +124,46 @@ export class CartComponent implements OnInit {
   }
 
   // Method to decrease the quantity, ensuring it doesn't go below 1
-  decreaseQuantity(item: any): void {
+  async decreaseQuantity(item: any): Promise<void> {
       if (item.quantity > 1) {
 
       let itemId;
       itemId = this.cartService.basket.findIndex(({ productId }) => productId == item.productId);
 
-
+      const availableStock = await firstValueFrom(this.productService.getAvailableStock(item.productId));
+      console.log("AvailableStock",availableStock);
+        if(item.quantity<availableStock)
+        {
 
       item.quantity = item.quantity - 1;
       this.basket[itemId].quantity = item.quantity;
 
 
+      
+      let reserveQuantity: ReserveQuantity = {           // this is an object which stores customer_id, all of the ordereditems details and date when these have been ordered
+        clientBasketId: this.clientbasketId, //guid value which is saved in the cookie
+        productId:item.productId,
+        amountToReserve:item.quantity
+
+      }          
+      var reserve=await firstValueFrom(this.productService.reserveStock(reserveQuantity));
+   
+    
+    if(reserve==true)
+    {
       this.cartService.saveBasket4(this.basket);
       this.cartProducts = this.cartService.getBasket();
       this.grandTotal = this.cartService.getTotalPrice();
+      
+    
+    window.location.reload();
+    console.log("reserved stock")
+    }
+
+    else {console.log("cannot reserved stock")}
 
     }
+  }
     else {
       alert("Quantity can not be negative.")
     }

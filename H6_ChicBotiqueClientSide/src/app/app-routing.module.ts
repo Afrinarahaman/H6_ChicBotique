@@ -30,6 +30,7 @@ const adminRoutes: Routes = [
 
 const clientRoutes: Routes = [
   { path: '', component: NavbarComponent },
+  { path: 'navbar', component: NavbarComponent },
   { path: 'frontpage', component: FrontpageComponent},
   { path: 'category_products/:id', component: CategoryProductsComponent },
   { path: 'product_details/:id', component: ProductDetailsComponent},
