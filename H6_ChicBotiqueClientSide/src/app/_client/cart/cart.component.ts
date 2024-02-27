@@ -53,7 +53,7 @@ export class CartComponent implements OnInit {
   }
   removeItem(productId: number) {
     console.log(productId);
-    if (confirm("are you sure to remove?")) {
+    if (confirm("are you sure to remove the item?")) {
       this.cartService.removeItemFromBasket(productId);
       this.cartProducts = this.cartService.getBasket();
 
@@ -80,7 +80,7 @@ export class CartComponent implements OnInit {
 
     const availableStock = await firstValueFrom(this.productService.getAvailableStock(item.productId));
     console.log("AvailableStock",availableStock);
-      if(item.quantity<availableStock)
+      if(item.quantity<=availableStock)
       {
         item.quantity = item.quantity + 1;
         this.basket[itemId].quantity = item.quantity;
@@ -132,7 +132,7 @@ export class CartComponent implements OnInit {
 
       const availableStock = await firstValueFrom(this.productService.getAvailableStock(item.productId));
       console.log("AvailableStock",availableStock);
-        if(item.quantity<availableStock)
+        if(item.quantity<=availableStock)
         {
 
       item.quantity = item.quantity - 1;
@@ -155,9 +155,9 @@ export class CartComponent implements OnInit {
       this.cartProducts = this.cartService.getBasket();
       this.grandTotal = this.cartService.getTotalPrice();
       
-    
-    window.location.reload();
     console.log("reserved stock")
+    window.location.reload();
+    
     }
 
     else {console.log("cannot reserved stock")}
@@ -166,8 +166,10 @@ export class CartComponent implements OnInit {
   }
     else {
       alert("Quantity can not be negative.")
+      
     }
     this.cartService.saveBasket();
+    window.location.reload();
   }
 
 

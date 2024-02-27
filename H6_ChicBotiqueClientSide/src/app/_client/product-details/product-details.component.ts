@@ -38,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
      private wishlistService: WishlistService,
      private router:Router,
      private cookieService:CookieService,
-     private authService:AuthService,
+     
     )
      {
      
