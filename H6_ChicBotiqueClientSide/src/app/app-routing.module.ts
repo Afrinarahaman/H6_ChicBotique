@@ -48,8 +48,8 @@ const clientRoutes: Routes = [
 
 @NgModule({
  imports: [
-  RouterModule.forRoot(adminRoutes, { useHash: true }), // Admin routes
-  RouterModule.forRoot(clientRoutes, { useHash: true }), // Client routes
+  RouterModule.forRoot([...adminRoutes,...clientRoutes], { useHash: false }), // Admin routes and client routes
+ 
   FormsModule],
   exports: [RouterModule]
 })

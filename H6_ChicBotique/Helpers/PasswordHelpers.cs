@@ -17,11 +17,11 @@ namespace H6_ChicBotique.Helpers
 
         }
         // Helper method to verify a password
-        public static bool VerifyPassword(string password, string salt, string expectedHash)
+       /* public static bool VerifyPassword(string password, string salt, string expectedHash)
         {
             string actualHash = HashPassword($"{password}{salt}");
             return actualHash == expectedHash;
-        }
+        }*/
         public static string GenerateSalt()
         {
             byte[] saltBytes = new byte[16];
