@@ -255,12 +255,17 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
         public async void Update_ShouldReturnStatusCode200_WhenUserIsSuccessfullyUpdated()
         {
             // Arrange
-            UserRequest updateUser = new UserRequest
+            UserUpdateRequest updateUser = new UserUpdateRequest
             {
                 FirstName = "Test",
                 LastName    = "Test",
                 Email = "Test@abc.com",
                 Password    = "Test",
+                Telephone= "1254789",
+                Address ="Test",
+                City="Test",
+                PostalCode="Test",
+
             };
 
             int userId = 1;
@@ -276,7 +281,7 @@ namespace H6_ChicBotiqueTestProject.ControllerTests
             };
 
             // Setup the mock ProductService to return the sample product response
-            _mockuserService.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<UserRequest>()))
+            _mockuserService.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<UserUpdateRequest>()))
                 .ReturnsAsync(userResponse);
 
             // Act

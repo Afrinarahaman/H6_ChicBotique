@@ -327,14 +327,17 @@ namespace H6_ChicBotiqueTestProject.ServiceTests
             };
 
             // Creating a user request with updated values
-            UserRequest userRequest = new()
+            UserUpdateRequest userRequest = new()
             {
-                
-                Email = "peter@abc.com",
-                Password="test",
-                FirstName = "Peter",
-                LastName = "Aksten",
-                
+
+                FirstName = "Test",
+                LastName    = "Test",
+                Email = "Test@abc.com",
+                Password    = "Test",
+                Telephone= "1254789",
+                Address ="Test",
+                City="Test",
+                PostalCode="Test",
 
             };
 
